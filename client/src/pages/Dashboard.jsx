@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   const today = new Date().toISOString().split('T')[0];
   const todayAppts = appts.filter(a => a.date === today && a.status !== 'cancelled');
-  const pendingSurgeries = appts.filter(a => a.type === 'surgery' && a.status === 'scheduled').length;
+  const pendingSurgeries = appts.filter(a => (a.type === 'surgery' || a.type === 'surgery_high' || a.type === 'surgery_ambulatory') && a.status === 'scheduled').length;
   const activeEmergencies = emergencies.filter(e => e.status === 'active');
 
   return (

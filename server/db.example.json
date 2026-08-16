@@ -1,0 +1,516 @@
+{
+  "doctors": [
+    {
+      "id": "doc-1",
+      "email": "doctorcirugia@gmail.com",
+      "firstName": "Carlos",
+      "lastName": "Mendoza",
+      "gender": "male",
+      "specialty": "Cirugía Bariátrica",
+      "avatar": null,
+      "lastModifiedNames": null,
+      "lastModifiedLastNames": null,
+      "lastModifiedEmail": null,
+      "lastModifiedSpecialty": null,
+      "consultationSchedule": [
+        {
+          "id": "sch-1",
+          "day": "Lunes",
+          "startTime": "08:00",
+          "endTime": "13:00",
+          "room": "Consultorio 1 - Evaluación Bariátrica Inicial"
+        },
+        {
+          "id": "sch-2",
+          "day": "Miércoles",
+          "startTime": "08:00",
+          "endTime": "13:00",
+          "room": "Consultorio 1 - Evaluación Bariátrica Inicial"
+        },
+        {
+          "id": "sch-3",
+          "day": "Viernes",
+          "startTime": "08:00",
+          "endTime": "12:00",
+          "room": "Consultorio 4 - Control & Seguimiento Postoperatorio"
+        }
+      ]
+    },
+    {
+      "id": "doc-2",
+      "email": "dra.valeria@gmail.com",
+      "firstName": "Valeria",
+      "lastName": "Gómez",
+      "gender": "female",
+      "specialty": "Nutrición Bariátrica & Metabolismo",
+      "avatar": null,
+      "lastModifiedNames": null,
+      "lastModifiedLastNames": null,
+      "lastModifiedEmail": null,
+      "lastModifiedSpecialty": null,
+      "consultationSchedule": [
+        {
+          "id": "sch-4",
+          "day": "Martes",
+          "startTime": "09:00",
+          "endTime": "14:00",
+          "room": "Consultorio 2 - Nutrición Clínica & Metabolismo"
+        },
+        {
+          "id": "sch-5",
+          "day": "Jueves",
+          "startTime": "09:00",
+          "endTime": "14:00",
+          "room": "Consultorio 2 - Nutrición Clínica & Metabolismo"
+        }
+      ]
+    }
+  ],
+  "patients": [
+    {
+      "id": "pat-1",
+      "historyNumber": "UB1024",
+      "firstName": "Mariana",
+      "lastName": "Rivas",
+      "age": 34,
+      "gender": "female",
+      "condition": "Preoperatorio",
+      "bloodType": "O+",
+      "phone": "+58 414 1234567",
+      "address": "Av. Principal Los Palos Grandes, Edif. Parque Real, Piso 4",
+      "weight": 98.5,
+      "height": 162,
+      "bmi": "37.5",
+      "consultationReason": "Evaluación para cirugía de Bypass Gástrico por Obesidad Grado II y comorbilidades asociadas.",
+      "allergies": "Penicilina, AINEs (Ibuprofeno)",
+      "chronicDiseases": "Hipertensión Arterial, Resistencia a la Insulina",
+      "stds": "Negativo / No refiere",
+      "surgicalHistory": "Cesárea (2018)",
+      "currentMedications": "Losartán 50mg c/24h, Metformina 850mg c/12h",
+      "emergencyContactName": "Alejandro Rivas",
+      "emergencyContactRelation": "Esposo",
+      "emergencyContactPhone": "+58 412 9876543",
+      "createdAt": "2026-01-15T09:30:00.000Z",
+      "updatedAt": "2026-01-15T09:30:00.000Z"
+    },
+    {
+      "id": "pat-2",
+      "historyNumber": "UB2088",
+      "firstName": "José",
+      "lastName": "Hernández",
+      "age": 42,
+      "gender": "male",
+      "condition": "Postoperatorio",
+      "bloodType": "A+",
+      "phone": "+58 424 5558899",
+      "address": "Calle 4 con Av. 10, Urb. Santa Fe Norte, Casa 12",
+      "weight": 115.0,
+      "height": 178,
+      "bmi": "36.3",
+      "consultationReason": "Control postquirúrgico de Manga Gástrica a los 3 meses.",
+      "allergies": "Ninguna conocida",
+      "chronicDiseases": "Diabetes Mellitus Tipo 2, Apnea del Sueño",
+      "stds": "Negativo / No refiere",
+      "surgicalHistory": "Manga Gástrica por Laparoscopia (2025)",
+      "currentMedications": "Complejo multivitamínico bariátrico, Omeprazol 20mg",
+      "emergencyContactName": "Carmen Hernández",
+      "emergencyContactRelation": "Hermana",
+      "emergencyContactPhone": "+58 416 3332211",
+      "createdAt": "2026-03-20T14:15:00.000Z",
+      "updatedAt": "2026-03-20T14:15:00.000Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "appt-1",
+      "historyNumber": "UB1024",
+      "patientId": "pat-1",
+      "firstName": "Mariana",
+      "lastName": "Rivas",
+      "age": 34,
+      "gender": "Femenino",
+      "consultationReason": "Valoración prequirúrgica y revisión de exámenes preoperatorios.",
+      "type": "consultation",
+      "date": "2026-08-16",
+      "startTime": "08:30",
+      "endTime": "09:15",
+      "room": "Consultorio 1 - Evaluación Bariátrica Inicial",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Carlos Mendoza",
+      "status": "scheduled",
+      "createdAt": "2026-08-10T10:00:00.000Z"
+    },
+    {
+      "id": "appt-2",
+      "historyNumber": "UB2088",
+      "patientId": "pat-2",
+      "firstName": "José",
+      "lastName": "Hernández",
+      "age": 42,
+      "gender": "Masculino",
+      "consultationReason": "Procedimiento Quirúrgico: Bypass Gástrico en Y de Roux.",
+      "type": "surgery_high",
+      "date": "2026-08-16",
+      "startTime": "10:00",
+      "endTime": "13:00",
+      "room": "Quirófano 1 - Cirugía Bariátrica & Metabólica Avanzada",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Carlos Mendoza",
+      "status": "in_progress",
+      "createdAt": "2026-08-12T11:30:00.000Z"
+    },
+    {
+      "id": "appt-3",
+      "historyNumber": "UB1024",
+      "patientId": "pat-1",
+      "firstName": "Mariana",
+      "lastName": "Rivas",
+      "age": 34,
+      "gender": "Femenino",
+      "consultationReason": "Colocación de Balón Intragástrico con control endoscópico.",
+      "type": "surgery_ambulatory",
+      "date": "2026-08-16",
+      "startTime": "14:00",
+      "endTime": "15:30",
+      "room": "Quirófano Ambulatorio A - Endoscopía Bariátrica & Balón",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Carlos Mendoza",
+      "status": "scheduled",
+      "createdAt": "2026-08-13T09:00:00.000Z"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "q-alta-1",
+      "name": "Quirófano 1 - Cirugía Bariátrica & Metabólica Avanzada",
+      "code": "QX-01",
+      "type": "operating_high",
+      "category": "Quirófano Alta Gama",
+      "floor": "Piso 2 - Bloque Quirúrgico Mayor",
+      "status": "available",
+      "capacity": "Intervenciones de Alta Complejidad",
+      "description": "Quirófano principal dotado para procedimientos de Bypass Gástrico en Y de Roux, Cruce Duodenal y Cirugías de Revisión.",
+      "equipment": [
+        "Torre de Laparoscopía 4K UHD con óptica de 30° e insuflador de CO2 calefactor (45 L/min)",
+        "Mesa Quirúrgica Bariátrica motorizada con capacidad dinámica de carga hasta 380 kg",
+        "Sistema de Sellado y Corte Vascular Ultrasónico/Bipolar (Harmonic / Ligasure)",
+        "Máquina de Anestesia de alta precisión con monitoreo de gases halogenados y BIS",
+        "Monitor Multiparámetros Invasivo (ECG, PNI, SpO2, Capnografía, Presión Invasiva)",
+        "Arco en C Radiológico digital con visor doble para fluoroscopia transoperatoria",
+        "Electrobisturí con módulo de coagulación por plasma de Argón",
+        "Lámparas Cialíticas LED de doble satélite con cámara 4K incorporada",
+        "Sistema de aspiración quirúrgica de alto vacío y doble recipiente"
+      ]
+    },
+    {
+      "id": "q-alta-2",
+      "name": "Quirófano 2 - Laparoscopía 4K & Cirugía Robótica",
+      "code": "QX-02",
+      "type": "operating_high",
+      "category": "Quirófano Alta Gama",
+      "floor": "Piso 2 - Bloque Quirúrgico Mayor",
+      "status": "available",
+      "capacity": "Intervenciones de Media-Alta Complejidad",
+      "description": "Quirófano inteligente equipado para Manga Gástrica por laparoscopía y cirugía metabólica avanzada.",
+      "equipment": [
+        "Torre de Videoendocirugía 4K con tecnología de visualización de fluorescencia ICG",
+        "Mesa Quirúrgica Bariátrica multiarticulada con posicionamiento Trendelenburg extremo",
+        "Sellador de Vasos Ligasure con piezas de mano Maryland y Blunt Tip",
+        "Estación de Anestesia con ventilación mecánica pulmonar protectora",
+        "Monitor de Profundidad Anestésica (BIS) y relajación neuromuscular (TOF)",
+        "Monitor Multiparámetros grado UCI quirúrgica",
+        "Lámparas Cialíticas LED con regulación de temperatura de color",
+        "Torre de infusión continua y calentador de fluidos normotérmico"
+      ]
+    },
+    {
+      "id": "q-alta-3",
+      "name": "Quirófano 3 - Bypass Gástrico & Revisión Compleja",
+      "code": "QX-03",
+      "type": "operating_high",
+      "category": "Quirófano Alta Gama",
+      "floor": "Piso 2 - Bloque Quirúrgico Mayor",
+      "status": "available",
+      "capacity": "Intervenciones de Alta Complejidad",
+      "description": "Espacio optimizado para conversiones quirúrgicas, re-operaciones bariátricas y abordajes multidisciplinarios.",
+      "equipment": [
+        "Torre de Laparoscopía Full HD 3D con visión estereoscópica de profundidad",
+        "Mesa Quirúrgica Bariátrica reforzada con extensiones laterales especiales",
+        "Disector Ultrasónico Harmonic Focus & Ace",
+        "Máquina de Anestesia con módulo de espirometría volumétrica",
+        "Monitoreo Hemodinámico Continuo no invasivo",
+        "Lámparas Quirúrgicas LED satelitales",
+        "Carro de vía aérea difícil con videolaringoscopio de fibra óptica"
+      ]
+    },
+    {
+      "id": "q-alta-4",
+      "name": "Quirófano 4 - Cirugía Bariátrica Mayor & Hernioplastia",
+      "code": "QX-04",
+      "type": "operating_high",
+      "category": "Quirófano Alta Gama",
+      "floor": "Piso 2 - Bloque Quirúrgico Mayor",
+      "status": "available",
+      "capacity": "Intervenciones de Media-Alta Complejidad",
+      "description": "Equipado para cirugías combinadas de obesidad mórbida con reparación de defectos complejos de pared abdominal.",
+      "equipment": [
+        "Torre de Laparoscopía 4K con fuente de luz LED de alta potencia",
+        "Mesa Quirúrgica Bariátrica electrónica de 360 kg de resistencia",
+        "Sistema de electrocirugía avanzada monopolar/bipolar con corte y hemostasia",
+        "Ventilador de anestesia de última generación con modos PRVC y PSV",
+        "Monitor Multiparámetros con registro electrocardiográfico continuo",
+        "Bomba de compresión neumática intermitente antitrombótica transoperatoria",
+        "Manta térmica de aire forzado para normotermia transquirúrgica"
+      ]
+    },
+    {
+      "id": "q-alta-5",
+      "name": "Quirófano 5 - Procedimientos Bariátricos Multiparámetro",
+      "code": "QX-05",
+      "type": "operating_high",
+      "category": "Quirófano Alta Gama",
+      "floor": "Piso 2 - Bloque Quirúrgico Mayor",
+      "status": "available",
+      "capacity": "Intervenciones de Media-Alta Complejidad",
+      "description": "Quirófano polivalente para procedimientos bariátricos y cirugías reconstructivas post-bariátricas.",
+      "equipment": [
+        "Torre de Laparoscopía 4K UHD con óptica rígida de 0° y 30°",
+        "Mesa Quirúrgica Bariátrica ergonómica con control remoto inalámbrico",
+        "Unidad electroquirúrgica con sellado bipolar avanzado",
+        "Estación de Anestesia con monitorización continua de CO2 espirado",
+        "Monitor multiparámetro con medición continua de temperatura central",
+        "Lámparas LED frontales y satélites con mango esterilizable",
+        "Equipo de aspiración quirúrgico dual de alta capacidad"
+      ]
+    },
+    {
+      "id": "q-alta-6",
+      "name": "Quirófano 6 - Cirugía Digestiva & Metabólica Mayor",
+      "code": "QX-06",
+      "type": "operating_high",
+      "category": "Quirófano Alta Gama",
+      "floor": "Piso 2 - Bloque Quirúrgico Mayor",
+      "status": "available",
+      "capacity": "Intervenciones de Alta Complejidad",
+      "description": "Quirófano de alta esterilidad con flujo laminar para cirugía metabólica, esofagogástrica y bariátrica.",
+      "equipment": [
+        "Torre de Laparoscopía 4K con insuflador inteligente y evacuador de humos",
+        "Mesa Quirúrgica de alta resistencia bariátrica (400 kg máx)",
+        "Sellador de vasos Harmonic HD con generador táctil",
+        "Máquina de Anestesia con analizador de gases anestésicos multicanal",
+        "Monitor Multiparámetros con módulo de gasto cardíaco continuo",
+        "Sistema de climatización quirúrgica con filtro HEPA de flujo laminar",
+        "Desfibrilador bifásico quirúrgico integrado con palas internas y externas"
+      ]
+    },
+    {
+      "id": "q-amb-1",
+      "name": "Quirófano Ambulatorio A - Endoscopía Bariátrica & Balón",
+      "code": "QX-AMB-A",
+      "type": "operating_ambulatory",
+      "category": "Quirófano Ambulatorio",
+      "floor": "Piso 1 - Unidad Ambulatoria",
+      "status": "available",
+      "capacity": "Intervenciones de Baja-Media Complejidad",
+      "description": "Espacio especializado en colocación/retiro de Balón Intragástrico, Endomanga y endoscopias terapéuticas.",
+      "equipment": [
+        "Torre de Videoendoscopía Digestiva Alta HD con cromoscopia digital NBI",
+        "Insuflador de CO2 endoscópico y bomba de lavado con calentador",
+        "Electrocardiógrafo y monitor multiparámetros con capnografía nasal",
+        "Camilla de procedimientos motorizada con barandillas de seguridad y Trendelenburg",
+        "Bomba de infusión de propofol TCI para sedación profunda dirigida",
+        "Carro de Paro con desfibrilador y set de intubación rápida",
+        "Aspirador quirúrgico de alto caudal silencioso"
+      ]
+    },
+    {
+      "id": "q-amb-2",
+      "name": "Quirófano Ambulatorio B - Procedimientos Menores & Curas",
+      "code": "QX-AMB-B",
+      "type": "operating_ambulatory",
+      "category": "Quirófano Ambulatorio",
+      "floor": "Piso 1 - Unidad Ambulatoria",
+      "status": "available",
+      "capacity": "Intervenciones de Baja Complejidad",
+      "description": "Quirófano para cirugías menores ambulatorias, curas complejas bajo sedación y colocación de accesos.",
+      "equipment": [
+        "Unidad electroquirúrgica ambulatoria monopolar/bipolar de 200W",
+        "Camilla quirúrgica de altura variable con ruedas antiestáticas",
+        "Monitor de signos vitales (ECG, PNI, Pulsioximetría, Temperatura)",
+        "Lámpara quirúrgica rodable LED de alta intensidad",
+        "Mesa de instrumental de mayo en acero inoxidable quirúrgico",
+        "Aspirador de secreciones y fluidos móvil"
+      ]
+    },
+    {
+      "id": "q-amb-3",
+      "name": "Quirófano Ambulatorio C - Cirugía Ambulatoria de Corta Estancia",
+      "code": "QX-AMB-C",
+      "type": "operating_ambulatory",
+      "category": "Quirófano Ambulatorio",
+      "floor": "Piso 1 - Unidad Ambulatoria",
+      "status": "available",
+      "capacity": "Intervenciones de Baja-Media Complejidad",
+      "description": "Quirófano para procedimientos ambulatorios de corta estancia y cirugía laparoscópica ambulatoria menor.",
+      "equipment": [
+        "Torre de laparoscopía Full HD compacta",
+        "Mesa de cirugía menor con inclinación lateral y longitudinal",
+        "Estación de anestesia ambulatoria con circuito circular pediátrico/adulto",
+        "Monitor de signos vitales multiparámetro de transporte",
+        "Lámparas Cialíticas LED dobles de techo",
+        "Desfibrilador externo automático (DEA) y carro de reanimación"
+      ]
+    },
+    {
+      "id": "cons-1",
+      "name": "Consultorio 1 - Evaluación Bariátrica Inicial",
+      "code": "CONS-01",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Consultorio médico para primeras consultas, valoración clínica general y diagnóstico inicial del paciente bariátrico.",
+      "equipment": [
+        "Báscula de Bioimpedancia Eléctrica Profesional (InBody / Tanita grado médico, hasta 300 kg)",
+        "Tallímetro de precisión milimétrica de pared",
+        "Camilla de Exploración clínica reforzada con escalerilla antideslizante",
+        "Monitor de Presión Arterial digital de pared con manguitos extragrandes para paciente bariátrico",
+        "Negatoscopio LED extraplano y monitor médico para visualización de estudios radiológicos",
+        "Set de diagnóstico clínico de pared (Otoscopio, Oftalmoscopio y Termómetro)",
+        "Estación de trabajo con terminal informática conectada al sistema EHR UCIBAM"
+      ]
+    },
+    {
+      "id": "cons-2",
+      "name": "Consultorio 2 - Nutrición Clínica & Metabolismo",
+      "code": "CONS-02",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Consultorio para planes nutricionales pre y postoperatorios, cálculo de gasto calórico y bioimpedanciometría seriada.",
+      "equipment": [
+        "Analizador de Composición Corporal segmental multifrecuencia",
+        "Cinta antropométrica de fibra de vidrio no extensible y plicómetro de precisión",
+        "Tallímetro digital integrado con calibración automática",
+        "Camilla de examen clínico acolchada",
+        "Software clínico de cálculo nutricional y composición corporal",
+        "Esfigmomanómetro aneroide hospitalario con brazalete bariátrico"
+      ]
+    },
+    {
+      "id": "cons-3",
+      "name": "Consultorio 3 - Psicología Bariátrica & Conductual",
+      "code": "CONS-03",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Espacio adaptado para evaluación psicológica prequirúrgica, test de adherencia al tratamiento y terapia de apoyo.",
+      "equipment": [
+        "Mobiliario ergonómico confortable para entrevistas y psicoterapia",
+        "Estación digital con batería de tests psicométricos estandarizados para cirugía bariátrica",
+        "Equipo de biofeedback y monitor de variabilidad de frecuencia cardíaca",
+        "Terminal de historia clínica digital con módulo de notas psicológicas confidenciales"
+      ]
+    },
+    {
+      "id": "cons-4",
+      "name": "Consultorio 4 - Control & Seguimiento Postoperatorio",
+      "code": "CONS-04",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Consultorio para retiro de puntos, curaciones de heridas laparoscópicas y controles mensuales de evolución.",
+      "equipment": [
+        "Camilla quirúrgica de exploración articulada con luz frontal LED de curación",
+        "Lámpara cuello de ganso LED de exploración focalizada",
+        "Mesa auxiliar de curaciones con instrumental estéril (pinzas, tijeras de retiro de puntos)",
+        "Báscula médica de pesaje rápido y bioimpedancia",
+        "Tensiómetro digital y glucómetro con tiras reactivas",
+        "Contenedor hermético de residuos biológicos y punzocortantes"
+      ]
+    },
+    {
+      "id": "cons-5",
+      "name": "Consultorio 5 - Medicina Interna & Riesgo Quirúrgico",
+      "code": "CONS-05",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Evaluación cardiológica y metabólica del paciente bariátrico previa a intervención.",
+      "equipment": [
+        "Electrocardiógrafo digital de 12 derivaciones con informe automático",
+        "Monitor de presión arterial ambulatorio (MAPA) y Holter",
+        "Espirómetro digital para pruebas de función pulmonar preoperatoria",
+        "Pulsioxímetro de mesa con curva pletismográfica",
+        "Estetoscopio cardiológico de doble campana",
+        "Camilla clínica con elevador de cabecera regulable"
+      ]
+    },
+    {
+      "id": "cons-6",
+      "name": "Consultorio 6 - Consulta Quirúrgica Bariátrica",
+      "code": "CONS-06",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Atención médica especializada por cirujanos bariátricos para programación y consentimiento informado.",
+      "equipment": [
+        "Báscula de alta capacidad con tallímetro",
+        "Modelos anatómicos explicativos 3D del tracto digestivo, Bypass y Manga Gástrica",
+        "Pantalla interactiva táctil de 43 pulgadas para explicación del procedimiento quirúrgico",
+        "Camilla de exploración bariátrica",
+        "Equipo de diagnóstico físico completo",
+        "Terminal informática de gestión clínica"
+      ]
+    },
+    {
+      "id": "cons-7",
+      "name": "Consultorio 7 - Gastroenterología & Endoscopía",
+      "code": "CONS-07",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Consultorio para diagnóstico de patologías digestivas, reflujo gastroesofágico y seguimiento endoscópico.",
+      "equipment": [
+        "Monitor de visualización de videoendoscopias previas en alta resolución",
+        "Camilla de exploración clínica reforzada",
+        "Negatoscopio digital",
+        "Equipo de ultrasonido portátil / ecógrafo de apoyo para valoración abdominal",
+        "Kit de diagnóstico físico de pared con esfingomanómetro"
+      ]
+    },
+    {
+      "id": "cons-8",
+      "name": "Consultorio 8 - Consulta de Chequeo & Revaloración",
+      "code": "CONS-08",
+      "type": "consultation",
+      "category": "Consultorio Médico",
+      "floor": "Piso 1 - Área de Consultas Externas",
+      "status": "available",
+      "capacity": "Consulta Médica",
+      "description": "Consultorio multidisciplinario para revaloraciones periódicas, control a largo plazo y prevención de reganancia de peso.",
+      "equipment": [
+        "Báscula de bioimpedancia clínica",
+        "Tallímetro de precisión",
+        "Camilla de exploración",
+        "Monitor de constantes vitales",
+        "Set instrumental de diagnóstico médico",
+        "Computador conectado a la red clínica UCIBAM"
+      ]
+    }
+  ],
+  "emergencies": []
+}
