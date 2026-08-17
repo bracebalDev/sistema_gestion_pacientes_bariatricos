@@ -601,8 +601,8 @@ export default function Scheduling() {
       {/* Header and Actions */}
       <div className="flex justify-between items-center flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Agenda de Consultas y Cirugías</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100">Agenda de Consultas y Cirugías</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
             Programación quirúrgica en quirófanos y consultas médicas en consultorios
           </p>
         </div>
@@ -611,7 +611,7 @@ export default function Scheduling() {
           {/* Download Daily Report in PDF */}
           <button 
             onClick={handleDownloadDailyReportPdf}
-            className="btn btn-secondary flex items-center gap-2 text-sm font-semibold shadow-xs hover:border-primary hover:text-primary transition-colors"
+            className="btn btn-secondary flex items-center gap-2 text-sm font-semibold shadow-xs hover:border-primary hover:text-primary transition-colors cursor-pointer"
             title="Descargar reporte médico del día en PDF en una pestaña aparte"
           >
             <Download size={16} />
@@ -621,7 +621,7 @@ export default function Scheduling() {
           {/* New Appointment Button */}
           <button 
             onClick={handleOpenCreate}
-            className="btn btn-primary flex items-center gap-2 px-4 py-2 shadow-xs"
+            className="btn btn-primary flex items-center gap-2 px-4 py-2 shadow-xs cursor-pointer"
           >
             <Plus size={18} />
             <span className="font-semibold">Nueva Cita</span>
@@ -630,12 +630,12 @@ export default function Scheduling() {
       </div>
 
       {/* Filter and Date Selection Card */}
-      <div className="card p-4 shadow-sm border border-gray-200/80 bg-white">
+      <div className="card p-4 shadow-sm border border-gray-200/80 dark:border-slate-800 bg-white dark:bg-[#151D2A]">
         <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
           
           {/* Date Picker & Navigation */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Fecha:</span>
+            <span className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Fecha:</span>
             <input 
               type="date" 
               className="input-field py-1.5 px-3 text-sm w-auto font-medium"
@@ -644,7 +644,7 @@ export default function Scheduling() {
             />
             <button 
               onClick={() => setSelectedDate(new Date().toISOString().split('T')[0])}
-              className="text-xs font-semibold text-primary hover:underline px-2 py-1 bg-sky-50 rounded"
+              className="text-xs font-semibold text-primary dark:text-primary-light hover:underline px-2 py-1 bg-sky-50 dark:bg-sky-950/50 rounded cursor-pointer"
             >
               Hoy
             </button>
@@ -655,8 +655,10 @@ export default function Scheduling() {
             <button 
               onClick={() => setFilterType('all')}
               className={clsx(
-                "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border",
-                filterType === 'all' ? "bg-slate-900 text-white border-slate-900" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border cursor-pointer",
+                filterType === 'all' 
+                  ? "bg-slate-900 dark:bg-slate-700 text-white border-slate-900 dark:border-slate-700" 
+                  : "bg-white dark:bg-[#151D2A] text-gray-600 dark:text-slate-300 border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800"
               )}
             >
               Todos ({appointments.filter(a => !selectedDate || a.date === selectedDate).length})
@@ -664,8 +666,10 @@ export default function Scheduling() {
             <button 
               onClick={() => setFilterType('consultation')}
               className={clsx(
-                "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border flex items-center gap-1.5",
-                filterType === 'consultation' ? "bg-sky-600 text-white border-sky-600" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border flex items-center gap-1.5 cursor-pointer",
+                filterType === 'consultation' 
+                  ? "bg-sky-600 text-white border-sky-600" 
+                  : "bg-white dark:bg-[#151D2A] text-gray-600 dark:text-slate-300 border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800"
               )}
             >
               <Stethoscope size={13} /> Consultas
@@ -673,8 +677,10 @@ export default function Scheduling() {
             <button 
               onClick={() => setFilterType('surgery')}
               className={clsx(
-                "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border flex items-center gap-1.5",
-                filterType === 'surgery' ? "bg-purple-600 text-white border-purple-600" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border flex items-center gap-1.5 cursor-pointer",
+                filterType === 'surgery' 
+                  ? "bg-purple-600 text-white border-purple-600" 
+                  : "bg-white dark:bg-[#151D2A] text-gray-600 dark:text-slate-300 border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800"
               )}
             >
               <Scissors size={13} /> Cirugías & Proc.
@@ -683,11 +689,11 @@ export default function Scheduling() {
 
           {/* Search bar in agenda */}
           <div className="relative max-w-xs w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" size={16} />
             <input 
               type="text" 
               placeholder="Buscar por paciente, espacio, doctor..."
-              className="w-full pl-9 pr-3 py-1.5 text-xs border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
+              className="w-full pl-9 pr-3 py-1.5 text-xs border border-gray-300 dark:border-slate-700 bg-white dark:bg-[#0B0F17] text-gray-900 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
             />
@@ -697,15 +703,15 @@ export default function Scheduling() {
       </div>
 
       {/* Main Content: Appointments List */}
-      <div className="card shadow-sm border border-gray-200/80">
-        <div className="card-header bg-gray-50/70 p-4 flex justify-between items-center">
+      <div className="card shadow-sm border border-gray-200/80 dark:border-slate-800">
+        <div className="card-header bg-gray-50/70 dark:bg-[#1A2332] p-4 flex justify-between items-center border-b border-gray-200 dark:border-slate-800">
           <div className="flex items-center gap-2">
             <CalendarIcon size={18} className="text-primary" />
-            <span className="font-bold text-gray-800 text-sm">
+            <span className="font-bold text-gray-800 dark:text-slate-100 text-sm">
               Programación para {new Date(`${selectedDate}T12:00:00`).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </span>
           </div>
-          <span className="text-xs text-gray-500 font-medium">
+          <span className="text-xs text-gray-500 dark:text-slate-400 font-medium">
             {filteredAppointments.length} actividad(es) agendada(s)
           </span>
         </div>
@@ -713,7 +719,7 @@ export default function Scheduling() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-gray-50/50 border-b border-gray-200 text-gray-600 text-xs uppercase tracking-wider">
+              <tr className="bg-gray-50/50 dark:bg-slate-800/60 border-b border-gray-200 dark:border-slate-800 text-gray-600 dark:text-slate-300 text-xs uppercase tracking-wider">
                 <th className="p-4 font-semibold">Fecha / Hora</th>
                 <th className="p-4 font-semibold">Nombres</th>
                 <th className="p-4 font-semibold">Apellidos</th>
@@ -725,20 +731,20 @@ export default function Scheduling() {
                 <th className="p-4 font-semibold text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 text-sm">
+            <tbody className="divide-y divide-gray-100 dark:divide-slate-800/70 text-sm">
               {loadingAppts ? (
                 <tr>
-                  <td colSpan="9" className="p-10 text-center text-gray-500">
+                  <td colSpan="9" className="p-10 text-center text-gray-500 dark:text-slate-400">
                     <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent mb-2"></div>
                     <p>Cargando agenda...</p>
                   </td>
                 </tr>
               ) : filteredAppointments.length === 0 ? (
                 <tr>
-                  <td colSpan="9" className="p-12 text-center text-gray-500">
-                    <CalendarIcon size={36} className="mx-auto text-gray-300 mb-2" />
-                    <p className="font-semibold text-gray-700">No hay citas ni cirugías programadas para este día</p>
-                    <p className="text-xs text-gray-400 mt-1">
+                  <td colSpan="9" className="p-12 text-center text-gray-500 dark:text-slate-400">
+                    <CalendarIcon size={36} className="mx-auto text-gray-300 dark:text-slate-600 mb-2" />
+                    <p className="font-semibold text-gray-700 dark:text-slate-300">No hay citas ni cirugías programadas para este día</p>
+                    <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
                       Haga clic en "Nueva Cita" para programar una consulta o cirugía.
                     </p>
                   </td>
@@ -750,57 +756,57 @@ export default function Scheduling() {
                   const isSurgery = isHighSurgery || isAmbulatory || a.type === 'surgery';
 
                   return (
-                    <tr key={a.id} className="hover:bg-sky-50/30 transition-colors group">
+                    <tr key={a.id} className="hover:bg-sky-50/30 dark:hover:bg-slate-800/40 transition-colors group">
                       <td className="p-4 whitespace-nowrap">
-                        <div className="font-bold text-gray-900 flex items-center gap-1.5 font-mono text-xs">
+                        <div className="font-bold text-gray-900 dark:text-slate-100 flex items-center gap-1.5 font-mono text-xs">
                           <Clock size={13} className="text-primary" />
                           <span>{a.startTime} - {a.endTime}</span>
                         </div>
-                        <div className="text-[11px] text-gray-400 mt-0.5">{a.date}</div>
+                        <div className="text-[11px] text-gray-400 dark:text-slate-500 mt-0.5">{a.date}</div>
                       </td>
 
-                      <td className="p-4 font-semibold text-gray-900">
+                      <td className="p-4 font-semibold text-gray-900 dark:text-slate-100">
                         {a.firstName}
                       </td>
 
-                      <td className="p-4 font-semibold text-gray-900">
+                      <td className="p-4 font-semibold text-gray-900 dark:text-slate-100">
                         {a.lastName}
                         {a.historyNumber && (
-                          <span className="block text-[10px] font-mono text-gray-400">
+                          <span className="block text-[10px] font-mono text-gray-400 dark:text-slate-500">
                             #{a.historyNumber}
                           </span>
                         )}
                       </td>
 
                       <td className="p-4">
-                        <div className="flex items-center gap-1.5 text-xs text-gray-700">
-                          <MapPin size={13} className="text-gray-400 shrink-0" />
+                        <div className="flex items-center gap-1.5 text-xs text-gray-700 dark:text-slate-300">
+                          <MapPin size={13} className="text-gray-400 dark:text-slate-500 shrink-0" />
                           <span className="font-medium">{a.room || 'Sin espacio asignado'}</span>
                         </div>
                       </td>
 
                       <td className="p-4 whitespace-nowrap">
                         <span className={clsx(
-                          "px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1",
-                          isHighSurgery ? 'bg-purple-100 text-purple-800' :
-                          isAmbulatory ? 'bg-indigo-100 text-indigo-800' :
-                          isSurgery ? 'bg-purple-100 text-purple-800' :
-                          'bg-sky-100 text-sky-800'
+                          "px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1 border",
+                          isHighSurgery ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 border-purple-200 dark:border-purple-800/50' :
+                          isAmbulatory ? 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-800 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800/50' :
+                          isSurgery ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 border-purple-200 dark:border-purple-800/50' :
+                          'bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-sky-800/50'
                         )}>
                           {isSurgery ? <Scissors size={12} /> : <Stethoscope size={12} />}
                           {isHighSurgery ? 'Cirugía Alta Gama' : isAmbulatory ? 'Proc. Ambulatorio' : isSurgery ? 'Cirugía' : 'Consulta'}
                         </span>
                       </td>
 
-                      <td className="p-4 text-xs font-medium text-gray-700 whitespace-nowrap">
+                      <td className="p-4 text-xs font-medium text-gray-700 dark:text-slate-300 whitespace-nowrap">
                         <div className="flex items-center gap-1 text-primary">
                           <User size={12} />
                           <span>{a.doctorName || 'Dr. Carlos Mendoza'}</span>
                         </div>
                       </td>
 
-                      <td className="p-4 text-xs text-gray-600 max-w-xs truncate">
-                        {a.consultationReason || <span className="text-gray-400 italic">No especificado</span>}
+                      <td className="p-4 text-xs text-gray-600 dark:text-slate-300 max-w-xs truncate">
+                        {a.consultationReason || <span className="text-gray-400 dark:text-slate-500 italic">No especificado</span>}
                       </td>
 
                       <td className="p-4 whitespace-nowrap">
@@ -809,11 +815,11 @@ export default function Scheduling() {
                           onChange={e => handleStatusChange(a.id, e.target.value)}
                           className={clsx(
                             "text-xs font-bold py-1 px-2 rounded-md border focus:outline-none cursor-pointer",
-                            a.status === 'confirmed' ? "bg-emerald-50 text-emerald-700 border-emerald-300" :
-                            a.status === 'in_progress' ? "bg-amber-50 text-amber-700 border-amber-300" :
-                            a.status === 'completed' ? "bg-blue-50 text-blue-700 border-blue-300" :
-                            a.status === 'cancelled' ? "bg-red-50 text-red-700 border-red-300" :
-                            "bg-gray-50 text-gray-700 border-gray-300"
+                            a.status === 'confirmed' ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800/60" :
+                            a.status === 'in_progress' ? "bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-300 dark:border-amber-800/60" :
+                            a.status === 'completed' ? "bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-800/60" :
+                            a.status === 'cancelled' ? "bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 border-red-300 dark:border-red-800/60" :
+                            "bg-gray-50 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-gray-300 dark:border-slate-700"
                           )}
                         >
                           <option value="scheduled">Programada</option>
@@ -828,14 +834,14 @@ export default function Scheduling() {
                         <div className="flex items-center justify-end gap-1.5">
                           <button 
                             onClick={() => handleOpenEdit(a)}
-                            className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+                            className="p-1.5 text-gray-400 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 rounded-md transition-colors cursor-pointer"
                             title="Editar Cita"
                           >
                             <Edit size={16} />
                           </button>
                           <button 
                             onClick={() => handleDelete(a.id, `${a.firstName} ${a.lastName}`)}
-                            className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                            className="p-1.5 text-gray-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 rounded-md transition-colors cursor-pointer"
                             title="Eliminar Cita"
                           >
                             <Trash2 size={16} />
@@ -857,7 +863,7 @@ export default function Scheduling() {
       {/* ========================================================================= */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-[#151D2A] text-gray-800 dark:text-slate-200 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
             
             {/* Header */}
             <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
@@ -871,7 +877,7 @@ export default function Scheduling() {
               </div>
               <button 
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors"
+                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -879,8 +885,8 @@ export default function Scheduling() {
 
             {/* Error Banner (Overlapping and missing fields) */}
             {formError && (
-              <div className="mx-6 mt-4 p-3.5 bg-red-50 border-l-4 border-red-500 rounded-r text-red-800 text-xs font-medium flex items-start gap-2 shadow-xs">
-                <AlertTriangle size={18} className="shrink-0 text-red-600 mt-0.5" />
+              <div className="mx-6 mt-4 p-3.5 bg-red-50 dark:bg-red-950/60 border-l-4 border-red-500 rounded-r text-red-800 dark:text-red-300 text-xs font-medium flex items-start gap-2 shadow-xs">
+                <AlertTriangle size={18} className="shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
                 <span className="leading-relaxed">{formError}</span>
               </div>
             )}
@@ -889,19 +895,19 @@ export default function Scheduling() {
             <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-5">
               
               {/* Sección 1: Búsqueda y Autocompletado por Historia */}
-              <div className="p-4 bg-sky-50/70 border border-sky-200 rounded-xl space-y-3">
+              <div className="p-4 bg-sky-50/70 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/60 rounded-xl space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-sky-950 uppercase tracking-wider flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-sky-950 dark:text-sky-300 uppercase tracking-wider flex items-center gap-1.5">
                     <Sparkles size={14} className="text-primary" /> # Historia Clínica (Autocompletar Paciente)
                   </label>
-                  <span className="text-[11px] text-gray-500">Opcional si es paciente nuevo</span>
+                  <span className="text-[11px] text-gray-500 dark:text-slate-400">Opcional si es paciente nuevo</span>
                 </div>
 
                 <div className="relative">
                   <input 
                     type="text" 
                     placeholder="Escriba el # de historia (ej: UB1024) para autocompletar..."
-                    className="input-field bg-white font-mono uppercase font-bold text-sm tracking-wider"
+                    className="input-field font-mono uppercase font-bold text-sm tracking-wider"
                     value={formData.historyNumber}
                     onChange={e => handleHistoryNumberChange(e.target.value)}
                   />
@@ -909,21 +915,21 @@ export default function Scheduling() {
 
                 {/* Match Notification */}
                 {autocompleteMatch ? (
-                  <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-xs flex items-center gap-2 font-medium">
-                    <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                  <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/60 rounded-lg text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2 font-medium">
+                    <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>
                       ¡Paciente encontrado! Datos de <strong>{autocompleteMatch.firstName} {autocompleteMatch.lastName}</strong> autocompletados correctamente.
                     </span>
                   </div>
                 ) : (
                   <div className="flex flex-wrap gap-1.5 items-center">
-                    <span className="text-[11px] text-gray-500">Sugerencias rápidas:</span>
+                    <span className="text-[11px] text-gray-500 dark:text-slate-400">Sugerencias rápidas:</span>
                     {patients.slice(0, 3).map(p => (
                       <button 
                         key={p.id}
                         type="button"
                         onClick={() => handleSelectPatientSuggestion(p)}
-                        className="text-[11px] bg-white border border-sky-200 hover:border-primary text-sky-800 px-2 py-0.5 rounded-md font-medium transition-colors"
+                        className="text-[11px] bg-white dark:bg-[#111823] border border-sky-200 dark:border-sky-800/60 hover:border-primary text-sky-800 dark:text-sky-300 px-2 py-0.5 rounded-md font-medium transition-colors cursor-pointer"
                       >
                         {p.historyNumber}: {p.firstName} {p.lastName}
                       </button>
@@ -1005,14 +1011,14 @@ export default function Scheduling() {
               </div>
 
               {/* Sección 4: Tipo de Cita y Espacio Adaptado (Match dinámico de espacios) */}
-              <div className="space-y-4 pt-4 border-t border-gray-100">
+              <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-slate-800">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="label-text font-semibold text-primary">
                       Tipo de Cita <span className="text-red-500">*</span>
                     </label>
                     <select 
-                      className="input-field mt-1 font-bold text-gray-900 border-primary/50"
+                      className="input-field mt-1 font-bold text-gray-900 dark:text-slate-100 border-primary/50"
                       value={formData.type}
                       onChange={e => handleTypeChange(e.target.value)}
                     >
@@ -1020,7 +1026,7 @@ export default function Scheduling() {
                       <option value="surgery_high">Cirugía de Media-Alta Dificultad (Quirófanos Alta Gama)</option>
                       <option value="surgery_ambulatory">Procedimiento Ambulatorio / Menor (Quirófanos Ambulatorios)</option>
                     </select>
-                    <p className="text-[11px] text-gray-500 mt-1">
+                    <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-1">
                       * Filtra automáticamente los espacios clínicos idóneos para este procedimiento.
                     </p>
                   </div>
@@ -1028,7 +1034,7 @@ export default function Scheduling() {
                   <div>
                     <label className="label-text font-semibold flex items-center justify-between">
                       <span>Espacio Idóneo Asignado <span className="text-red-500">*</span></span>
-                      <span className="text-[11px] text-purple-600 font-bold">
+                      <span className="text-[11px] text-purple-600 dark:text-purple-400 font-bold">
                         {compatibleRooms.length} espacio(s) disponible(s)
                       </span>
                     </label>
@@ -1082,7 +1088,7 @@ export default function Scheduling() {
               </div>
 
               {/* Modal Footer Buttons */}
-              <div className="pt-4 border-t border-gray-200 flex items-center justify-between">
+              <div className="pt-4 border-t border-gray-200 dark:border-slate-800 flex items-center justify-between">
                 <button 
                   type="button" 
                   onClick={() => setIsModalOpen(false)}

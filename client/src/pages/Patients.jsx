@@ -284,19 +284,19 @@ export default function Patients() {
   const getConditionBadge = (condition) => {
     switch (condition) {
       case 'Estable':
-        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        return 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60';
       case 'Preoperatorio':
-        return 'bg-sky-50 text-sky-700 border-sky-200';
+        return 'bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800/60';
       case 'Postoperatorio':
-        return 'bg-purple-50 text-purple-700 border-purple-200';
+        return 'bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800/60';
       case 'En Observación':
-        return 'bg-amber-50 text-amber-700 border-amber-200';
+        return 'bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/60';
       case 'Crítico':
-        return 'bg-red-50 text-red-700 border-red-200';
+        return 'bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800/60';
       case 'Alta Médica':
-        return 'bg-gray-100 text-gray-700 border-gray-300';
+        return 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 border-gray-300 dark:border-slate-700';
       default:
-        return 'bg-gray-50 text-gray-600 border-gray-200';
+        return 'bg-gray-50 dark:bg-slate-800/50 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-700';
     }
   };
 
@@ -308,8 +308,8 @@ export default function Patients() {
       {/* Header and New Patient Button */}
       <div className="flex justify-between items-center flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Directorio de Pacientes</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100">Directorio de Pacientes</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
             Gestión de Historias Clínicas Electrónicas (Estándar Internacional EHR)
           </p>
         </div>
@@ -323,32 +323,32 @@ export default function Patients() {
       </div>
 
       {/* Main Card with Search Bar & Table */}
-      <div className="card shadow-sm border border-gray-200/80">
+      <div className="card shadow-sm border border-gray-200/80 dark:border-slate-800">
         
         {/* Search Header */}
-        <div className="card-header flex-col sm:flex-row gap-4 justify-between items-stretch sm:items-center bg-white p-4">
+        <div className="card-header flex-col sm:flex-row gap-4 justify-between items-stretch sm:items-center bg-white dark:bg-[#151D2A] p-4 border-b border-gray-200 dark:border-slate-800">
           <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" size={18} />
             <input 
               type="text" 
               placeholder="Buscar por # de historia o nombre (orden ascendente)..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-slate-700 bg-white dark:bg-[#0B0F17] text-gray-900 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-500 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             {searchTerm && (
               <button 
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300"
               >
                 <X size={16} />
               </button>
             )}
           </div>
-          <div className="text-xs text-gray-500 flex items-center gap-2 self-end sm:self-auto">
-            <span>Total: <strong>{sortedAndFilteredPatients.length}</strong> pacientes</span>
-            <span className="text-gray-300">|</span>
-            <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium">
+          <div className="text-xs text-gray-500 dark:text-slate-400 flex items-center gap-2 self-end sm:self-auto">
+            <span>Total: <strong className="text-gray-900 dark:text-slate-200">{sortedAndFilteredPatients.length}</strong> pacientes</span>
+            <span className="text-gray-300 dark:text-slate-700">|</span>
+            <span className="text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800/60 px-2 py-0.5 rounded font-medium">
               Orden: Más antiguos a más recientes
             </span>
           </div>
@@ -358,7 +358,7 @@ export default function Patients() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-gray-50/80 border-b border-gray-200 text-gray-600 text-xs uppercase tracking-wider">
+              <tr className="bg-gray-50/80 dark:bg-slate-800/60 border-b border-gray-200 dark:border-slate-800 text-gray-600 dark:text-slate-300 text-xs uppercase tracking-wider">
                 <th className="p-4 font-semibold"># Historia</th>
                 <th className="p-4 font-semibold">Paciente</th>
                 <th className="p-4 font-semibold">Edad / Género</th>
@@ -368,20 +368,20 @@ export default function Patients() {
                 <th className="p-4 font-semibold text-right">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 text-sm">
+            <tbody className="divide-y divide-gray-100 dark:divide-slate-800/70 text-sm">
               {loading ? (
                 <tr>
-                  <td colSpan="7" className="p-10 text-center text-gray-500">
+                  <td colSpan="7" className="p-10 text-center text-gray-500 dark:text-slate-400">
                     <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent mb-2"></div>
                     <p>Cargando pacientes...</p>
                   </td>
                 </tr>
               ) : sortedAndFilteredPatients.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="p-12 text-center text-gray-500">
-                    <User size={36} className="mx-auto text-gray-300 mb-2" />
-                    <p className="font-semibold text-gray-700">No se encontraron pacientes registrados</p>
-                    <p className="text-xs text-gray-400 mt-1">
+                  <td colSpan="7" className="p-12 text-center text-gray-500 dark:text-slate-400">
+                    <User size={36} className="mx-auto text-gray-300 dark:text-slate-600 mb-2" />
+                    <p className="font-semibold text-gray-700 dark:text-slate-300">No se encontraron pacientes registrados</p>
+                    <p className="text-xs text-gray-400 dark:text-slate-500 mt-1">
                       {searchTerm ? 'Pruebe con otro término de búsqueda o número de historia.' : 'Haga clic en "Nuevo Paciente" para comenzar.'}
                     </p>
                   </td>
@@ -394,23 +394,23 @@ export default function Patients() {
                       ? 'Fem.' 
                       : (p.gender || p.sex || 'Otro');
                   return (
-                    <tr key={p.id} className="hover:bg-sky-50/30 transition-colors group">
+                    <tr key={p.id} className="hover:bg-sky-50/30 dark:hover:bg-slate-800/40 transition-colors group">
                       <td className="p-4">
-                        <span className="font-mono font-bold text-xs bg-slate-100 text-slate-800 px-2.5 py-1 rounded border border-slate-200">
+                        <span className="font-mono font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700">
                           {p.historyNumber}
                         </span>
                       </td>
                       <td className="p-4">
-                        <div className="font-semibold text-gray-900 leading-snug">
+                        <div className="font-semibold text-gray-900 dark:text-slate-100 leading-snug">
                           {p.firstName} {p.lastName}
                         </div>
-                        <div className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
+                        <div className="text-xs text-gray-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
                           <Phone size={11} /> {p.phone || 'Sin teléfono'}
                         </div>
                       </td>
-                      <td className="p-4 text-gray-700">
+                      <td className="p-4 text-gray-700 dark:text-slate-300">
                         <span>{p.age} años</span>
-                        <span className="text-gray-400 mx-1">•</span>
+                        <span className="text-gray-400 dark:text-slate-600 mx-1">•</span>
                         <span className="font-medium">{displayGender}</span>
                       </td>
                     <td className="p-4">
@@ -419,32 +419,32 @@ export default function Patients() {
                       </span>
                     </td>
                     <td className="p-4">
-                      <span className="font-semibold text-xs text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-100">
+                      <span className="font-semibold text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/60 px-2 py-0.5 rounded border border-red-100 dark:border-red-900/50">
                         {p.bloodType || 'N/A'}
                       </span>
                     </td>
-                    <td className="p-4 text-gray-500 text-xs whitespace-nowrap">
+                    <td className="p-4 text-gray-500 dark:text-slate-400 text-xs whitespace-nowrap">
                       {formatDateTime(p.createdAt)}
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-1.5">
                         <button 
                           onClick={() => handleOpenView(p)}
-                          className="p-1.5 text-gray-500 hover:text-primary hover:bg-sky-50 rounded-md transition-colors"
+                          className="p-1.5 text-gray-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary-light hover:bg-sky-50 dark:hover:bg-slate-800 rounded-md transition-colors"
                           title="Ver Historia Completa"
                         >
                           <Eye size={17} />
                         </button>
                         <button 
                           onClick={() => handleOpenEdit(p)}
-                          className="p-1.5 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+                          className="p-1.5 text-gray-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 rounded-md transition-colors"
                           title="Editar Historia Clínica"
                         >
                           <Edit size={17} />
                         </button>
                         <button 
                           onClick={() => handleDelete(p.id, `${p.firstName} ${p.lastName}`)}
-                          className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                          className="p-1.5 text-gray-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 rounded-md transition-colors"
                           title="Eliminar Paciente"
                         >
                           <Trash2 size={17} />
@@ -465,7 +465,7 @@ export default function Patients() {
       {/* ========================================================================= */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-[#151D2A] text-gray-800 dark:text-slate-200 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
             
             {/* Modal Header */}
             <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
@@ -482,7 +482,7 @@ export default function Patients() {
               </div>
               <button 
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors"
+                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -490,8 +490,8 @@ export default function Patients() {
 
             {/* Inmutability Alert Banner in Edit Mode */}
             {isEditing && (
-              <div className="bg-amber-50 border-b border-amber-200 px-6 py-2.5 text-xs text-amber-900 flex items-center gap-2">
-                <Lock size={14} className="text-amber-700 shrink-0" />
+              <div className="bg-amber-50 dark:bg-amber-950/60 border-b border-amber-200 dark:border-amber-900/60 px-6 py-2.5 text-xs text-amber-900 dark:text-amber-200 flex items-center gap-2">
+                <Lock size={14} className="text-amber-700 dark:text-amber-400 shrink-0" />
                 <span>
                   <strong>Modo Seguro:</strong> Por normatividad médica internacional, el <strong>Número de Historia</strong>, <strong>Nombres</strong>, <strong>Apellidos</strong> y <strong>Fecha de Registro</strong> son inmutables y no pueden modificarse.
                 </span>
@@ -500,20 +500,20 @@ export default function Patients() {
 
             {/* Error Message */}
             {formError && (
-              <div className="mx-6 mt-4 p-3 bg-red-50 border-l-4 border-red-500 rounded-r text-red-700 text-xs font-medium flex items-center gap-2">
+              <div className="mx-6 mt-4 p-3 bg-red-50 dark:bg-red-950/60 border-l-4 border-red-500 rounded-r text-red-700 dark:text-red-300 text-xs font-medium flex items-center gap-2">
                 <AlertCircle size={16} className="shrink-0" />
                 <span>{formError}</span>
               </div>
             )}
 
             {/* Tab Navigation */}
-            <div className="px-6 border-b border-gray-200 flex gap-2 bg-gray-50/70 pt-2 overflow-x-auto">
+            <div className="px-6 border-b border-gray-200 dark:border-slate-800 flex gap-2 bg-gray-50/70 dark:bg-[#111823] pt-2 overflow-x-auto">
               <button 
                 type="button"
                 onClick={() => setActiveTab('general')}
                 className={clsx(
-                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap",
-                  activeTab === 'general' ? "border-primary text-primary bg-white shadow-xs" : "border-transparent text-gray-500 hover:text-gray-800"
+                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
+                  activeTab === 'general' ? "border-primary text-primary dark:text-primary-light bg-white dark:bg-[#151D2A] shadow-xs" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
                 )}
               >
                 <User size={14} /> I. Datos Demográficos
@@ -522,8 +522,8 @@ export default function Patients() {
                 type="button"
                 onClick={() => setActiveTab('clinical')}
                 className={clsx(
-                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap",
-                  activeTab === 'clinical' ? "border-primary text-primary bg-white shadow-xs" : "border-transparent text-gray-500 hover:text-gray-800"
+                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
+                  activeTab === 'clinical' ? "border-primary text-primary dark:text-primary-light bg-white dark:bg-[#151D2A] shadow-xs" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
                 )}
               >
                 <Activity size={14} /> II. Parámetros Clínicos & IMC
@@ -532,8 +532,8 @@ export default function Patients() {
                 type="button"
                 onClick={() => setActiveTab('history')}
                 className={clsx(
-                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap",
-                  activeTab === 'history' ? "border-primary text-primary bg-white shadow-xs" : "border-transparent text-gray-500 hover:text-gray-800"
+                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
+                  activeTab === 'history' ? "border-primary text-primary dark:text-primary-light bg-white dark:bg-[#151D2A] shadow-xs" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
                 )}
               >
                 <ShieldAlert size={14} /> III. Antecedentes & Motivo
@@ -542,8 +542,8 @@ export default function Patients() {
                 type="button"
                 onClick={() => setActiveTab('emergency')}
                 className={clsx(
-                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap",
-                  activeTab === 'emergency' ? "border-primary text-primary bg-white shadow-xs" : "border-transparent text-gray-500 hover:text-gray-800"
+                  "px-4 py-2 text-xs font-semibold rounded-t-lg border-b-2 transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer",
+                  activeTab === 'emergency' ? "border-primary text-primary dark:text-primary-light bg-white dark:bg-[#151D2A] shadow-xs" : "border-transparent text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200"
                 )}
               >
                 <Phone size={14} /> IV. Contacto de Emergencia
@@ -582,16 +582,16 @@ export default function Patients() {
                           placeholder="Ej: UB2045"
                           className={clsx(
                             "input-field font-mono font-bold tracking-wider uppercase",
-                            isEditing && "bg-gray-100 text-gray-500 cursor-not-allowed border-gray-200"
+                            isEditing && "bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed border-gray-200 dark:border-slate-700"
                           )}
                           value={formData.historyNumber}
                           onChange={e => handleInputChange('historyNumber', e.target.value.toUpperCase())}
                           disabled={isEditing}
                           required
                         />
-                        {isEditing && <Lock size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />}
+                        {isEditing && <Lock size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />}
                       </div>
-                      <span className="text-[10px] text-gray-400 mt-1 block">
+                      <span className="text-[10px] text-gray-400 dark:text-slate-500 mt-1 block">
                         6 caracteres alfanuméricos (mínimo 2 números y letras).
                       </span>
                     </div>
@@ -603,11 +603,11 @@ export default function Patients() {
                       </label>
                       <input 
                         type="text" 
-                        className="input-field mt-1 bg-gray-100 text-gray-600 cursor-not-allowed text-xs font-medium"
+                        className="input-field mt-1 bg-gray-100 dark:bg-slate-800/80 text-gray-600 dark:text-slate-400 cursor-not-allowed text-xs font-medium"
                         value={formatDateTime(formData.createdAt || new Date().toISOString())}
                         disabled
                       />
-                      <span className="text-[10px] text-gray-400 mt-1 block">
+                      <span className="text-[10px] text-gray-400 dark:text-slate-500 mt-1 block">
                         Asignada automáticamente al momento del registro.
                       </span>
                     </div>
@@ -636,11 +636,11 @@ export default function Patients() {
                     <div>
                       <label className="label-text font-semibold flex items-center justify-between">
                         <span>Nombres <span className="text-red-500">*</span></span>
-                        {isEditing && <span className="text-[10px] text-amber-600 flex items-center gap-1"><Lock size={10} /> Inmutable</span>}
+                        {isEditing && <span className="text-[10px] text-amber-600 dark:text-amber-400 flex items-center gap-1"><Lock size={10} /> Inmutable</span>}
                       </label>
                       <input 
                         type="text" 
-                        className={clsx("input-field mt-1", isEditing && "bg-gray-100 text-gray-500 cursor-not-allowed")}
+                        className={clsx("input-field mt-1", isEditing && "bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed")}
                         placeholder="Nombres completos"
                         value={formData.firstName}
                         onChange={e => handleInputChange('firstName', e.target.value)}
@@ -653,11 +653,11 @@ export default function Patients() {
                     <div>
                       <label className="label-text font-semibold flex items-center justify-between">
                         <span>Apellidos <span className="text-red-500">*</span></span>
-                        {isEditing && <span className="text-[10px] text-amber-600 flex items-center gap-1"><Lock size={10} /> Inmutable</span>}
+                        {isEditing && <span className="text-[10px] text-amber-600 dark:text-amber-400 flex items-center gap-1"><Lock size={10} /> Inmutable</span>}
                       </label>
                       <input 
                         type="text" 
-                        className={clsx("input-field mt-1", isEditing && "bg-gray-100 text-gray-500 cursor-not-allowed")}
+                        className={clsx("input-field mt-1", isEditing && "bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed")}
                         placeholder="Apellidos completos"
                         value={formData.lastName}
                         onChange={e => handleInputChange('lastName', e.target.value)}
@@ -741,7 +741,7 @@ export default function Patients() {
                     <div>
                       <label className="label-text font-semibold">Grupo y Factor Sanguíneo</label>
                       <select 
-                        className="input-field mt-1 font-bold text-red-700"
+                        className="input-field mt-1 font-bold text-red-700 dark:text-red-400"
                         value={formData.bloodType}
                         onChange={e => handleInputChange('bloodType', e.target.value)}
                       >
@@ -758,15 +758,15 @@ export default function Patients() {
                     </div>
 
                     {/* IMC Calculado (Tarjeta de Información) */}
-                    <div className="p-3 bg-sky-50/70 border border-sky-200 rounded-lg flex flex-col justify-center">
-                      <span className="text-[11px] font-semibold text-sky-800 flex items-center gap-1">
+                    <div className="p-3 bg-sky-50/70 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/60 rounded-lg flex flex-col justify-center">
+                      <span className="text-[11px] font-semibold text-sky-800 dark:text-sky-300 flex items-center gap-1">
                         <Scale size={13} /> IMC Calculado (OMS)
                       </span>
                       <div className="flex items-baseline gap-2 mt-1">
-                        <span className="text-2xl font-black text-sky-950">
+                        <span className="text-2xl font-black text-sky-950 dark:text-white">
                           {bmiInfo.bmi || '--'}
                         </span>
-                        <span className="text-xs font-bold text-primary">
+                        <span className="text-xs font-bold text-primary dark:text-primary-light">
                           {bmiInfo.category || 'Ingrese peso y altura'}
                         </span>
                       </div>
@@ -823,12 +823,12 @@ export default function Patients() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Alergias */}
                     <div>
-                      <label className="label-text font-semibold text-red-700 flex items-center gap-1.5">
+                      <label className="label-text font-semibold text-red-700 dark:text-red-400 flex items-center gap-1.5">
                         <ShieldAlert size={15} /> Alergias Conocidas (Fármacos / Alimentos)
                       </label>
                       <input 
                         type="text" 
-                        className="input-field mt-1 border-red-200 focus:border-red-500"
+                        className="input-field mt-1 border-red-200 dark:border-red-900/60 focus:border-red-500"
                         placeholder="Ej: Penicilina, AINEs, Mariscos (o 'Ninguna')"
                         value={formData.allergies}
                         onChange={e => handleInputChange('allergies', e.target.value)}
@@ -898,8 +898,8 @@ export default function Patients() {
               {/* TAB 4: CONTACTO DE EMERGENCIA */}
               {activeTab === 'emergency' && (
                 <div className="space-y-5 animate-in fade-in">
-                  <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                    <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+                  <div className="p-4 bg-gray-50 dark:bg-[#111823] rounded-xl border border-gray-200 dark:border-slate-800">
+                    <h3 className="text-sm font-bold text-gray-800 dark:text-slate-100 mb-3 flex items-center gap-2">
                       <Phone size={16} className="text-primary" /> Persona de Contacto en Caso de Emergencia
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -939,7 +939,7 @@ export default function Patients() {
               )}
 
               {/* Modal Footer Buttons */}
-              <div className="pt-4 border-t border-gray-200 flex items-center justify-between">
+              <div className="pt-4 border-t border-gray-200 dark:border-slate-800 flex items-center justify-between">
                 <button 
                   type="button" 
                   onClick={() => setIsModalOpen(false)}
@@ -969,7 +969,7 @@ export default function Patients() {
       {/* ========================================================================= */}
       {isViewModalOpen && selectedPatient && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-[#151D2A] text-gray-800 dark:text-slate-200 rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-transparent dark:border-slate-800">
             
             {/* Header */}
             <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
@@ -988,7 +988,7 @@ export default function Patients() {
               </div>
               <button 
                 onClick={() => setIsViewModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors"
+                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -998,14 +998,14 @@ export default function Patients() {
             <div className="p-6 overflow-y-auto space-y-6 text-sm">
               
               {/* Demográficos */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 dark:bg-[#111823] rounded-xl border border-slate-200 dark:border-slate-800">
                 <div>
-                  <span className="text-xs text-gray-500 block">Edad:</span>
-                  <strong className="text-gray-900">{selectedPatient.age} años</strong>
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block">Edad:</span>
+                  <strong className="text-gray-900 dark:text-slate-100">{selectedPatient.age} años</strong>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block">Género:</span>
-                  <strong className="text-gray-900">
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block">Género:</span>
+                  <strong className="text-gray-900 dark:text-slate-100">
                     {selectedPatient.gender === 'female' || selectedPatient.gender === 'Femenino' || selectedPatient.sex === 'F' 
                       ? 'Femenino' 
                       : selectedPatient.gender === 'male' || selectedPatient.gender === 'Masculino' || selectedPatient.sex === 'M'
@@ -1014,11 +1014,11 @@ export default function Patients() {
                   </strong>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block">Tipo Sangre:</span>
-                  <strong className="text-red-700">{selectedPatient.bloodType || 'N/A'}</strong>
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block">Tipo Sangre:</span>
+                  <strong className="text-red-700 dark:text-red-400">{selectedPatient.bloodType || 'N/A'}</strong>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block">Condición:</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block">Condición:</span>
                   <span className={clsx("px-2 py-0.5 rounded-full text-xs font-semibold border", getConditionBadge(selectedPatient.condition))}>
                     {selectedPatient.condition}
                   </span>
@@ -1026,22 +1026,22 @@ export default function Patients() {
               </div>
 
               {/* Antropometría / IMC */}
-              <div className="p-4 bg-sky-50/70 border border-sky-200 rounded-xl">
-                <h4 className="text-xs font-bold text-sky-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <div className="p-4 bg-sky-50/70 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/60 rounded-xl">
+                <h4 className="text-xs font-bold text-sky-900 dark:text-sky-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                   <Scale size={14} /> Antropometría Bariátrica
                 </h4>
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <span className="text-xs text-gray-500 block">Peso:</span>
-                    <strong className="text-gray-800">{selectedPatient.weight ? `${selectedPatient.weight} kg` : 'No registrado'}</strong>
+                    <span className="text-xs text-gray-500 dark:text-slate-400 block">Peso:</span>
+                    <strong className="text-gray-800 dark:text-slate-100">{selectedPatient.weight ? `${selectedPatient.weight} kg` : 'No registrado'}</strong>
                   </div>
                   <div>
-                    <span className="text-xs text-gray-500 block">Estatura:</span>
-                    <strong className="text-gray-800">{selectedPatient.height ? `${selectedPatient.height} cm` : 'No registrada'}</strong>
+                    <span className="text-xs text-gray-500 dark:text-slate-400 block">Estatura:</span>
+                    <strong className="text-gray-800 dark:text-slate-100">{selectedPatient.height ? `${selectedPatient.height} cm` : 'No registrada'}</strong>
                   </div>
                   <div>
-                    <span className="text-xs text-gray-500 block">IMC:</span>
-                    <strong className="text-primary">{selectedPatient.bmi ? `${selectedPatient.bmi} kg/m²` : 'N/A'}</strong>
+                    <span className="text-xs text-gray-500 dark:text-slate-400 block">IMC:</span>
+                    <strong className="text-primary dark:text-primary-light">{selectedPatient.bmi ? `${selectedPatient.bmi} kg/m²` : 'N/A'}</strong>
                   </div>
                 </div>
               </div>
@@ -1049,24 +1049,24 @@ export default function Patients() {
               {/* Motivo & Alergias */}
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Motivo de Consulta</h4>
-                  <p className="text-gray-800 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                  <h4 className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-1">Motivo de Consulta</h4>
+                  <p className="text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#111823] p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                     {selectedPatient.consultationReason || 'Sin motivo detallado registrado.'}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-xs font-bold text-red-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+                    <h4 className="text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wider mb-1 flex items-center gap-1">
                       <ShieldAlert size={13} /> Alergias
                     </h4>
-                    <p className="text-gray-800 bg-red-50/50 p-3 rounded-lg border border-red-200">
+                    <p className="text-gray-800 dark:text-slate-200 bg-red-50/50 dark:bg-red-950/30 p-3 rounded-lg border border-red-200 dark:border-red-900/50">
                       {selectedPatient.allergies || 'Ninguna conocida'}
                     </p>
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">ETS / ITS</h4>
-                    <p className="text-gray-800 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <h4 className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-1">ETS / ITS</h4>
+                    <p className="text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#111823] p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                       {selectedPatient.stds || 'Negativo / No refiere'}
                     </p>
                   </div>
@@ -1074,32 +1074,32 @@ export default function Patients() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Enfermedades Crónicas</h4>
-                    <p className="text-gray-800 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <h4 className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-1">Enfermedades Crónicas</h4>
+                    <p className="text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#111823] p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                       {selectedPatient.chronicDiseases || 'Ninguna registrada'}
                     </p>
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Antecedentes Quirúrgicos</h4>
-                    <p className="text-gray-800 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                    <h4 className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-1">Antecedentes Quirúrgicos</h4>
+                    <p className="text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#111823] p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                       {selectedPatient.surgicalHistory || 'Ninguno registrado'}
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Medicamentos Actuales</h4>
-                  <p className="text-gray-800 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                  <h4 className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-1">Medicamentos Actuales</h4>
+                  <p className="text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#111823] p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                     {selectedPatient.currentMedications || 'Ninguno'}
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Contacto de Emergencia</h4>
-                  <p className="text-gray-800 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                  <h4 className="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-1">Contacto de Emergencia</h4>
+                  <p className="text-gray-800 dark:text-slate-200 bg-gray-50 dark:bg-[#111823] p-3 rounded-lg border border-gray-200 dark:border-slate-800">
                     {selectedPatient.emergencyContactName ? (
                       <span>
-                        <strong>{selectedPatient.emergencyContactName}</strong> ({selectedPatient.emergencyContactRelation || 'Familiar'}) — Tel: {selectedPatient.emergencyContactPhone || 'Sin teléfono'}
+                        <strong className="text-gray-900 dark:text-slate-100">{selectedPatient.emergencyContactName}</strong> ({selectedPatient.emergencyContactRelation || 'Familiar'}) — Tel: {selectedPatient.emergencyContactPhone || 'Sin teléfono'}
                       </span>
                     ) : (
                       'No registrado'
@@ -1111,7 +1111,7 @@ export default function Patients() {
             </div>
 
             {/* Footer */}
-            <div className="p-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
+            <div className="p-4 bg-gray-50 dark:bg-[#111823] border-t border-gray-200 dark:border-slate-800 flex justify-between items-center">
               <button 
                 onClick={() => {
                   setIsViewModalOpen(false);

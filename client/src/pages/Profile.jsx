@@ -184,34 +184,34 @@ export default function Profile() {
     <div className="space-y-6 max-w-3xl mx-auto pb-12">
       <div className="flex justify-between items-center flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Perfil del Médico</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Información profesional y configuración de cuenta</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100">Perfil del Médico</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Información profesional y configuración de cuenta</p>
         </div>
       </div>
 
       {savedSuccess && (
-        <div className="p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-lg text-emerald-800 text-sm flex items-center gap-3 shadow-sm animate-in fade-in">
-          <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
+        <div className="p-4 bg-emerald-50 dark:bg-emerald-950/60 border-l-4 border-emerald-500 rounded-r-lg text-emerald-800 dark:text-emerald-300 text-sm flex items-center gap-3 shadow-sm animate-in fade-in">
+          <CheckCircle2 size={20} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
           <span className="font-medium">¡Cambios guardados con éxito en la base de datos JSON!</span>
         </div>
       )}
 
       {errorMessage && (
-        <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg text-red-800 text-sm flex items-center gap-3 shadow-sm animate-in fade-in">
-          <AlertCircle size={20} className="text-red-600 shrink-0" />
+        <div className="p-4 bg-red-50 dark:bg-red-950/60 border-l-4 border-red-500 rounded-r-lg text-red-800 dark:text-red-300 text-sm flex items-center gap-3 shadow-sm animate-in fade-in">
+          <AlertCircle size={20} className="text-red-600 dark:text-red-400 shrink-0" />
           <span className="font-medium">{errorMessage}</span>
         </div>
       )}
 
-      <div className="card shadow-sm border border-gray-200/80">
+      <div className="card shadow-sm border border-gray-200/80 dark:border-slate-800">
         <div className="card-body p-6 sm:p-8">
           
           {/* Header del Perfil / Círculo de Foto interactivo */}
-          <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start mb-8 pb-8 border-b border-gray-100">
+          <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start mb-8 pb-8 border-b border-gray-100 dark:border-slate-800">
             <div className="flex flex-col items-center">
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="relative w-32 h-32 rounded-full bg-primary text-white flex items-center justify-center text-4xl font-bold overflow-hidden shadow-md border-4 border-white cursor-pointer group transition-transform hover:scale-105"
+                className="relative w-32 h-32 rounded-full bg-primary text-white flex items-center justify-center text-4xl font-bold overflow-hidden shadow-md border-4 border-white dark:border-slate-800 cursor-pointer group transition-transform hover:scale-105"
                 title="Pulsar para cambiar fotografía"
               >
                 {avatar ? (
@@ -231,7 +231,7 @@ export default function Profile() {
                 <button 
                   type="button" 
                   onClick={handleRemovePhoto} 
-                  className="mt-2 text-xs text-red-600 hover:text-red-700 flex items-center gap-1 hover:underline"
+                  className="mt-2 text-xs text-red-600 dark:text-red-400 hover:text-red-700 flex items-center gap-1 hover:underline cursor-pointer"
                 >
                   <Trash2 size={13} /> Quitar foto
                 </button>
@@ -248,13 +248,13 @@ export default function Profile() {
 
             <div className="flex-1 text-center sm:text-left pt-2">
               <div className="flex items-center justify-center sm:justify-start gap-2">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
                   {doctorPrefix} {firstName} {lastName}
                 </h2>
               </div>
-              <p className="text-primary font-medium text-sm mt-0.5">{specialty}</p>
-              <p className="text-gray-500 text-xs mt-1">Clínica UCIBAM • Unidad Bariátrica</p>
-              <p className="text-xs text-gray-400 mt-2">
+              <p className="text-primary dark:text-primary-light font-medium text-sm mt-0.5">{specialty}</p>
+              <p className="text-gray-500 dark:text-slate-400 text-xs mt-1">Clínica UCIBAM • Unidad Bariátrica</p>
+              <p className="text-xs text-gray-400 dark:text-slate-500 mt-2">
                 * Para cambiar su foto, haga clic directamente sobre el círculo.
               </p>
             </div>
@@ -269,7 +269,7 @@ export default function Profile() {
                   <label className="label-text flex items-center gap-2 font-semibold">
                     <Shield size={16} className="text-primary" /> Género
                   </label>
-                  <span className="text-xs text-gray-400 flex items-center gap-1">
+                  <span className="text-xs text-gray-400 dark:text-slate-500 flex items-center gap-1">
                     <Lock size={12} /> Definido al crear la cuenta
                   </span>
                 </div>
@@ -277,8 +277,8 @@ export default function Profile() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
                     user?.gender === 'male' || !user?.gender
-                      ? 'border-primary bg-sky-50/70 text-gray-900 font-medium ring-1 ring-primary/30' 
-                      : 'border-gray-200 bg-gray-50/50 text-gray-400 opacity-60'
+                      ? 'border-primary bg-sky-50/70 dark:bg-sky-950/40 text-gray-900 dark:text-slate-100 font-medium ring-1 ring-primary/30' 
+                      : 'border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/40 text-gray-400 dark:text-slate-500 opacity-60'
                   } cursor-not-allowed`}>
                     <input 
                       type="radio" 
@@ -295,8 +295,8 @@ export default function Profile() {
 
                   <div className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
                     user?.gender === 'female' 
-                      ? 'border-primary bg-sky-50/70 text-gray-900 font-medium ring-1 ring-primary/30' 
-                      : 'border-gray-200 bg-gray-50/50 text-gray-400 opacity-60'
+                      ? 'border-primary bg-sky-50/70 dark:bg-sky-950/40 text-gray-900 dark:text-slate-100 font-medium ring-1 ring-primary/30' 
+                      : 'border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/40 text-gray-400 dark:text-slate-500 opacity-60'
                   } cursor-not-allowed`}>
                     <input 
                       type="radio" 
@@ -311,7 +311,7 @@ export default function Profile() {
                     </div>
                   </div>
                 </div>
-                <p className="text-[11px] text-gray-400 mt-1.5 flex items-center gap-1">
+                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1.5 flex items-center gap-1">
                   <Lock size={11} /> El género se selecciona al momento de crear la cuenta y no puede modificarse en esta sección.
                 </p>
               </div>
@@ -323,24 +323,24 @@ export default function Profile() {
                     <User size={16} /> Nombres
                   </span>
                   {namesStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
                       <Lock size={11} /> Disponible en {namesStatus.remainingDays}d
                     </span>
                   ) : (
-                    <span className="text-[11px] text-emerald-600 flex items-center gap-1">
+                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                       <Clock size={11} /> 1 vez cada 4 meses
                     </span>
                   )}
                 </label>
                 <input 
                   type="text" 
-                  className={`input-field mt-1 ${namesStatus.isLocked ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${namesStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={firstName} 
                   onChange={e => setFirstName(e.target.value)} 
                   disabled={namesStatus.isLocked}
                   required
                 />
-                <p className="text-[11px] text-gray-400 mt-1">
+                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
                   {namesStatus.isLocked 
                     ? `Bloqueado por política de seguridad (cambio permitido cada 4 meses).` 
                     : `Disponible para modificar (cambio permitido una vez cada 4 meses).`}
@@ -354,24 +354,24 @@ export default function Profile() {
                     <User size={16} /> Apellidos
                   </span>
                   {lastNamesStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
                       <Lock size={11} /> Disponible en {lastNamesStatus.remainingDays}d
                     </span>
                   ) : (
-                    <span className="text-[11px] text-emerald-600 flex items-center gap-1">
+                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                       <Clock size={11} /> 1 vez cada 4 meses
                     </span>
                   )}
                 </label>
                 <input 
                   type="text" 
-                  className={`input-field mt-1 ${lastNamesStatus.isLocked ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${lastNamesStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={lastName} 
                   onChange={e => setLastName(e.target.value)} 
                   disabled={lastNamesStatus.isLocked}
                   required
                 />
-                <p className="text-[11px] text-gray-400 mt-1">
+                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
                   {lastNamesStatus.isLocked 
                     ? `Bloqueado por política de seguridad (cambio permitido cada 4 meses).` 
                     : `Disponible para modificar (cambio permitido una vez cada 4 meses).`}
@@ -385,24 +385,24 @@ export default function Profile() {
                     <Mail size={16} /> Correo Electrónico
                   </span>
                   {emailStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
                       <Lock size={11} /> Disponible en {emailStatus.remainingDays}d
                     </span>
                   ) : (
-                    <span className="text-[11px] text-emerald-600 flex items-center gap-1">
+                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                       <Clock size={11} /> 1 vez cada 21 días
                     </span>
                   )}
                 </label>
                 <input 
                   type="email" 
-                  className={`input-field mt-1 ${emailStatus.isLocked ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${emailStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={email} 
                   onChange={e => setEmail(e.target.value)} 
                   disabled={emailStatus.isLocked}
                   required
                 />
-                <p className="text-[11px] text-gray-400 mt-1">
+                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
                   {emailStatus.isLocked 
                     ? `Bloqueado: disponible para cambio en ${emailStatus.remainingDays} días.` 
                     : `Modificable una vez cada 21 días.`}
@@ -416,23 +416,23 @@ export default function Profile() {
                     <Shield size={16} /> Especialidad Médica
                   </span>
                   {specialtyStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
                       <Lock size={11} /> Disponible en {specialtyStatus.remainingDays}d
                     </span>
                   ) : (
-                    <span className="text-[11px] text-emerald-600 flex items-center gap-1">
+                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                       <Clock size={11} /> 1 vez cada 6 meses
                     </span>
                   )}
                 </label>
                 <input 
                   type="text" 
-                  className={`input-field mt-1 ${specialtyStatus.isLocked ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${specialtyStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={specialty} 
                   onChange={e => setSpecialty(e.target.value)} 
                   disabled={specialtyStatus.isLocked}
                 />
-                <p className="text-[11px] text-gray-400 mt-1">
+                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
                   {specialtyStatus.isLocked 
                     ? `Bloqueado por política de seguridad (cambio permitido cada 6 meses).` 
                     : `Modificable una vez cada 6 meses.`}
@@ -441,37 +441,37 @@ export default function Profile() {
             </div>
 
             {/* Días y Horarios de Consulta en Consultorios (Estándar de Clínica) */}
-            <div className="pt-6 border-t border-gray-200 space-y-4">
+            <div className="pt-6 border-t border-gray-200 dark:border-slate-800 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 flex items-center gap-2">
                     <Clock size={18} className="text-primary" /> Días y Horarios de Consulta en Consultorio
                   </h3>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-slate-400">
                     Registre los días y turnos en que pasa consulta en la clínica para visibilidad en el módulo de Espacios y para los pacientes.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={handleAddScheduleShift}
-                  className="btn btn-secondary text-xs flex items-center gap-1.5 self-start sm:self-auto py-1.5 px-3 font-semibold hover:border-primary hover:text-primary"
+                  className="btn btn-secondary text-xs flex items-center gap-1.5 self-start sm:self-auto py-1.5 px-3 font-semibold hover:border-primary hover:text-primary cursor-pointer"
                 >
                   <span>+ Agregar Turno</span>
                 </button>
               </div>
 
               {consultationSchedule.length === 0 ? (
-                <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl text-center text-xs text-gray-500">
+                <div className="p-4 bg-gray-50 dark:bg-[#111823] border border-gray-200 dark:border-slate-800 rounded-xl text-center text-xs text-gray-500 dark:text-slate-400">
                   No ha registrado horarios fijos de consulta. Haga clic en "+ Agregar Turno" para configurar sus días.
                 </div>
               ) : (
                 <div className="space-y-3">
                   {consultationSchedule.map((shift, idx) => (
-                    <div key={shift.id || idx} className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                    <div key={shift.id || idx} className="p-3.5 bg-slate-50 dark:bg-[#111823] border border-slate-200 dark:border-slate-800 rounded-xl flex flex-col md:flex-row items-stretch md:items-center gap-3">
                       <div className="w-full md:w-32">
-                        <label className="text-[11px] font-semibold text-gray-600 block mb-1">Día:</label>
+                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Día:</label>
                         <select
-                          className="input-field py-1 px-2 text-xs font-semibold bg-white"
+                          className="input-field py-1 px-2 text-xs font-semibold"
                           value={shift.day}
                           onChange={e => handleUpdateScheduleShift(idx, 'day', e.target.value)}
                         >
@@ -482,10 +482,10 @@ export default function Profile() {
                       </div>
 
                       <div className="w-full md:w-28">
-                        <label className="text-[11px] font-semibold text-gray-600 block mb-1">Inicio:</label>
+                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Inicio:</label>
                         <input
                           type="time"
-                          className="input-field py-1 px-2 text-xs font-mono bg-white"
+                          className="input-field py-1 px-2 text-xs font-mono"
                           value={shift.startTime}
                           onChange={e => handleUpdateScheduleShift(idx, 'startTime', e.target.value)}
                           required
@@ -493,10 +493,10 @@ export default function Profile() {
                       </div>
 
                       <div className="w-full md:w-28">
-                        <label className="text-[11px] font-semibold text-gray-600 block mb-1">Fin:</label>
+                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Fin:</label>
                         <input
                           type="time"
-                          className="input-field py-1 px-2 text-xs font-mono bg-white"
+                          className="input-field py-1 px-2 text-xs font-mono"
                           value={shift.endTime}
                           onChange={e => handleUpdateScheduleShift(idx, 'endTime', e.target.value)}
                           required
@@ -504,9 +504,9 @@ export default function Profile() {
                       </div>
 
                       <div className="flex-1">
-                        <label className="text-[11px] font-semibold text-gray-600 block mb-1">Consultorio Asignado:</label>
+                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Consultorio Asignado:</label>
                         <select
-                          className="input-field py-1 px-2 text-xs bg-white"
+                          className="input-field py-1 px-2 text-xs"
                           value={shift.room}
                           onChange={e => handleUpdateScheduleShift(idx, 'room', e.target.value)}
                           required
@@ -521,7 +521,7 @@ export default function Profile() {
                         <button
                           type="button"
                           onClick={() => handleRemoveScheduleShift(idx)}
-                          className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors mt-auto"
+                          className="p-1.5 text-gray-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 rounded-lg transition-colors mt-auto cursor-pointer"
                           title="Eliminar turno de consulta"
                         >
                           <Trash2 size={16} />
@@ -534,9 +534,9 @@ export default function Profile() {
             </div>
 
             {/* Contraseña (Modificable) */}
-            <div className="pt-6 border-t border-gray-200">
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Cambiar Contraseña</h3>
-              <p className="text-xs text-gray-500 mb-4">Deje estos campos en blanco si no desea modificar su contraseña actual.</p>
+            <div className="pt-6 border-t border-gray-200 dark:border-slate-800">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1">Cambiar Contraseña</h3>
+              <p className="text-xs text-gray-500 dark:text-slate-400 mb-4">Deje estos campos en blanco si no desea modificar su contraseña actual.</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
@@ -576,7 +576,7 @@ export default function Profile() {
               <button 
                 type="submit" 
                 disabled={isSaving}
-                className="btn btn-primary flex items-center gap-2 px-6 py-2.5 shadow hover:shadow-md transition-all disabled:opacity-50"
+                className="btn btn-primary flex items-center gap-2 px-6 py-2.5 shadow hover:shadow-md transition-all disabled:opacity-50 cursor-pointer"
               >
                 <Save size={18} /> {isSaving ? 'Guardando en JSON...' : 'Guardar Cambios'}
               </button>
