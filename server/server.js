@@ -178,8 +178,8 @@ app.delete('/api/:collection/:id', validateCollection, (req, res) => {
   }
 });
 
-// Catch-all route to serve React Single Page Application (SPA)
-app.get('*', (req, res) => {
+// Catch-all middleware to serve React Single Page Application (SPA)
+app.use((req, res) => {
   res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
