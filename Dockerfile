@@ -1,5 +1,5 @@
 # Stage 1: Build the React Frontend
-FROM node:18-alpine AS build
+FROM node:20-alpine AS build
 
 # Set working directory for client
 WORKDIR /app/client
@@ -13,7 +13,7 @@ COPY client/ ./
 RUN npm run build
 
 # Stage 2: Setup the Express Backend
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Set working directory for server
 WORKDIR /app/server
@@ -34,3 +34,4 @@ EXPOSE 3000
 
 # Start the Express server
 CMD ["node", "server.js"]
+
