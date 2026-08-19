@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Clock, AlertTriangle, Shield, Stethoscope, ArrowRight } from 'lucide-react';
+import { Clock, AlertTriangle, Lock, Mail } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 import logo from '../assets/logo.png';
 
@@ -27,12 +27,6 @@ export default function Login() {
     }
   };
 
-  const handleQuickFill = (targetEmail, targetPass) => {
-    setEmail(targetEmail);
-    setPassword(targetPass);
-    setError('');
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-100 dark:bg-[#0B0F17] p-4 relative overflow-hidden transition-colors duration-200">
       {/* Top right theme switcher */}
@@ -54,7 +48,7 @@ export default function Login() {
             />
           </div>
           <h1 className="text-xl font-bold text-gray-800 dark:text-slate-100">Sistema de Gestión Clínica</h1>
-          <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">Ingrese sus credenciales de acceso</p>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">Ingrese sus credenciales institucionales</p>
         </div>
 
         {sessionExpired && (
@@ -77,63 +71,42 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="label-text font-medium text-gray-700 dark:text-slate-300">Correo Electrónico</label>
-            <input 
-              type="email" 
-              className="input-field mt-1"
-              placeholder="correo@ucibam.com"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
+            <div className="relative mt-1">
+              <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
+              <input 
+                type="email" 
+                className="input-field pl-10"
+                placeholder="correo@ucibam.com"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </div>
           </div>
           <div>
             <label className="label-text font-medium text-gray-700 dark:text-slate-300">Contraseña</label>
-            <input 
-              type="password" 
-              className="input-field mt-1"
-              placeholder="••••••••"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative mt-1">
+              <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
+              <input 
+                type="password" 
+                className="input-field pl-10"
+                placeholder="••••••••"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+            </div>
           </div>
           <button type="submit" className="btn btn-primary w-full py-3 text-base font-semibold shadow hover:shadow-md transition-all rounded-lg mt-2 cursor-pointer">
             Iniciar Sesión
           </button>
         </form>
 
-        {/* Acceso rápido para pruebas QA y Demostración */}
-        <div className="mt-6 pt-5 border-t border-gray-100 dark:border-slate-800 space-y-2">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-slate-500 text-center">
-            Accesos de Demostración & QA
+        <div className="mt-6 text-center">
+          <p className="text-xs text-gray-400 dark:text-slate-500">
+            UCIBAM • Unidad de Cirugía Bariátrica y Metabólica
           </p>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickFill('doctorcirugia@gmail.com', 'doctor123')}
-              className="p-2.5 bg-sky-50 dark:bg-sky-950/40 hover:bg-sky-100 dark:hover:bg-sky-900/50 border border-sky-200 dark:border-sky-800/60 rounded-xl text-left transition-all cursor-pointer group"
-            >
-              <div className="flex items-center justify-between text-xs font-bold text-sky-900 dark:text-sky-300">
-                <span className="flex items-center gap-1"><Stethoscope size={13} /> Rol Médico</span>
-                <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <span className="text-[10px] text-gray-500 dark:text-slate-400 truncate block mt-0.5">Dr. Carlos Mendoza</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickFill('admin@ucibam.com', 'admin123')}
-              className="p-2.5 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 border border-indigo-200 dark:border-indigo-800/60 rounded-xl text-left transition-all cursor-pointer group"
-            >
-              <div className="flex items-center justify-between text-xs font-bold text-indigo-900 dark:text-indigo-300">
-                <span className="flex items-center gap-1"><Shield size={13} /> Rol Admin</span>
-                <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <span className="text-[10px] text-gray-500 dark:text-slate-400 truncate block mt-0.5">Administrador General</span>
-            </button>
-          </div>
         </div>
-
       </div>
     </div>
   );
