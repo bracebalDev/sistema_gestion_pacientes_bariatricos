@@ -10,6 +10,7 @@
     "client": "cd client && npm run dev"
   },
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "marked": "^18.0.10"
   }
 }

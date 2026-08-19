@@ -1,9 +1,9 @@
 <!--
   =============================================================================
   UNIVERSIDAD DE CARABOBO
-  FACULTAD EXPERIMENTAL DE CIENCIAS Y TECNOLOGÍA (FACYT)
+  FACULTAD EXPERIMENTAL DE CIENCIAS Y TECNOLOGÍA
   DEPARTAMENTO DE COMPUTACIÓN
-  CÁTEDRA: SISTEMAS DE INFORMACIÓN / DESARROLLO CON INTELIGENCIA ARTIFICIAL
+  SISTEMAS DE INFORMACIÓN
   =============================================================================
 -->
 
@@ -12,7 +12,7 @@
     República Bolivariana de Venezuela<br>
     Universidad de Carabobo<br>
     Facultad Experimental de Ciencias y Tecnología (FACYT)<br>
-    Departamento de Computación • Área de Sistemas de Información
+    Departamento de Computación • Sistemas de Información
   </p>
   
   <h1 style="font-size: 24px; font-weight: 900; color: #0f172a; margin-top: 1.2rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -22,9 +22,9 @@
     Informe Técnico de Arquitectura, Orquestación con IA, Control de Acceso RBAC y Despliegue en Producción
   </p>
   <div style="font-size: 12px; color: #64748b; margin-top: 0.8rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-    <span><strong>Autor / Desarrollador:</strong> Brayan Ceballos (Estudiante de Computación, 7mo Semestre)</span>
+    <span><strong>Autor / Desarrollador:</strong> Brayan Ceballos</span>
     <span>•</span>
-    <span><strong>Período Académico:</strong> 2026-I</span>
+    <span><strong>Período Académico:</strong> I-2026</span>
     <span>•</span>
     <span><strong>Fecha:</strong> 18 de Agosto de 2026</span>
   </div>
