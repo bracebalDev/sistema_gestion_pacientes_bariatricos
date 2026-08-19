@@ -5,6 +5,8 @@ const AuthContext = createContext();
 // Tiempo de inactividad máxima permitido: 15 minutos (en milisegundos)
 const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000;
 
+const API_BASE = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.port === '5173' ? 'http://localhost:3000/api' : '/api');
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,12 +41,15 @@ export function AuthProvider({ children }) {
       
       if (initialData) {
         try {
-          const res = await fetch('http://localhost:3000/api/doctors');
+          const endpoint = initialData.role === 'admin' ? `${API_BASE}/admins` : `${API_BASE}/doctors`;
+          const res = await fetch(endpoint);
           if (res.ok) {
-            const docs = await res.json();
-            if (docs && docs.length > 0) {
-              const dbDoctor = docs.find(d => d.id === 'doc-1') || docs[0];
-              initialData = { ...initialData, ...dbDoctor };
+            const list = await res.json();
+            if (list && list.length > 0) {
+              const matched = list.find(item => item.id === initialData.id || item.email === initialData.email);
+              if (matched) {
+                initialData = { ...initialData, ...matched };
+              }
             }
           }
         } catch (err) {
@@ -113,51 +118,90 @@ export function AuthProvider({ children }) {
   }, [user, handleInactivityLogout]);
 
   const login = async (email, password) => {
-    // Mock validation
-    if (email && password) {
-      const existing = localStorage.getItem('ucibam_user');
-      const parsed = existing ? JSON.parse(existing) : null;
-      const userData = {
-        id: 'doc-1',
-        email,
-        firstName: parsed?.firstName || 'Carlos',
-        lastName: parsed?.lastName || 'Mendoza',
-        gender: parsed?.gender || 'male', // 'male' -> Dr., 'female' -> Dra.
-        specialty: parsed?.specialty || 'Cirugía Bariátrica',
-        avatar: parsed?.avatar || null,
-        lastModifiedNames: parsed?.lastModifiedNames || null,
-        lastModifiedLastNames: parsed?.lastModifiedLastNames || null,
-        lastModifiedEmail: parsed?.lastModifiedEmail || null,
-        lastModifiedSpecialty: parsed?.lastModifiedSpecialty || null
+    if (!email || !password) return null;
+    const cleanEmail = email.trim().toLowerCase();
+
+    // Check if logging in as Admin
+    if (cleanEmail === 'admin@ucibam.com' || cleanEmail.startsWith('admin')) {
+      let adminData = {
+        id: 'admin-1',
+        email: cleanEmail,
+        firstName: 'Administrador',
+        lastName: 'General',
+        gender: 'male',
+        role: 'admin',
+        specialty: 'Dirección & Gestión Hospitalaria',
+        avatar: null
       };
 
-      setSessionExpired(false);
-      setUser(userData);
-      localStorage.setItem('ucibam_user', JSON.stringify(userData));
-      localStorage.setItem('ucibam_last_active', Date.now().toString());
-
       try {
-        await fetch('http://localhost:3000/api/doctors/doc-1', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(userData)
-        });
+        const res = await fetch(`${API_BASE}/admins`);
+        if (res.ok) {
+          const adminsList = await res.json();
+          const found = (adminsList || []).find(a => a.email.toLowerCase() === cleanEmail);
+          if (found) {
+            adminData = { ...adminData, ...found, role: 'admin' };
+          }
+        }
       } catch (e) {
-        console.warn('Could not sync login user to DB JSON:', e.message);
+        console.warn('Syncing admin user from DB:', e.message);
       }
 
-      return true;
+      setSessionExpired(false);
+      setUser(adminData);
+      localStorage.setItem('ucibam_user', JSON.stringify(adminData));
+      localStorage.setItem('ucibam_last_active', Date.now().toString());
+      return adminData;
     }
-    return false;
+
+    // Otherwise, Doctor Login
+    let doctorData = {
+      id: 'doc-1',
+      email: cleanEmail,
+      firstName: 'Carlos',
+      lastName: 'Mendoza',
+      gender: 'male',
+      role: 'doctor',
+      specialty: 'Cirugía Bariátrica',
+      avatar: null,
+      lastModifiedNames: null,
+      lastModifiedLastNames: null,
+      lastModifiedEmail: null,
+      lastModifiedSpecialty: null
+    };
+
+    try {
+      const res = await fetch(`${API_BASE}/doctors`);
+      if (res.ok) {
+        const docs = await res.json();
+        if (docs && docs.length > 0) {
+          const foundDoc = docs.find(d => d.email && d.email.toLowerCase() === cleanEmail) || docs[0];
+          doctorData = { ...doctorData, ...foundDoc, role: 'doctor' };
+        }
+      }
+    } catch (e) {
+      console.warn('Could not sync login doctor to DB JSON:', e.message);
+    }
+
+    setSessionExpired(false);
+    setUser(doctorData);
+    localStorage.setItem('ucibam_user', JSON.stringify(doctorData));
+    localStorage.setItem('ucibam_last_active', Date.now().toString());
+
+    return doctorData;
   };
 
   const updateUser = async (newUserData) => {
-    const updated = { ...(user || {}), ...newUserData, id: user?.id || 'doc-1' };
+    const updated = { ...(user || {}), ...newUserData };
     setUser(updated);
     localStorage.setItem('ucibam_user', JSON.stringify(updated));
 
     try {
-      await fetch(`http://localhost:3000/api/doctors/${updated.id}`, {
+      const endpoint = updated.role === 'admin' 
+        ? `${API_BASE}/admins/${updated.id}` 
+        : `${API_BASE}/doctors/${updated.id}`;
+      
+      await fetch(endpoint, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updated)

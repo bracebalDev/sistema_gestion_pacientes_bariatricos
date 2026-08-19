@@ -11,11 +11,40 @@ import Scheduling from './pages/Scheduling';
 import Rooms from './pages/Rooms';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
+import AdminDoctors from './pages/AdminDoctors';
 
+// Authentication Guard
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   return children;
+};
+
+// Doctor-Only Route Guard (Blocks Admin from clinical views: Dashboard, Patients, Scheduling)
+const DoctorRoute = ({ children }) => {
+  const { user } = useAuth();
+  if (user?.role === 'admin') {
+    return <Navigate to="/doctors" replace />;
+  }
+  return children;
+};
+
+// Admin-Only Route Guard (Blocks Doctor from administrative doctor management)
+const AdminRoute = ({ children }) => {
+  const { user } = useAuth();
+  if (user?.role !== 'admin') {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
+
+// Dynamic index resolver based on role
+const RootIndex = () => {
+  const { user } = useAuth();
+  if (user?.role === 'admin') {
+    return <Navigate to="/doctors" replace />;
+  }
+  return <Dashboard />;
 };
 
 function AppRoutes() {
@@ -23,11 +52,21 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route index element={<Dashboard />} />
-        <Route path="patients" element={<Patients />} />
-        <Route path="scheduling" element={<Scheduling />} />
+        <Route index element={<RootIndex />} />
+        
+        {/* Clinical Views (Restricted from Admin role) */}
+        <Route path="patients" element={<DoctorRoute><Patients /></DoctorRoute>} />
+        <Route path="scheduling" element={<DoctorRoute><Scheduling /></DoctorRoute>} />
+
+        {/* Administrative Views (Restricted to Admin role) */}
+        <Route path="doctors" element={<AdminRoute><AdminDoctors /></AdminRoute>} />
+
+        {/* Shared Management & Profile Views */}
         <Route path="rooms" element={<Rooms />} />
         <Route path="profile" element={<Profile />} />
+
+        {/* Fallback */}
+        <Route path="*" element={<RootIndex />} />
       </Route>
     </Routes>
   );

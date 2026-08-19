@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 const DB_FILE = path.join(__dirname, 'db.json');
 
 // Allowed collections whitelist (prevents prototype pollution and arbitrary collection injection)
-const ALLOWED_COLLECTIONS = new Set(['doctors', 'patients', 'appointments', 'rooms', 'emergencies']);
+const ALLOWED_COLLECTIONS = new Set(['doctors', 'patients', 'appointments', 'rooms', 'emergencies', 'admins']);
 
 // Security middleware: disable X-Powered-By header
 app.disable('x-powered-by');
@@ -39,6 +39,7 @@ app.use(express.static(clientBuildPath));
 if (!fs.existsSync(DB_FILE)) {
   fs.writeFileSync(DB_FILE, JSON.stringify({ 
     doctors: [],
+    admins: [],
     patients: [], 
     appointments: [], 
     rooms: [], 
@@ -53,7 +54,7 @@ const readDB = () => {
     return JSON.parse(data || '{}');
   } catch (err) {
     console.error('Error reading JSON DB:', err.message);
-    return { doctors: [], patients: [], appointments: [], rooms: [], emergencies: [] };
+    return { doctors: [], admins: [], patients: [], appointments: [], rooms: [], emergencies: [] };
   }
 };
 
@@ -69,9 +70,9 @@ const writeDB = (data) => {
 // Helper to strip sensitive server-only fields (like plain passwords or secrets) before sending to client
 const sanitizeRecord = (item, collection) => {
   if (!item || typeof item !== 'object') return item;
-  if (collection === 'doctors') {
-    const { password, ...safeDoctor } = item;
-    return safeDoctor;
+  if (collection === 'doctors' || collection === 'admins') {
+    const { password, ...safeRecord } = item;
+    return safeRecord;
   }
   return item;
 };

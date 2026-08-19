@@ -1,15 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { User, Mail, Shield, Save, Camera, Trash2, CheckCircle2, Lock, Clock, AlertCircle } from 'lucide-react';
+import { User, Mail, Shield, Save, Camera, Trash2, CheckCircle2, Lock, Clock, AlertCircle, KeyRound } from 'lucide-react';
 
 export default function Profile() {
   const { user, updateUser } = useAuth();
   const fileInputRef = useRef(null);
 
-  const [firstName, setFirstName] = useState(user?.firstName || 'Carlos');
-  const [lastName, setLastName] = useState(user?.lastName || 'Mendoza');
-  const [email, setEmail] = useState(user?.email || 'doctorcirugia@gmail.com');
-  const [specialty, setSpecialty] = useState(user?.specialty || 'Cirugía Bariátrica');
+  const isAdmin = user?.role === 'admin';
+
+  const [firstName, setFirstName] = useState(user?.firstName || (isAdmin ? 'Administrador' : 'Carlos'));
+  const [lastName, setLastName] = useState(user?.lastName || (isAdmin ? 'General' : 'Mendoza'));
+  const [email, setEmail] = useState(user?.email || (isAdmin ? 'admin@ucibam.com' : 'doctorcirugia@gmail.com'));
+  const [specialty, setSpecialty] = useState(user?.specialty || (isAdmin ? 'Dirección & Gestión Hospitalaria' : 'Cirugía Bariátrica'));
   const [avatar, setAvatar] = useState(user?.avatar || null);
   const [consultationSchedule, setConsultationSchedule] = useState(
     user?.consultationSchedule || [
@@ -28,9 +30,23 @@ export default function Profile() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
-  // Helper to calculate lock status and remaining days
+  // Sync state if user changes in context
+  useEffect(() => {
+    if (user) {
+      setFirstName(user.firstName || '');
+      setLastName(user.lastName || '');
+      setEmail(user.email || '');
+      setSpecialty(user.specialty || '');
+      setAvatar(user.avatar || null);
+      if (user.consultationSchedule) {
+        setConsultationSchedule(user.consultationSchedule);
+      }
+    }
+  }, [user]);
+
+  // Helper to calculate lock status and remaining days (Doctor only)
   const calculateRestriction = (lastModifiedStr, requiredDays, periodName) => {
-    if (!lastModifiedStr) {
+    if (isAdmin || !lastModifiedStr) {
       return { isLocked: false, remainingDays: 0, periodName };
     }
     const lastDate = new Date(lastModifiedStr).getTime();
@@ -93,40 +109,47 @@ export default function Profile() {
       avatar
     };
 
-    // Update names only if allowed and changed
-    if (!namesStatus.isLocked && firstName !== user?.firstName) {
+    if (isAdmin) {
       updates.firstName = firstName;
-      updates.lastModifiedNames = nowIso;
-    } else {
-      updates.firstName = user?.firstName || firstName;
-    }
-
-    // Update last names only if allowed and changed
-    if (!lastNamesStatus.isLocked && lastName !== user?.lastName) {
       updates.lastName = lastName;
-      updates.lastModifiedLastNames = nowIso;
-    } else {
-      updates.lastName = user?.lastName || lastName;
-    }
-
-    // Update email only if allowed and changed
-    if (!emailStatus.isLocked && email !== user?.email) {
       updates.email = email;
-      updates.lastModifiedEmail = nowIso;
-    } else {
-      updates.email = user?.email || email;
-    }
-
-    // Update specialty only if allowed and changed
-    if (!specialtyStatus.isLocked && specialty !== user?.specialty) {
       updates.specialty = specialty;
-      updates.lastModifiedSpecialty = nowIso;
     } else {
-      updates.specialty = user?.specialty || specialty;
-    }
+      // Update names only if allowed and changed
+      if (!namesStatus.isLocked && firstName !== user?.firstName) {
+        updates.firstName = firstName;
+        updates.lastModifiedNames = nowIso;
+      } else {
+        updates.firstName = user?.firstName || firstName;
+      }
 
-    // Consultation schedule
-    updates.consultationSchedule = consultationSchedule;
+      // Update last names only if allowed and changed
+      if (!lastNamesStatus.isLocked && lastName !== user?.lastName) {
+        updates.lastName = lastName;
+        updates.lastModifiedLastNames = nowIso;
+      } else {
+        updates.lastName = user?.lastName || lastName;
+      }
+
+      // Update email only if allowed and changed
+      if (!emailStatus.isLocked && email !== user?.email) {
+        updates.email = email;
+        updates.lastModifiedEmail = nowIso;
+      } else {
+        updates.email = user?.email || email;
+      }
+
+      // Update specialty only if allowed and changed
+      if (!specialtyStatus.isLocked && specialty !== user?.specialty) {
+        updates.specialty = specialty;
+        updates.lastModifiedSpecialty = nowIso;
+      } else {
+        updates.specialty = user?.specialty || specialty;
+      }
+
+      // Consultation schedule
+      updates.consultationSchedule = consultationSchedule;
+    }
 
     try {
       await updateUser(updates);
@@ -179,13 +202,24 @@ export default function Profile() {
   const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
   const doctorPrefix = user?.gender === 'female' ? 'Dra.' : 'Dr.';
+  const displayTitle = isAdmin ? 'Perfil del Administrador' : 'Perfil del Médico';
+  const displaySubtitle = isAdmin 
+    ? 'Gestión de credenciales administrativas y cuenta institucional' 
+    : 'Información profesional y configuración de cuenta médica';
 
   return (
     <div className="space-y-6 max-w-3xl mx-auto pb-12">
       <div className="flex justify-between items-center flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100">Perfil del Médico</h1>
-          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">Información profesional y configuración de cuenta</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100 flex items-center gap-2">
+            {displayTitle}
+            {isAdmin && (
+              <span className="text-[11px] font-mono px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/60 text-indigo-800 dark:text-indigo-300 rounded-full font-bold uppercase">
+                Admin
+              </span>
+            )}
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">{displaySubtitle}</p>
         </div>
       </div>
 
@@ -203,7 +237,7 @@ export default function Profile() {
         </div>
       )}
 
-      <div className="card shadow-sm border border-gray-200/80 dark:border-slate-800">
+      <div className="card shadow-sm border border-gray-200/80 dark:border-slate-800 bg-white dark:bg-[#151D2A]">
         <div className="card-body p-6 sm:p-8">
           
           {/* Header del Perfil / Círculo de Foto interactivo */}
@@ -211,13 +245,13 @@ export default function Profile() {
             <div className="flex flex-col items-center">
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="relative w-32 h-32 rounded-full bg-primary text-white flex items-center justify-center text-4xl font-bold overflow-hidden shadow-md border-4 border-white dark:border-slate-800 cursor-pointer group transition-transform hover:scale-105"
+                className={`relative w-32 h-32 rounded-full ${isAdmin ? 'bg-indigo-700' : 'bg-primary'} text-white flex items-center justify-center text-4xl font-bold overflow-hidden shadow-md border-4 border-white dark:border-slate-800 cursor-pointer group transition-transform hover:scale-105`}
                 title="Pulsar para cambiar fotografía"
               >
                 {avatar ? (
                   <img src={avatar} alt="Foto de perfil" className="w-full h-full object-cover" />
                 ) : (
-                  <span>{firstName ? firstName.charAt(0).toUpperCase() : 'D'}{lastName ? lastName.charAt(0).toUpperCase() : ''}</span>
+                  <span>{isAdmin ? 'A' : (firstName ? firstName.charAt(0).toUpperCase() : 'D')}</span>
                 )}
                 
                 {/* Overlay interactivo al pasar el mouse */}
@@ -249,11 +283,11 @@ export default function Profile() {
             <div className="flex-1 text-center sm:text-left pt-2">
               <div className="flex items-center justify-center sm:justify-start gap-2">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
-                  {doctorPrefix} {firstName} {lastName}
+                  {isAdmin ? `${firstName} ${lastName}` : `${doctorPrefix} ${firstName} ${lastName}`}
                 </h2>
               </div>
               <p className="text-primary dark:text-primary-light font-medium text-sm mt-0.5">{specialty}</p>
-              <p className="text-gray-500 dark:text-slate-400 text-xs mt-1">Clínica UCIBAM • Unidad Bariátrica</p>
+              <p className="text-gray-500 dark:text-slate-400 text-xs mt-1">Clínica UCIBAM • {isAdmin ? 'Dirección General' : 'Unidad Bariátrica'}</p>
               <p className="text-xs text-gray-400 dark:text-slate-500 mt-2">
                 * Para cambiar su foto, haga clic directamente sobre el círculo.
               </p>
@@ -263,279 +297,301 @@ export default function Profile() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
-              {/* Sección Género (Solo lectura) */}
-              <div className="md:col-span-2">
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="label-text flex items-center gap-2 font-semibold">
-                    <Shield size={16} className="text-primary" /> Género
-                  </label>
-                  <span className="text-xs text-gray-400 dark:text-slate-500 flex items-center gap-1">
-                    <Lock size={12} /> Definido al crear la cuenta
-                  </span>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
-                    user?.gender === 'male' || !user?.gender
-                      ? 'border-primary bg-sky-50/70 dark:bg-sky-950/40 text-gray-900 dark:text-slate-100 font-medium ring-1 ring-primary/30' 
-                      : 'border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/40 text-gray-400 dark:text-slate-500 opacity-60'
-                  } cursor-not-allowed`}>
-                    <input 
-                      type="radio" 
-                      name="gender" 
-                      value="male" 
-                      checked={user?.gender === 'male' || !user?.gender} 
-                      disabled
-                      className="text-primary focus:ring-0 h-4 w-4 cursor-not-allowed"
-                    />
-                    <div>
-                      <span className="block text-sm font-semibold">Masculino (Dr.)</span>
+              {/* Sección Género */}
+              {!isAdmin && (
+                <div className="md:col-span-2">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="label-text flex items-center gap-2 font-semibold">
+                      <Shield size={16} className="text-primary" /> Género
+                    </label>
+                    <span className="text-xs text-gray-400 dark:text-slate-500 flex items-center gap-1">
+                      <Lock size={12} /> Definido por Administración
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
+                      user?.gender === 'male' || !user?.gender
+                        ? 'border-primary bg-sky-50/70 dark:bg-sky-950/40 text-gray-900 dark:text-slate-100 font-medium ring-1 ring-primary/30' 
+                        : 'border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/40 text-gray-400 dark:text-slate-500 opacity-60'
+                    } cursor-not-allowed`}>
+                      <input 
+                        type="radio" 
+                        name="gender" 
+                        value="male" 
+                        checked={user?.gender === 'male' || !user?.gender} 
+                        disabled
+                        className="text-primary focus:ring-0 h-4 w-4 cursor-not-allowed"
+                      />
+                      <div>
+                        <span className="block text-sm font-semibold">Masculino (Dr.)</span>
+                      </div>
+                    </div>
+
+                    <div className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
+                      user?.gender === 'female' 
+                        ? 'border-primary bg-sky-50/70 dark:bg-sky-950/40 text-gray-900 dark:text-slate-100 font-medium ring-1 ring-primary/30' 
+                        : 'border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/40 text-gray-400 dark:text-slate-500 opacity-60'
+                    } cursor-not-allowed`}>
+                      <input 
+                        type="radio" 
+                        name="gender" 
+                        value="female" 
+                        checked={user?.gender === 'female'} 
+                        disabled
+                        className="text-primary focus:ring-0 h-4 w-4 cursor-not-allowed"
+                      />
+                      <div>
+                        <span className="block text-sm font-semibold">Femenino (Dra.)</span>
+                      </div>
                     </div>
                   </div>
-
-                  <div className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
-                    user?.gender === 'female' 
-                      ? 'border-primary bg-sky-50/70 dark:bg-sky-950/40 text-gray-900 dark:text-slate-100 font-medium ring-1 ring-primary/30' 
-                      : 'border-gray-200 dark:border-slate-700 bg-gray-50/50 dark:bg-slate-800/40 text-gray-400 dark:text-slate-500 opacity-60'
-                  } cursor-not-allowed`}>
-                    <input 
-                      type="radio" 
-                      name="gender" 
-                      value="female" 
-                      checked={user?.gender === 'female'} 
-                      disabled
-                      className="text-primary focus:ring-0 h-4 w-4 cursor-not-allowed"
-                    />
-                    <div>
-                      <span className="block text-sm font-semibold">Femenino (Dra.)</span>
-                    </div>
-                  </div>
+                  <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1.5 flex items-center gap-1">
+                    <Lock size={11} /> El género asigna el prefijo Dr./Dra. y solo puede ser modificado por el Administrador.
+                  </p>
                 </div>
-                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1.5 flex items-center gap-1">
-                  <Lock size={11} /> El género se selecciona al momento de crear la cuenta y no puede modificarse en esta sección.
-                </p>
-              </div>
+              )}
 
-              {/* Nombres (Modificable 1 vez cada 4 meses) */}
+              {/* Nombres */}
               <div>
                 <label className="label-text flex items-center justify-between">
                   <span className="flex items-center gap-2 font-medium">
                     <User size={16} /> Nombres
                   </span>
-                  {namesStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
-                      <Lock size={11} /> Disponible en {namesStatus.remainingDays}d
-                    </span>
-                  ) : (
-                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                      <Clock size={11} /> 1 vez cada 4 meses
-                    </span>
+                  {!isAdmin && (
+                    namesStatus.isLocked ? (
+                      <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
+                        <Lock size={11} /> Disponible en {namesStatus.remainingDays}d
+                      </span>
+                    ) : (
+                      <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                        <Clock size={11} /> 1 vez cada 4 meses
+                      </span>
+                    )
                   )}
                 </label>
                 <input 
                   type="text" 
-                  className={`input-field mt-1 ${namesStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${!isAdmin && namesStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={firstName} 
                   onChange={e => setFirstName(e.target.value)} 
-                  disabled={namesStatus.isLocked}
+                  disabled={!isAdmin && namesStatus.isLocked}
                   required
                 />
-                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
-                  {namesStatus.isLocked 
-                    ? `Bloqueado por política de seguridad (cambio permitido cada 4 meses).` 
-                    : `Disponible para modificar (cambio permitido una vez cada 4 meses).`}
-                </p>
+                {!isAdmin && (
+                  <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
+                    {namesStatus.isLocked 
+                      ? `Bloqueado por política de seguridad (cambio permitido cada 4 meses).` 
+                      : `Disponible para modificar (cambio permitido una vez cada 4 meses).`}
+                  </p>
+                )}
               </div>
 
-              {/* Apellidos (Modificable 1 vez cada 4 meses) */}
+              {/* Apellidos */}
               <div>
                 <label className="label-text flex items-center justify-between">
                   <span className="flex items-center gap-2 font-medium">
                     <User size={16} /> Apellidos
                   </span>
-                  {lastNamesStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
-                      <Lock size={11} /> Disponible en {lastNamesStatus.remainingDays}d
-                    </span>
-                  ) : (
-                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                      <Clock size={11} /> 1 vez cada 4 meses
-                    </span>
+                  {!isAdmin && (
+                    lastNamesStatus.isLocked ? (
+                      <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
+                        <Lock size={11} /> Disponible en {lastNamesStatus.remainingDays}d
+                      </span>
+                    ) : (
+                      <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                        <Clock size={11} /> 1 vez cada 4 meses
+                      </span>
+                    )
                   )}
                 </label>
                 <input 
                   type="text" 
-                  className={`input-field mt-1 ${lastNamesStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${!isAdmin && lastNamesStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={lastName} 
                   onChange={e => setLastName(e.target.value)} 
-                  disabled={lastNamesStatus.isLocked}
+                  disabled={!isAdmin && lastNamesStatus.isLocked}
                   required
                 />
-                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
-                  {lastNamesStatus.isLocked 
-                    ? `Bloqueado por política de seguridad (cambio permitido cada 4 meses).` 
-                    : `Disponible para modificar (cambio permitido una vez cada 4 meses).`}
-                </p>
+                {!isAdmin && (
+                  <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
+                    {lastNamesStatus.isLocked 
+                      ? `Bloqueado por política de seguridad (cambio permitido cada 4 meses).` 
+                      : `Disponible para modificar (cambio permitido una vez cada 4 meses).`}
+                  </p>
+                )}
               </div>
 
-              {/* Correo Electrónico (Modificable 1 vez cada 21 días) */}
+              {/* Correo Electrónico */}
               <div>
                 <label className="label-text flex items-center justify-between">
                   <span className="flex items-center gap-2 font-medium">
                     <Mail size={16} /> Correo Electrónico
                   </span>
-                  {emailStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
-                      <Lock size={11} /> Disponible en {emailStatus.remainingDays}d
-                    </span>
-                  ) : (
-                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                      <Clock size={11} /> 1 vez cada 21 días
-                    </span>
+                  {!isAdmin && (
+                    emailStatus.isLocked ? (
+                      <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
+                        <Lock size={11} /> Disponible en {emailStatus.remainingDays}d
+                      </span>
+                    ) : (
+                      <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                        <Clock size={11} /> 1 vez cada 21 días
+                      </span>
+                    )
                   )}
                 </label>
                 <input 
                   type="email" 
-                  className={`input-field mt-1 ${emailStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${!isAdmin && emailStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={email} 
                   onChange={e => setEmail(e.target.value)} 
-                  disabled={emailStatus.isLocked}
+                  disabled={!isAdmin && emailStatus.isLocked}
                   required
                 />
-                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
-                  {emailStatus.isLocked 
-                    ? `Bloqueado: disponible para cambio en ${emailStatus.remainingDays} días.` 
-                    : `Modificable una vez cada 21 días.`}
-                </p>
+                {!isAdmin && (
+                  <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
+                    {emailStatus.isLocked 
+                      ? `Bloqueado: disponible para cambio en ${emailStatus.remainingDays} días.` 
+                      : `Modificable una vez cada 21 días.`}
+                  </p>
+                )}
               </div>
 
-              {/* Especialidad (Modificable 1 vez cada 6 meses) */}
+              {/* Cargo / Especialidad */}
               <div>
                 <label className="label-text flex items-center justify-between">
                   <span className="flex items-center gap-2 font-medium">
-                    <Shield size={16} /> Especialidad Médica
+                    <Shield size={16} /> {isAdmin ? 'Cargo / Rol Institucional' : 'Especialidad Médica'}
                   </span>
-                  {specialtyStatus.isLocked ? (
-                    <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
-                      <Lock size={11} /> Disponible en {specialtyStatus.remainingDays}d
-                    </span>
-                  ) : (
-                    <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                      <Clock size={11} /> 1 vez cada 6 meses
-                    </span>
+                  {!isAdmin && (
+                    specialtyStatus.isLocked ? (
+                      <span className="text-[11px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/50 px-2 py-0.5 rounded flex items-center gap-1">
+                        <Lock size={11} /> Disponible en {specialtyStatus.remainingDays}d
+                      </span>
+                    ) : (
+                      <span className="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                        <Clock size={11} /> 1 vez cada 6 meses
+                      </span>
+                    )
                   )}
                 </label>
                 <input 
                   type="text" 
-                  className={`input-field mt-1 ${specialtyStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
+                  className={`input-field mt-1 ${!isAdmin && specialtyStatus.isLocked ? 'bg-gray-100 dark:bg-slate-800/80 text-gray-500 dark:text-slate-400 cursor-not-allowed' : ''}`}
                   value={specialty} 
                   onChange={e => setSpecialty(e.target.value)} 
-                  disabled={specialtyStatus.isLocked}
+                  disabled={!isAdmin && specialtyStatus.isLocked}
                 />
-                <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
-                  {specialtyStatus.isLocked 
-                    ? `Bloqueado por política de seguridad (cambio permitido cada 6 meses).` 
-                    : `Modificable una vez cada 6 meses.`}
-                </p>
-              </div>
-            </div>
-
-            {/* Días y Horarios de Consulta en Consultorios (Estándar de Clínica) */}
-            <div className="pt-6 border-t border-gray-200 dark:border-slate-800 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 flex items-center gap-2">
-                    <Clock size={18} className="text-primary" /> Días y Horarios de Consulta en Consultorio
-                  </h3>
-                  <p className="text-xs text-gray-500 dark:text-slate-400">
-                    Registre los días y turnos en que pasa consulta en la clínica para visibilidad en el módulo de Espacios y para los pacientes.
+                {!isAdmin && (
+                  <p className="text-[11px] text-gray-400 dark:text-slate-500 mt-1">
+                    {specialtyStatus.isLocked 
+                      ? `Bloqueado por política de seguridad (cambio permitido cada 6 meses).` 
+                      : `Modificable una vez cada 6 meses.`}
                   </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleAddScheduleShift}
-                  className="btn btn-secondary text-xs flex items-center gap-1.5 self-start sm:self-auto py-1.5 px-3 font-semibold hover:border-primary hover:text-primary cursor-pointer"
-                >
-                  <span>+ Agregar Turno</span>
-                </button>
+                )}
               </div>
-
-              {consultationSchedule.length === 0 ? (
-                <div className="p-4 bg-gray-50 dark:bg-[#111823] border border-gray-200 dark:border-slate-800 rounded-xl text-center text-xs text-gray-500 dark:text-slate-400">
-                  No ha registrado horarios fijos de consulta. Haga clic en "+ Agregar Turno" para configurar sus días.
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {consultationSchedule.map((shift, idx) => (
-                    <div key={shift.id || idx} className="p-3.5 bg-slate-50 dark:bg-[#111823] border border-slate-200 dark:border-slate-800 rounded-xl flex flex-col md:flex-row items-stretch md:items-center gap-3">
-                      <div className="w-full md:w-32">
-                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Día:</label>
-                        <select
-                          className="input-field py-1 px-2 text-xs font-semibold"
-                          value={shift.day}
-                          onChange={e => handleUpdateScheduleShift(idx, 'day', e.target.value)}
-                        >
-                          {daysOfWeek.map(d => (
-                            <option key={d} value={d}>{d}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="w-full md:w-28">
-                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Inicio:</label>
-                        <input
-                          type="time"
-                          className="input-field py-1 px-2 text-xs font-mono"
-                          value={shift.startTime}
-                          onChange={e => handleUpdateScheduleShift(idx, 'startTime', e.target.value)}
-                          required
-                        />
-                      </div>
-
-                      <div className="w-full md:w-28">
-                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Fin:</label>
-                        <input
-                          type="time"
-                          className="input-field py-1 px-2 text-xs font-mono"
-                          value={shift.endTime}
-                          onChange={e => handleUpdateScheduleShift(idx, 'endTime', e.target.value)}
-                          required
-                        />
-                      </div>
-
-                      <div className="flex-1">
-                        <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Consultorio Asignado:</label>
-                        <select
-                          className="input-field py-1 px-2 text-xs"
-                          value={shift.room}
-                          onChange={e => handleUpdateScheduleShift(idx, 'room', e.target.value)}
-                          required
-                        >
-                          {availableConsultationRooms.map(cName => (
-                            <option key={cName} value={cName}>{cName}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="flex items-end">
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveScheduleShift(idx)}
-                          className="p-1.5 text-gray-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 rounded-lg transition-colors mt-auto cursor-pointer"
-                          title="Eliminar turno de consulta"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
+
+            {/* Días y Horarios de Consulta en Consultorios (Solo para Médicos) */}
+            {!isAdmin && (
+              <div className="pt-6 border-t border-gray-200 dark:border-slate-800 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 flex items-center gap-2">
+                      <Clock size={18} className="text-primary" /> Días y Horarios de Consulta en Consultorio
+                    </h3>
+                    <p className="text-xs text-gray-500 dark:text-slate-400">
+                      Registre los días y turnos en que pasa consulta en la clínica para visibilidad en el módulo de Espacios y para los pacientes.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddScheduleShift}
+                    className="btn btn-secondary text-xs flex items-center gap-1.5 self-start sm:self-auto py-1.5 px-3 font-semibold hover:border-primary hover:text-primary cursor-pointer"
+                  >
+                    <span>+ Agregar Turno</span>
+                  </button>
+                </div>
+
+                {consultationSchedule.length === 0 ? (
+                  <div className="p-4 bg-gray-50 dark:bg-[#111823] border border-gray-200 dark:border-slate-800 rounded-xl text-center text-xs text-gray-500 dark:text-slate-400">
+                    No ha registrado horarios fijos de consulta. Haga clic en "+ Agregar Turno" para configurar sus días.
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {consultationSchedule.map((shift, idx) => (
+                      <div key={shift.id || idx} className="p-3.5 bg-slate-50 dark:bg-[#111823] border border-slate-200 dark:border-slate-800 rounded-xl flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                        <div className="w-full md:w-32">
+                          <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Día:</label>
+                          <select
+                            className="input-field py-1 px-2 text-xs font-semibold"
+                            value={shift.day}
+                            onChange={e => handleUpdateScheduleShift(idx, 'day', e.target.value)}
+                          >
+                            {daysOfWeek.map(d => (
+                              <option key={d} value={d}>{d}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="w-full md:w-28">
+                          <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Inicio:</label>
+                          <input
+                            type="time"
+                            className="input-field py-1 px-2 text-xs font-mono"
+                            value={shift.startTime}
+                            onChange={e => handleUpdateScheduleShift(idx, 'startTime', e.target.value)}
+                            required
+                          />
+                        </div>
+
+                        <div className="w-full md:w-28">
+                          <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Fin:</label>
+                          <input
+                            type="time"
+                            className="input-field py-1 px-2 text-xs font-mono"
+                            value={shift.endTime}
+                            onChange={e => handleUpdateScheduleShift(idx, 'endTime', e.target.value)}
+                            required
+                          />
+                        </div>
+
+                        <div className="flex-1">
+                          <label className="text-[11px] font-semibold text-gray-600 dark:text-slate-300 block mb-1">Consultorio Asignado:</label>
+                          <select
+                            className="input-field py-1 px-2 text-xs"
+                            value={shift.room}
+                            onChange={e => handleUpdateScheduleShift(idx, 'room', e.target.value)}
+                            required
+                          >
+                            {availableConsultationRooms.map(cName => (
+                              <option key={cName} value={cName}>{cName}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="flex items-end">
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveScheduleShift(idx)}
+                            className="p-1.5 text-gray-400 dark:text-slate-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 rounded-lg transition-colors mt-auto cursor-pointer"
+                            title="Eliminar turno de consulta"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Contraseña (Modificable) */}
             <div className="pt-6 border-t border-gray-200 dark:border-slate-800">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1">Cambiar Contraseña</h3>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1 flex items-center gap-2">
+                <KeyRound size={18} className="text-primary" /> Cambiar Contraseña
+              </h3>
               <p className="text-xs text-gray-500 dark:text-slate-400 mb-4">Deje estos campos en blanco si no desea modificar su contraseña actual.</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
