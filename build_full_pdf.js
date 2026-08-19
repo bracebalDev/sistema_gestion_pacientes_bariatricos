@@ -29,7 +29,7 @@ async function fetchMermaidSvg(mermaidCode) {
 }
 
 async function main() {
-  console.log('--- GENERANDO INFORME TÉCNICO PDF CON DIAGRAMAS SVG ---');
+  console.log('--- GENERANDO INFORME TÉCNICO PDF (MATRICES Y TABLAS ESTRUCTURALES) ---');
   
   const mdPath = path.join(__dirname, 'Sistema de Gestión de Cirugía Bariátrica.md');
   const mdContent = fs.readFileSync(mdPath, 'utf-8');

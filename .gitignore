@@ -5,3 +5,4 @@ build/
 .gemini/
 .DS_Store
 server/db.json
+static_report.html

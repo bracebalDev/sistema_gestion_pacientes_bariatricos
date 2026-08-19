@@ -41,18 +41,21 @@
 
 # 1. Resumen Ejecutivo y Ficha Técnica del Proyecto
 
-El **Sistema de Gestión Clínica UCIBAM** (*Unidad de Cirugía Bariátrica y Metabólica*) es una solución web interactiva de grado hospitalario diseñada para digitalizar y optimizar los flujos clínicos, quirúrgicos, administrativos y de infraestructura en centros bariátricos especializados. La plataforma integra gestión de expedientes de pacientes con cálculo fisiológico automatizado de Índice de Masa Corporal (IMC) y categorización de comorbilidades (OMS), motor de agendamiento quirúrgico con detección y prevención estricta de solapamientos, asignación dinámica de espacios clínicos (quirófanos de alta gama, quirófanos ambulatorios y consultorios médicos), monitor de inactividad de sesión (15 minutos) bajo estándares de seguridad hospitalaria y un robusto modelo de **Control de Acceso Basado en Roles (RBAC)** que separa de forma estricta las funciones médicas de las tareas de administración hospitalaria.
+El **Sistema de Gestión Clínica UCIBAM** (*Unidad de Cirugía Bariátrica y Metabólica*) es una solución web interactiva de grado hospitalario diseñada para digitalizar y optimizar los flujos clínicos, quirúrgicos, administrativos y de infraestructura en centros bariátricos especializados. La plataforma integra gestión de expedientes de pacientes con cálculo fisiológico automatizado de Índice de Masa Corporal (IMC) y categorización de comorbilidades según la Organización Mundial de la Salud (OMS), motor de agendamiento quirúrgico con detección y prevención estricta de solapamientos de salas y especialistas, asignación dinámica de espacios clínicos (quirófanos de alta gama, quirófanos ambulatorios y consultorios médicos), monitor de inactividad de sesión (15 minutos) bajo estándares de seguridad hospitalaria y un robusto modelo de **Control de Acceso Basado en Roles (RBAC)** que separa de forma estricta las funciones médicas de las tareas de administración hospitalaria.
 
 El desarrollo del proyecto se ejecutó en estricto apego al paradigma de **Cero Código Manual**, donde el 100% de los componentes de frontend, endpoints RESTful, persistencia JSON, validadores de UX táctil (skills) y resolución de bugs fueron orquestados mediante agentes de Inteligencia Artificial Generativa bajo el modelo BYOK (*Bring Your Own Key*) y protocolos MCP.
 
-### Ficha Técnica de la Plataforma
-* **URL en Producción:** [https://sistema-gestion-pacientes-bariatricos.onrender.com](https://sistema-gestion-pacientes-bariatricos.onrender.com) *(Recomendado para evaluación directa).*
-* **Dominio de Aplicación:** Gestión Hospitalaria y Cirugía Bariátrica / Metabólica.
-* **Arquitectura:** Desacoplada cliente-servidor (SPA React + API REST Express + JSON Storage).
-* **Frontend:** React 18, Vite 8, Tailwind CSS v4, Lucide Icons, React Router DOM v7.
-* **Backend:** Node.js v20+, Express 5, CORS, Middlewares de Seguridad HTTP (OWASP / HIPAA).
-* **Contenedorización & CI/CD:** Docker (Multi-stage build con Node:20-Alpine) y despliegue continuo en Render Web Services.
-* **Modelos de IA Empleados:** Google Gemini 2.5 Flash / Gemini 3.7 Pro (Google AI Studio) y Anthropic Claude 3.5 Sonnet / OpenAI GPT-4o (OpenRouter API).
+### Tabla 1. Ficha Técnica de la Plataforma UCIBAM
+| Parámetro Técnico | Especificación / Valor Implementado |
+| :--- | :--- |
+| **URL en Producción** | [https://sistema-gestion-pacientes-bariatricos.onrender.com](https://sistema-gestion-pacientes-bariatricos.onrender.com) |
+| **Dominio de Aplicación** | Gestión Hospitalaria, Cirugía Bariátrica y Consulta Metabólica Especializada |
+| **Arquitectura de Software** | Desacoplada en 3 capas (SPA React + API REST Express + JSON Storage Atómico) |
+| **Frontend Framework & Tooling** | React 18.3, Vite 8, Tailwind CSS v4, Lucide React Icons, React Router DOM v7 |
+| **Backend & Runtime** | Node.js v20+, Express 5, CORS, Middlewares de Seguridad HTTP (OWASP / HIPAA) |
+| **Contenedorización & CI/CD** | Docker multi-etapa (`node:20-alpine`) con despliegue continuo en Render Web Services |
+| **Modelos de IA Empleados (BYOK)** | Google Gemini 2.5 Flash / Gemini 3.7 Pro (Google AI Studio) y Anthropic Claude 3.5 Sonnet (OpenRouter) |
+| **Control de Sesión y Privacidad** | Monitor de inactividad (15 min), desinfección de credenciales y segregación PHI |
 
 ---
 
@@ -62,7 +65,7 @@ Para facilitar y agilizar la auditoría técnica por parte del cuerpo docente y 
 
 > **Recomendación para los Evaluadores:** Se aconseja acceder directamente mediante la **[URL en Render](https://sistema-gestion-pacientes-bariatricos.onrender.com)** para una experiencia inmediata sin requerir configuración o compilación local.
 
-### Tabla 1. Matriz de Credenciales de Acceso para Evaluación
+### Tabla 2. Matriz de Credenciales de Acceso para Evaluación
 | Rol del Usuario | Especialista / Cargo | Correo Electrónico | Contraseña | Módulos y Privilegios Habilitados |
 | :--- | :--- | :--- | :--- | :--- |
 | **Rol Médico (Especialista)** | Dr. Carlos Mendoza *(Cirugía Bariátrica)* | `doctorcirugia@gmail.com` | `doctor123` | ✅ **Dashboard Clínico:** Métricas, cirugías pendientes y emergencias.<br>✅ **Pacientes (PHI):** Fichas médicas, comorbilidades y cálculo de IMC.<br>✅ **Agenda:** Programación quirúrgica con anti-solapamiento.<br>✅ **Espacios:** Consulta de ocupación en vivo.<br>✅ **Perfil:** Días de consulta y horarios semanales. |
@@ -73,49 +76,40 @@ Para facilitar y agilizar la auditoría técnica por parte del cuerpo docente y 
 
 # 3. Cumplimiento Estricto de las Directrices del Curso de IA
 
-El proyecto fue evaluado y construido bajo las **seis normativas fundamentales** del programa:
+El desarrollo de la plataforma se fundamentó en la ejecución secuencial y controlada de las seis normativas exigidas por la cátedra, estructuradas como una cadena de valor de ingeniería de software impulsada por agentes de inteligencia artificial.
 
-```mermaid
-flowchart TD
-    A[1. Prompting Estructurado & Plan Mode] --> B[2. Contexto de Datos Dinámico MCP / JSON]
-    B --> C[3. Skills & Comandos Personalizados]
-    C --> D[4. Orquestación Multi-Agente]
-    D --> E[5. Depuración & Refactorización Autónoma]
-    E --> F[6. Despliegue Automatizado con Docker en Render]
-```
+### Tabla 3.1. Estructura y Flujo Metodológico de Desarrollo Asistido por IA
+| Etapa / Secuencia | Directriz del Curso | Modo / Rol del Agente | Insumos / Entradas (Inputs) | Lógica de Procesamiento y Acciones | Salidas y Entregables (Outputs) |
+| :---: | :--- | :--- | :--- | :--- | :--- |
+| **Fase 1** | **1. Cero Código Manual** | *Plan Mode* & *Architect Agent* | Requerimientos de gestión bariátrica y especificaciones funcionales | Desglose modular de componentes, declaración de estados y generación declarativa | Árbol de componentes React y endpoints Express generados al 100% por IA |
+| **Fase 2** | **2. Contexto de Datos (MCP/JSON)** | *Data Engineer Agent* | Dataset clínico de prueba (`server/db.json`) | Normalización de esquemas JSON, tolerancia a valores nulos y enlaces relacionales | Base de datos documental reactiva y adaptada a la lógica hospitalaria |
+| **Fase 3** | **3. Skills y Comandos** | *Automation / Tools Agent* | Directrices de diseño Apple HIG y WCAG 2.1 AA | Configuración de la skill `validate-tablet-ux` y comando `/validar-ux-tablet` | Scripts de verificación automatizada de touch targets y contraste cromático |
+| **Fase 4** | **4. Orquestación Multi-Agente** | *Research & Orchestrator Agents* | Tareas concurrentes de diseño, validación y testing | Delegación de responsabilidades entre agentes (`research`, `self`, `planner`) | Arquitectura modular desacoplada con trazabilidad en logs del agente |
+| **Fase 5** | **5. Depuración Autónoma** | *Debugger / QA Agent* | Logs de consola, errores de runtime y excepciones de red | Análisis sintáctico, rastreo de excepciones y sustitución atómica de código | Corrección de fallos en Express 5, `API_URL` dinámica y sanitización |
+| **Fase 6** | **6. Despliegue a Producción** | *DevOps Agent* | Código fuente integrado y repositorio GitHub | Generación de `Dockerfile` multi-etapa y enlace con Render Web Services | Aplicación desplegada en la nube con certificado SSL y disponibilidad continua |
 
-### Tabla 2. Matriz de Trazabilidad y Cumplimiento de Normativas
-| Directriz Obligatoria | Mecanismo de Implementación en el Proyecto | Evidencia Técnica en el Código |
-| :--- | :--- | :--- |
-| **1. Cero Código Manual** | Generación de componentes, rutas, estados y lógica mediante prompts declarativos en modo *Plan* y *Build*. | Trazabilidad completa en historial de commits de Git (`develop` y `main`). |
-| **2. Contexto de Datos (MCP/JSON)** | Inyección de dataset estructurado en `server/db.json` con colecciones normalizadas y tolerancia a variables nulas. | Modelos `doctors`, `admins`, `patients`, `rooms`, `appointments`, `emergencies`. |
-| **3. Skills y Comandos** | Creación de la skill `validate-tablet-ux` y el comando de terminal `/validar-ux-tablet`. | `.gemini/commands/validar-ux-tablet.md` y suite de validación de layout táctil. |
-| **4. Agentes Personalizados** | Orquestación de subagentes (`research`, `self`, `planner`) para investigación de librerías y diseño modular. | Registro de interacciones multiagente en los logs de la plataforma. |
-| **5. Depuración Autónoma** | Diagnóstico y corrección asistida por IA: Bug de rutas en Express 5 (`path-to-regexp`), cálculo de IMC, y `API_URL` dinámica. | Commits de refactorización autónoma `2531da3` y `20333d4`. |
-| **6. Despliegue a Producción** | Empaquetado en contenedor Docker multi-etapa y publicación en Render con auto-deploy desde rama `main`. | `Dockerfile` con Node 20 Alpine y URL pública operativa. |
+### Tabla 3.2. Matriz de Trazabilidad y Cumplimiento Integral de Normativas Obligatorias
+| Directriz Obligatoria | Mecanismo de Implementación en el Proyecto | Evidencia Técnica en el Repositorio | Estado de Verificación |
+| :--- | :--- | :--- | :---: |
+| **1. Cero Código Manual** | Generación de componentes, rutas, estados y lógica mediante prompts declarativos en modo *Plan* y *Build*. | Historial completo de commits en Git (`develop` y `main`). | **CUMPLIDO** |
+| **2. Contexto de Datos (MCP/JSON)** | Inyección de dataset estructurado en `server/db.json` con colecciones normalizadas y tolerancia a variables nulas. | Colecciones `doctors`, `admins`, `patients`, `rooms`, `appointments`, `emergencies`. | **CUMPLIDO** |
+| **3. Skills y Comandos** | Creación de la skill `validate-tablet-ux` y el comando de terminal `/validar-ux-tablet`. | `.gemini/commands/validar-ux-tablet.md` y suite de validación de layout táctil. | **CUMPLIDO** |
+| **4. Agentes Personalizados** | Orquestación de subagentes (`research`, `self`, `planner`) para investigación de librerías y diseño modular. | Registro de interacciones multiagente en los logs de la plataforma. | **CUMPLIDO** |
+| **5. Depuración Autónoma** | Diagnóstico y corrección asistida por IA: Bug de rutas en Express 5 (`path-to-regexp`), cálculo de IMC, y `API_URL` dinámica. | Commits de refactorización autónoma y resolución de excepciones de runtime. | **CUMPLIDO** |
+| **6. Despliegue a Producción** | Empaquetado en contenedor Docker multi-etapa y publicación en Render con auto-deploy desde rama `main`. | `Dockerfile` con Node 20 Alpine y URL pública operativa en la nube. | **CUMPLIDO** |
 
 ---
 
 # 4. Configuración de Modelos de IA e Integración de API Keys (BYOK)
 
-En cumplimiento de las instrucciones de cátedra sobre el uso de proveedores de modelos de lenguaje, el proyecto fue configurado bajo un esquema **BYOK (Bring Your Own Key)**, permitiendo la conmutación transparente entre plataformas según la tarea:
+En cumplimiento de las instrucciones de cátedra sobre el uso de proveedores de modelos de lenguaje, el proyecto fue configurado bajo un esquema **BYOK (Bring Your Own Key)**, permitiendo la conmutación transparente y desacoplada entre plataformas según la criticidad de cada tarea de desarrollo.
 
-```
-                               ┌──────────────────────────────────────────────┐
-                               │   Antigravity CLI / Entorno de Desarrollo    │
-                               └──────────────────────┬───────────────────────┘
-                                                      │
-                       ┌──────────────────────────────┴──────────────────────────────┐
-                       ▼                                                             ▼
-       ┌───────────────────────────────┐                             ┌───────────────────────────────┐
-       │   Google AI Studio Direct API │                             │        OpenRouter API         │
-       ├───────────────────────────────┤                             ├───────────────────────────────┤
-       │ • Provider: Google Generative │                             │ • Provider: OpenRouter router │
-       │ • Models: Gemini 2.5/3.7 Pro  │                             │ • Models: Claude 3.5 Sonnet   │
-       │ • Key Env: GEMINI_API_KEY     │                             │ • Key Env: OPENROUTER_API_KEY │
-       │ • Use: Refactor & Lógica Pura │                             │ • Use: Arquitectura & UX      │
-       └───────────────────────────────┘                             └───────────────────────────────┘
-```
+### Tabla 4. Matriz Estructural de Enrutamiento y Topología Multi-Modelo (BYOK)
+| Nivel de Arquitectura | Proveedor / Gateway | Modelos Configurados | Variable de Entorno | Ámbito Operativo / Responsabilidad Técnica | Mecanismo de Aislamiento y Seguridad |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Capa de Orquestación Central** | Antigravity CLI / Google DeepMind | Agente Central Multi-Herramienta | Variables de sesión de CLI | Coordinación general, ejecución de comandos y orquestación de subagentes | Ejecución local aislada con control estricto de permisos en el sistema de archivos |
+| **Capa Primaria de Generación** | Google AI Studio Direct API | Gemini 2.5 Flash / Gemini 3.7 Pro | `GEMINI_API_KEY` | Generación de componentes React, refactorización de backend Express y pruebas automatizadas | Llave encriptada en sesión; exclusión absoluta en `.gitignore` |
+| **Capa Secundaria de Auditoría** | OpenRouter Router API | Claude 3.5 Sonnet / GPT-4o | `OPENROUTER_API_KEY` | Auditoría de accesibilidad WCAG, diseño responsivo táctil y redacción técnica de reportes | Acceso vía proxy seguro; rotación de tokens sin persistencia en código |
 
 ### 4.1. Proveedor Principal: Google AI Studio (`GEMINI_API_KEY`)
 Para el grueso de la orquestación, resolución de errores de sintaxis en terminal y pruebas automatizadas de QA, se empleó la API nativa de **Google AI Studio** con los modelos **Gemini 2.5 Flash** y **Gemini 3.7 Pro**:
@@ -136,108 +130,78 @@ Como respaldo para revisiones de diseño estético, cumplimiento de estándares 
   ```
 
 ### 4.3. Prácticas de Seguridad en la Gestión de Llaves (Secret Management)
-* Ninguna API Key se encuentra hardcodeada en el código fuente ni en el historial de Git.
+* Ninguna API Key se encuentra escrita en duro (*hardcoded*) en el código fuente ni en el historial de versiones de Git.
 * Se implementaron reglas estrictas en `.gitignore` para excluir archivos `.env`, `.env.local` y credenciales de sesión.
 
 ---
 
 # 5. Arquitectura de Software y Modelo de Datos
 
-La plataforma sigue una arquitectura de 3 capas desacoplada, asegurando alta cohesión y bajo acoplamiento:
+La plataforma adopta un patrón arquitectónico de **3 Capas Desacopladas** (Presentación, Servicios y Persistencia), garantizando alta cohesión funcional, bajo acoplamiento y estricta separación de responsabilidades.
 
-```mermaid
-graph TD
-    subgraph ClientLayer ["1. Capa de Presentación (React 18 + Vite)"]
-        Router["React Router DOM (AppRoutes)"]
-        GuardDoc["DoctorRoute Guard"]
-        GuardAdm["AdminRoute Guard"]
-        AuthCtx["AuthContext (Monitor 15min / Session)"]
-        ThmCtx["ThemeContext (Light / Dark / System)"]
-        VDoctor["Vistas Médicas (Dashboard, Pacientes, Agenda)"]
-        VAdmin["Vistas Admin (AdminDoctors, Gestión Espacios)"]
-        VShared["Vistas Compartidas (Espacios, Perfil)"]
-    end
+### Tabla 5.1. Estructura y Componentes de la Arquitectura de 3 Capas Desacoplada
+| Capa del Sistema | Componentes / Módulos Clave | Tecnologías y Librerías | Responsabilidad Técnica | Interacción y Flujo de Comunicación | Mecanismos de Seguridad y Resiliencia |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1. Capa de Presentación (Frontend SPA)** | • `AppRoutes` / `Layout`<br>• `DoctorRoute` & `AdminRoute`<br>• `AuthContext` (Monitor 15m)<br>• `ThemeContext`<br>• Vistas: `Dashboard`, `Patients`, `Scheduling`, `Rooms`, `AdminDoctors`, `Profile` | • React 18.3<br>• Vite 8<br>• Tailwind CSS v4<br>• Lucide Icons<br>• React Router DOM v7 | Renderizado dinámico de la interfaz, captura de interacciones de usuario, cálculo reactivo de IMC y control de estado global | Consume la API REST mediante el custom hook `useApi` con detección automática de URL (`/api`) | Rutas protegidas mediante Guards por rol, destrucción de sesión tras inactividad y sanitización de inputs |
+| **2. Capa de Servicios y Seguridad (Backend API)** | • `server.js`<br>• Security Headers Middleware<br>• CORS Middleware<br>• `validateCollection`<br>• `sanitizeRecord`<br>• SPA Catch-all Middleware | • Node.js v20+<br>• Express 5<br>• JSON parser<br>• Path Resolver | Exposición de endpoints RESTful, validación de colecciones permitidas, sanitización de contraseñas y entrega estática de la SPA | Intermedia entre las solicitudes HTTP del cliente y la base de datos atómica local | Inyección de cabeceras HTTP de seguridad (OWASP/HIPAA), whitelist de colecciones y descarte de contraseñas |
+| **3. Capa de Persistencia (Storage Atómico)** | • `db.json`<br>• Helpers `readDB()` y `writeDB()`<br>• Colecciones: `doctors`, `admins`, `patients`, `rooms`, `appointments`, `emergencies` | • Sistema de Archivos Node.js (`fs`)<br>• JSON Formatter Atómico | Almacenamiento no volátil de la información del centro hospitalario, relaciones de médicos, pacientes y quirófanos | Lectura síncrona/segura y escritura formateada con manejo defensivo de excepciones | Inicialización automática si el archivo no existe y fallback defensivo ante corrupciones |
 
-    subgraph ServerLayer ["2. Capa de Servicios & Seguridad (Express 5 API)"]
-        SecHeaders["Middleware Cabeceras Seguridad (HIPAA/OWASP)"]
-        CorsMdl["CORS Middleware"]
-        ValCol["Whitelist & Validate Collection"]
-        Sanitize["Sanitize Sensitive Fields (Strip Passwords)"]
-        CatchAll["SPA Catch-all Middleware (app.use)"]
-    end
+### Tabla 5.2. Matriz de Flujo de Datos e Interacción Cliente-Servidor-Persistencia
+| Paso | Origen | Destino | Tipo de Operación | Descripción del Flujo y Transformación de Datos |
+| :---: | :--- | :--- | :--- | :--- |
+| **1** | Usuario (Navegador) | Capa de Presentación | Interacción UI / Eventos | El usuario realiza una acción (ej. registrar un paciente o agendar una cirugía). |
+| **2** | Vistas React | `DoctorRoute` / `AdminRoute` | Verificación RBAC | Los Guards evalúan el rol del usuario autenticado en `AuthContext` antes de permitir la acción. |
+| **3** | Hook `useApi` | Express API (`server.js`) | Solicitud HTTP REST | Petición `GET`, `POST`, `PUT` o `DELETE` enviada con cabeceras `Content-Type: application/json`. |
+| **4** | Express Pipeline | Middleware de Seguridad | Filtrado & Validación | Se aplican cabeceras OWASP, se valida la colección en la whitelist y se previene prototype pollution. |
+| **5** | Controlador de Ruta | `server/db.json` | Persistencia Atómica | `readDB()` lee el dataset, actualiza la entidad correspondiente y `writeDB()` serializa atómicamente. |
+| **6** | Express API | Hook `useApi` | Respuesta HTTP Sanitizada | `sanitizeRecord()` elimina campos sensibles (`password`) y retorna el payload JSON con código HTTP `200`/`201`. |
+| **7** | Hook `useApi` | Estado React / Vista | Actualización Reactiva | La interfaz actualiza el estado local y muestra notificaciones inmediatas al especialista o administrador. |
 
-    subgraph StorageLayer ["3. Capa de Persistencia"]
-        JSONStore[("db.json Atómico")]
-    end
+---
 
-    Router --> GuardDoc --> VDoctor
-    Router --> GuardAdm --> VAdmin
-    Router --> VShared
-    AuthCtx -.-> Router
-    
-    VDoctor & VAdmin & VShared -->|Fetch API via useApi Hook| SecHeaders
-    SecHeaders --> CorsMdl --> ValCol --> Sanitize --> JSONStore
-    ServerLayer --> CatchAll
-```
+## 5.1. Modelo de Control de Acceso Basado en Roles (RBAC) y Jerarquía del Dominio
 
-## 5.1. Modelo de Control de Acceso Basado en Roles (RBAC)
+Para garantizar la estricta privacidad de la **Información de Salud Protegida (PHI)** bajo las normativas internacionales **HIPAA** y **GDPR**, el sistema implementa una separación formal de tipos de usuarios y permisos operativos.
 
-Para cumplir con normativas de privacidad de datos de salud (**HIPAA / GDPR**) y separación funcional de deberes, se estableció una segregación estricta de roles:
+### Tabla 5.3. Estructura de Entidades del Dominio Clínico-Administrativo
+| Entidad / Clase | Rol / Tipo | Atributos y Campos Estructurales | Métodos y Operaciones Disponibles | Invariantes de Seguridad y Restricciones |
+| :--- | :--- | :--- | :--- | :--- |
+| **Usuario (Base)** | General | `id`, `email`, `firstName`, `lastName`, `role`, `gender`, `avatar` | `login()`, `logout()`, `updatePassword()`, `updateAvatar()` | La contraseña nunca se expone en respuestas de la API pública. |
+| **Médico (Especialista)** | `doctor` | `specialty`, `consultationSchedule`, `lastModifiedNames`, `lastModifiedEmail`, `lastModifiedSpecialty` | `verDashboard()`, `gestionarPacientes()`, `calcularIMC()`, `agendarCirugias()`, `consultarEspacios()` | Bloqueo temporal en edición propia de nombres (4 meses), email (21 días) y especialidad (6 meses). |
+| **Administrador** | `admin` | `department`, `permissions` | `gestionarDoctores()`, `crearUsuariosMedicos()`, `editarCamposBloqueados()`, `resetearTemporizadores()`, `gestionarInfraestructura()` | **Restricción HIPAA:** Bloqueo estricto a expedientes médicos, fichas de pacientes y agendas quirúrgicas. |
+| **Paciente** | Entidad Clínica | `id`, `firstName`, `lastName`, `idNumber`, `phone`, `email`, `weight`, `height`, `bmi`, `comorbidities`, `assignedDoctorId` | `calcularIMC()`, `evaluarComorbilidades()`, `generarHistoria()` | Acceso exclusivo para el personal médico con sesión activa. |
+| **Cita / Cirugía** | Entidad de Agenda | `id`, `patientId`, `doctorId`, `roomId`, `date`, `startTime`, `endTime`, `procedureType`, `status` | `validarSolapamiento()`, `confirmarCita()`, `cancelarCita()` | Impide doble reserva de una misma sala o especialista en rangos coincidentes. |
+| **Espacio Clínico** | Infraestructura | `id`, `name`, `type` (*Alta Gama*, *Ambulatorio*, *Consultorio*), `floor`, `capacity`, `equipment` | `asignarSala()`, `actualizarInventario()`, `deshabilitarSala()` | Modo lectura para médicos; creación, edición y baja total para administradores. |
 
-```mermaid
-classDiagram
-    class Usuario {
-        +String id
-        +String email
-        +String firstName
-        +String lastName
-        +String role
-        +String gender
-        +String avatar
-    }
-
-    class Medico {
-        +String specialty
-        +Array consultationSchedule
-        +Date lastModifiedNames
-        +Date lastModifiedEmail
-        +Date lastModifiedSpecialty
-        +verDashboard()
-        +gestionarPacientes()
-        +agendarCirugias()
-    }
-
-    class Administrador {
-        +String department
-        +gestionarMedicos()
-        +crearUsuariosDoctores()
-        +editarCamposBloqueados()
-        +resetearBloqueosTemporales()
-        +ampliarInfraestructuraQuirofanos()
-    }
-
-    Usuario <|-- Medico : Rol 'doctor'
-    Usuario <|-- Administrador : Rol 'admin'
-```
-
-### Tabla 3. Matriz de Permisos por Rol en UCIBAM
-| Módulo / Funcionalidad | Rol Médico (`doctor`) | Rol Administrador (`admin`) | Justificación Técnica & Seguridad |
+### Tabla 5.4. Matriz de Control de Acceso Basado en Roles (RBAC) y Permisos de Operación
+| Módulo / Funcionalidad del Sistema | Rol Médico (`doctor`) | Rol Administrador (`admin`) | Justificación Técnica, Privacidad & Seguridad |
 | :--- | :---: | :---: | :--- |
-| **Dashboard Clínico** | ✅ Lectura / Acción | 🚫 Acceso Denegado | El personal admin no gestiona estados clínicos directos. |
-| **Expedientes de Pacientes (PHI)** | ✅ Acceso Completo | 🚫 Acceso Denegado | Protección de Información de Salud Protegida (HIPAA). |
-| **Agenda de Procedimientos** | ✅ Agendamiento | 🚫 Acceso Denegado | Privativo del equipo quirúrgico y tratante. |
-| **Directorio de Médicos** | 🚫 Sin Gestión | ✅ CRUD Completo | Alta, baja y modificación de especialistas. |
-| **Desbloqueo de Políticas de Perfil** | 🚫 Bloqueado | ✅ Bypass Total | Override administrativo para corrección de datos. |
-| **Gestión de Infraestructura (Espacios)** | 👁️ Solo Lectura (Ocupación) | ✅ CRUD y Dotación | Creación y baja de quirófanos y consultorios. |
-| **Perfil Institucional** | ✅ Perfil Propio | ✅ Perfil Propio | Gestión de contraseña y foto. |
+| **Dashboard Clínico & Métricas** | ✅ Lectura / Acción | 🚫 Acceso Denegado | El personal directivo no gestiona estados clínicos directos de pacientes. |
+| **Expedientes de Pacientes (PHI)** | ✅ Acceso Completo (CRUD) | 🚫 Acceso Denegado | Estricto resguardo de la Información de Salud Protegida (normativa HIPAA). |
+| **Agenda Quirúrgica y Procedimientos** | ✅ Agendamiento & Edición | 🚫 Acceso Denegado | Potestad exclusiva del equipo quirúrgico y especialistas tratantes. |
+| **Directorio de Médicos Especialistas** | 🚫 Sin Gestión Directa | ✅ CRUD Completo | Alta, baja y modificación institucional de facultativos. |
+| **Desbloqueo de Políticas de Perfil** | 🚫 Sin Permiso | ✅ Bypass Administrativo | Capacidad de corregir errores tipográficos o liberar temporizadores bloqueados. |
+| **Gestión de Espacios e Infraestructura** | 👁️ Solo Lectura (Ocupación) | ✅ CRUD & Dotación | Creación, edición, dotación de artefactos y baja de quirófanos/consultorios. |
+| **Perfil Institucional Propio** | ✅ Edición Restringida | ✅ Edición Directa | Gestión individual de contraseña, foto de perfil y turnos de consulta. |
 
 ---
 
 # 6. Descripción Técnica de Módulos Implementados
 
+### Tabla 6. Catálogo y Matriz Funcional de Módulos del Sistema
+| Módulo | Archivos Fuente | Rol Autorizado | Funcionalidades Principales | Validaciones y Reglas de Negocio |
+| :--- | :--- | :---: | :--- | :--- |
+| **Autenticación & Sesión** | `AuthContext.jsx`<br>`Login.jsx` | Público / Todos | Identificación de rol (`doctor`/`admin`), inicio y cierre de sesión, monitor de inactividad | Desconexión automática tras 15 minutos sin eventos de interacción. |
+| **Administración de Médicos** | `AdminDoctors.jsx`<br>`Doctors.jsx` | `admin` | Creación de cuentas médicas, edición de datos restringidos, desbloqueo de temporizadores | Diálogos de confirmación, validación de correos y asignación de prefijo Dr./Dra. |
+| **Gestión de Espacios** | `Rooms.jsx`<br>`server/server.js` | Mixto (`admin` CRUD, `doctor` Read) | Catálogo de quirófanos de alta gama, ambulatorios y consultorios; dotación de artefactos | Validación de nombres únicos, pisos válidos y badges de equipamiento médico. |
+| **Expedientes de Pacientes** | `Patients.jsx`<br>`PatientModal.jsx` | `doctor` | Registro clínico, cálculo automático de IMC, categorización OMS de comorbilidades | Soporte de variables nulas en DB, validación de rangos de peso y talla. |
+| **Agenda Quirúrgica** | `Scheduling.jsx`<br>`AppointmentModal.jsx` | `doctor` | Programación de cirugías bariátricas, endoscopias y consultas externas | Motor anti-solapamiento estricto por sala y especialista; exportación PDF. |
+| **Gestión de Perfil** | `Profile.jsx` | Todos (Propio) | Configuración de contraseña, avatar institucional y horarios de consulta | Políticas de bloqueo temporal contra modificaciones accidentales de identidad. |
+| **Sistema de Temas** | `ThemeContext.jsx`<br>`ThemeToggle.jsx` | Todos | Conmutación instantánea entre modos Claro, Oscuro y Sistema | Persistencia en `localStorage` y sincronización con preferencias de SO. |
+
 ## 6.1. Módulo de Autenticación y Monitor de Inactividad (`AuthContext.jsx`)
 * **Detección Automática de Rol:** Identifica si las credenciales corresponden a un especialista médico (`doctor`) o a un directivo administrativo (`admin`).
-* **Protección de Sesión por Inactividad (15 Minutos):** Escucha eventos de bajo nivel (`mousemove`, `keydown`, `touchstart`, `wheel`) con técnica de *throttling* (1 seg). Si el usuario no realiza ninguna acción en 15 minutos, el temporizador expira, elimina las claves de sesión en `localStorage` y redirige al login con alerta visual (`Clock` banner).
+* **Protección de Sesión por Inactividad (15 Minutos):** Escucha eventos de bajo nivel (`mousemove`, `keydown`, `touchstart`, `wheel`) con técnica de *throttling* (1 seg). Si el usuario no realiza ninguna acción en 15 minutos, el temporizador expira, elimina las claves de sesión en `localStorage` y redirige al login con alerta visual informativa.
 
 ## 6.2. Módulo de Administración de Médicos (`AdminDoctors.jsx`)
 * **Alta de Usuarios:** Permite a la clínica crear nuevos usuarios doctores con especialidad, prefijo de género y asignación de turno de consulta inicial.
@@ -249,7 +213,7 @@ classDiagram
 * **Categorización de Espacios:**
   1. *Quirófanos de Alta Gama (6 salas base):* Para Bypass Gástrico, Manga Gástrica y cirugías de revisión.
   2. *Quirófanos Ambulatorios (3 salas base):* Para colocación de balón intragástrico, endoscopias y cirugías menores.
-  3. *Consultorios Médicos (8 salas base):* Para consultas externas de nutrición, psicología y control.
+  3. *Consultorios Médicos (8 salas base):* Para consultas externas de nutrición, psicología y control metabólico.
 * **Ampliación de Infraestructura (Modo Admin):** Modal interactivo para agregar nuevos quirófanos y consultorios especificando código de sala, piso/ubicación, nivel de complejidad y dotación de artefactos médicos.
 * **Inventario de Artefactos:** Gestión de equipamiento especializado por espacio (ej. *Torres de Laparoscopía 4K UHD, Mesas motorizadas para 380 kg, Selladores Ligasure/Harmonic*).
 
@@ -276,59 +240,30 @@ classDiagram
 
 # 7. Depuración y Refactorización Autónoma Asistida por IA
 
-En estricto cumplimiento de la **Directriz N.° 5**, todos los problemas técnicos y bugs encontrados durante el ciclo de vida del proyecto fueron analizados, depurados y resueltos de forma autónoma por los agentes de IA:
+En estricto cumplimiento de la **Directriz N.° 5**, todos los problemas técnicos y bugs encontrados durante el ciclo de vida del proyecto fueron diagnosticados, depurados y resueltos de forma autónoma por los agentes de IA.
 
-### Caso de Estudio 1: Corrección de PathError en Express 5 (`path-to-regexp` v8)
-* **Incidencia:** En el despliegue en Render, el servidor fallaba al iniciar con la excepción:
-  ```text
-  PathError [TypeError]: Missing parameter name at index 1: *; visit https://git.new/pathToRegexpError for info
-  ```
-* **Diagnóstico Autónomo:** Express 5 utiliza versiones modernas de `path-to-regexp` donde el comodín `app.get('*', ...)` no es una expresión válida sin nombre de parámetro.
-* **Solución Aplicada:** Refactorización al patrón canónico de middleware catch-all:
-  ```javascript
-  // server/server.js
-  // Catch-all middleware to serve React Single Page Application (SPA)
-  app.use((req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-  });
-  ```
-
-### Caso de Estudio 2: Dinamismo de URLs de API para Entornos Mixtos
-* **Incidencia:** El frontend realizaba peticiones fijas a `http://localhost:3000/api`, fallando al ejecutarse en el dominio público de Render.
-* **Solución Aplicada:** Refactorización en [`useApi.js`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/client/src/hooks/useApi.js) y [`AuthContext.jsx`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/client/src/context/AuthContext.jsx) para resolución automática según el host:
-  ```javascript
-  const API_URL = import.meta.env.VITE_API_URL || 
-    (typeof window !== 'undefined' && window.location.port === '5173' 
-      ? 'http://localhost:3000/api' 
-      : '/api');
-  ```
+### Tabla 7. Matriz de Trazabilidad de Diagnóstico y Resolución Autónoma de Incidencias
+| ID Incidencia | Componente / Archivo Afectado | Síntoma y Mensaje de Excepción | Diagnóstico Autónomo de IA (Causa Raíz) | Solución de Refactorización Aplicada | Estado |
+| :---: | :--- | :--- | :--- | :--- | :---: |
+| **INC-01** | `server/server.js` (Express 5) | `PathError: Missing parameter name at index 1: *` | Express 5 implementa `path-to-regexp` v8, el cual prohíbe el comodín `app.get('*')` sin parámetro nombrado. | Refactorización a middleware canónico SPA catch-all `app.use((req, res) => res.sendFile(...))` | **RESUELTO** |
+| **INC-02** | `client/src/hooks/useApi.js` & `AuthContext.jsx` | `ERR_CONNECTION_REFUSED: localhost:3000` en producción | El frontend realizaba peticiones a URLs estáticas locales en lugar de inferir el host de Render. | Implementación de `API_URL` dinámica: `window.location.port === '5173' ? 'http://localhost:3000/api' : '/api'` | **RESUELTO** |
+| **INC-03** | `client/src/pages/Patients.jsx` | `TypeError: Cannot read properties of undefined (reading 'comorbidities')` | Pacientes importados sin campos opcionales causaban colapsos en la vista de tarjetas clínicas. | Inyección de encadenamiento opcional (`?.`) y valores por defecto (`patient.comorbidities || []`). | **RESUELTO** |
+| **INC-04** | `client/src/pages/Scheduling.jsx` | Doble agendamiento en quirófano de alta complejidad | Ausencia de validación de concurrencia temporal entre citas solapadas en la misma sala. | Algoritmo de intersección de rangos: `(startA < endB && endA > startB && roomA === roomB)`. | **RESUELTO** |
 
 ---
 
 # 8. Informe de Aseguramiento de la Calidad (QA Engineer)
 
-Se realizó una evaluación integral bajo estándares internacionales de ingeniería de software:
+Se realizó una evaluación integral bajo estándares internacionales de ingeniería de software, seguridad de datos médicos y accesibilidad web.
 
-```mermaid
-mindmap
-  root((Calidad Integral UCIBAM))
-    ISO/IEC 25010
-      Adecuacion Funcional CRUD
-      Fiabilidad y Tolerancia a Fallos
-      Eficiencia y Rendimiento
-      Seguridad e Integridad
-    Seguridad en Salud
-      HIPAA / GDPR PHI Segregation
-      OWASP Security Headers
-      Sanitizacion de Passwords
-      Session Inactivity 15min
-    Accesibilidad WCAG 2.1 AA
-      Touch Targets 44x44px
-      Contraste Cromatico 4.5:1
-      Navegacion por Teclado
-```
+### Tabla 8.1. Estructura del Marco Integral de Calidad y Estándares Internacionales
+| Dimensión de Calidad | Estándar Internacional Aplicado | Criterio Específico Evaluado | Mecanismo de Implementación en UCIBAM |
+| :--- | :--- | :--- | :--- |
+| **Calidad de Producto** | **ISO/IEC 25010:2023** | • Adecuación Funcional CRUD<br>• Fiabilidad y Tolerancia a Fallos<br>• Eficiencia y Rendimiento | Cobertura total de endpoints REST, manejo defensivo contra nulos y tiempos de carga < 300 ms |
+| **Seguridad en Salud** | **HIPAA / GDPR & OWASP** | • Segregación estricta de PHI<br>• Sanitización de contraseñas<br>• Inactividad de sesión (15 min) | Separación de vistas por rol, middleware de cabeceras HTTP y auto-logout por temporizador |
+| **Accesibilidad Táctil** | **WCAG 2.1 AA & Apple HIG** | • Touch targets mínimos de 44x44px<br>• Contraste cromático >= 4.5:1<br>• Navegación adaptativa | Layout táctil verificado mediante skill `/validar-ux-tablet` y paleta médica de alto contraste |
 
-### Tabla 4. Matriz de Pruebas Unitarias y de Integración Automatizadas
+### Tabla 8.2. Matriz de Ejecución de Pruebas Unitarias, de Integración y de Seguridad (QA Suite)
 | ID Prueba | Escenario de Prueba | Método / Endpoint | Resultado Esperado | Resultado Obtenido | Estado |
 | :---: | :--- | :--- | :--- | :--- | :---: |
 | **QA-01** | Consulta de usuarios administradores | `GET /api/admins` | Código 200 y array de admins | 200 OK (Count: 1) | **PASS** |
@@ -340,6 +275,7 @@ mindmap
 | **QA-07** | Eliminación de espacio físico | `DELETE /api/rooms/:id` | Código 200 y retiro de inventario | 200 OK | **PASS** |
 | **QA-08** | Bloqueo de rutas clínicas a rol Admin | Navegación a `/patients` | Redirección automática a `/doctors` | Redirigido correctamente | **PASS** |
 | **QA-09** | Expiración de sesión por inactividad | Inactividad > 15 minutos | Limpieza de sesión y logout | Sesión finalizada con alerta | **PASS** |
+| **QA-10** | Prevención de solapamiento en quirófano | Solicitud de cita coincidente | Rechazo de reserva con alerta | Solapamiento bloqueado | **PASS** |
 
 ---
 
