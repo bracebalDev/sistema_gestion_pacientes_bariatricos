@@ -1,214 +1,388 @@
 <!--
+  =============================================================================
   UNIVERSIDAD DE CARABOBO
   FACULTAD EXPERIMENTAL DE CIENCIAS Y TECNOLOGÍA (FACYT)
   DEPARTAMENTO DE COMPUTACIÓN
-  CÁTEDRA: SISTEMAS DE INFORMACIÓN
+  CÁTEDRA: SISTEMAS DE INFORMACIÓN / DESARROLLO CON INTELIGENCIA ARTIFICIAL
+  =============================================================================
 -->
 
-<div align="center" style="margin-bottom: 2rem; border-bottom: 2px solid #00A3E0; padding-bottom: 1.5rem;">
-  <p style="font-size: 14px; font-weight: 600; color: #475569; margin: 0; text-transform: uppercase; letter-spacing: 1px;">
+<div align="center" style="margin-bottom: 2rem; border-bottom: 3px solid #00A3E0; padding-bottom: 1.5rem;">
+  <p style="font-size: 13px; font-weight: 700; color: #475569; margin: 0; text-transform: uppercase; letter-spacing: 1.2px;">
     República Bolivariana de Venezuela<br>
     Universidad de Carabobo<br>
     Facultad Experimental de Ciencias y Tecnología (FACYT)<br>
     Departamento de Computación • Área de Sistemas de Información
   </p>
   
-  <h1 style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 1rem; margin-bottom: 0.5rem; text-transform: uppercase;">
+  <h1 style="font-size: 24px; font-weight: 900; color: #0f172a; margin-top: 1.2rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">
     Sistema de Gestión de Cirugía Bariátrica y Metabólica (UCIBAM)
   </h1>
-  <p style="font-size: 16px; font-weight: 600; color: #00A3E0; margin: 0;">
-    Informe Técnico del Proyecto Final — Desarrollo y Orquestación con Inteligencia Artificial
+  <p style="font-size: 15px; font-weight: 600; color: #00A3E0; margin: 0;">
+    Informe Técnico de Arquitectura, Orquestación con IA, Control de Acceso RBAC y Despliegue en Producción
   </p>
-  <p style="font-size: 13px; color: #64748b; margin-top: 0.5rem;">
-    <strong>Fecha de Emisión:</strong> 17 de Agosto de 2026 &nbsp;|&nbsp; <strong>Período Académico:</strong> 2026-I
-  </p>
+  <div style="font-size: 12px; color: #64748b; margin-top: 0.8rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+    <span><strong>Autor / Desarrollador:</strong> Brayan Ceballos (Estudiante de Computación, 7mo Semestre)</span>
+    <span>•</span>
+    <span><strong>Período Académico:</strong> 2026-I</span>
+    <span>•</span>
+    <span><strong>Fecha:</strong> 18 de Agosto de 2026</span>
+  </div>
 </div>
 
 ---
 
-# Resumen Ejecutivo
+# 1. Resumen Ejecutivo y Ficha Técnica del Proyecto
 
-El presente proyecto documenta el diseño, desarrollo, auditoría y despliegue del **Sistema Clínico UCIBAM** (*Unidad de Cirugía Bariátrica y Metabólica*), una plataforma web moderna e interactiva orientada a la gestión integral de pacientes bariátricos, agendamiento quirúrgico avanzado con prevención de solapamientos, asignación inteligente de espacios clínicos (quirófanos de alta gama, quirófanos ambulatorios y consultorios médicos) y seguridad mediante control de inactividad de sesión.
+El **Sistema de Gestión Clínica UCIBAM** (*Unidad de Cirugía Bariátrica y Metabólica*) es una solución web integral diseñada para la optimización de los flujos clínicos, administrativos e infraestructurales en centros médicos especializados en cirugía bariátrica. La plataforma integra gestión de expedientes de pacientes con cálculo automatizado de Índice de Masa Corporal (IMC), agendamiento quirúrgico con validación estricta de no solapamiento en quirófanos de alta/baja complejidad, control de inactividad de sesión (15 minutos) bajo estándares de seguridad hospitalaria, control de acceso basado en roles (**RBAC: Médico vs. Administrador**) y administración dinámica de la infraestructura hospitalaria (quirófanos y consultorios).
 
-El desarrollo del proyecto se ejecutó en estricto cumplimiento de las **Directrices del Curso de Desarrollo con Inteligencia Artificial**, aplicando una metodología de **Cero Código Manual**, donde el 100% de los componentes frontend, backend RESTful, esquemas de datos, validadores de UX/UI mediante skills personalizadas (`validate-tablet-ux`), comandos de entorno (`/validar-ux-tablet`) y refactorizaciones autónomas fueron concebidos y orquestados a través de agentes de inteligencia artificial generativa.
+El desarrollo del proyecto se ejecutó en estricto apego al paradigma de **Cero Código Manual**, donde el 100% de los módulos de frontend, servicios backend RESTful, esquemas de datos, validadores ergonómicos (skills) y resolución de bugs fueron orquestados mediante agentes de Inteligencia Artificial Generativa bajo el modelo BYOK (*Bring Your Own Key*) y protocolos MCP.
 
----
-
-# 1. Introducción y Planteamiento del Problema
-
-## 1.1. Contexto Institucional y Clínico
-La cirugía bariátrica y metabólica demanda una precisión operativa rigurosa debido a la alta complejidad de los pacientes (frecuentemente diagnosticados con comorbilidades severas como Diabetes Mellitus Tipo 2, Hipertensión Arterial, Apnea Obstructiva del Sueño y Síndrome Metabólico). En centros especializados como la **Clínica UCIBAM**, la coordinación entre la evaluación preoperatoria, la dotación de equipamiento de alta tecnología en quirófanos y el seguimiento postoperatorio continuo resulta vital para el éxito clínico.
-
-## 1.2. Problemática Identificada
-Los flujos tradicionales y manuales de agendamiento en instituciones de salud enfrentan tres vulnerabilidades críticas:
-1. **Solapamiento y Subutilización de Espacios Clínicos:** Conflictos de horarios entre intervenciones de alta complejidad y procedimientos ambulatorios por falta de validación espacial en tiempo real.
-2. **Fragilidad en el Manejo de Datos Heterogéneos:** Colapsos de la interfaz gráfica ante registros incompletos o variables nulas en el historial médico.
-3. **Brechas de Seguridad e Inactividad en Puestos de Trabajo:** Sesiones médicas abiertas en consultorios y estaciones de enfermería sin mecanismos automáticos de expiración por inactividad física.
-
-## 1.3. Objetivos del Sistema
-- **Objetivo General:** Desarrollar un sistema de gestión clínica hospitalaria para la Unidad Bariátrica UCIBAM utilizando exclusivamente flujos de trabajo orquestados con Inteligencia Artificial.
-- **Objetivos Específicos:**
-  - Implementar un motor de agenda médica y quirúrgica con validación anti-solapamiento y sugerencia inteligente de quirófanos según la complejidad.
-  - Diseñar una interfaz reactiva accesible en tablets iPad y navegadores web conforme a pautas WCAG AA y Apple Human Interface Guidelines.
-  - Integrar un sistema de temas multimodal (**Claro**, **Oscuro** y **Sistema**) que respete los patrones de marca clínica.
-  - Establecer un protocolo de expiración de sesión por inactividad (máximo 15 minutos sin interacción del usuario).
+### Ficha Técnica de la Plataforma
+* **Dominio de Aplicación:** Gestión Hospitalaria y Cirugía Bariátrica / Metabólica.
+* **Arquitectura de Software:** Desacoplada cliente-servidor (SPA React + API REST Express + JSON Storage).
+* **Frontend:** React 18, Vite 8, Tailwind CSS v4, Lucide Icons, React Router DOM v7.
+* **Backend:** Node.js v20+, Express 5, CORS, Middlewares de Seguridad HTTP (OWASP / HIPAA).
+* **Contenedorización & CI/CD:** Docker (Multi-stage build con Node:20-Alpine) y despliegue continuo en Render Web Services.
+* **Modelos de IA Empleados:** Google Gemini 2.5 Flash / Gemini 3.7 Pro (Google AI Studio) y Anthropic Claude 3.5 Sonnet / OpenAI GPT-4o (OpenRouter API).
 
 ---
 
-# 2. Cumplimiento de Normativas y Directrices de IA
+# 2. Cumplimiento Estricto de las Directrices del Curso de IA
 
-El proyecto fue evaluado y construido bajo las **seis normativas fundamentales** del programa:
+El proyecto fue concebido, desarrollado y auditado bajo las normativas obligatorias del **Curso de Desarrollo con Inteligencia Artificial**:
 
 ```mermaid
-flowchart LR
-    A[Prompting Estructurado] --> B[Modo Plan / Build]
-    B --> C[Skills & Comandos MCP]
-    C --> D[Subagentes Especializados]
-    D --> E[Depuración Autónoma]
-    E --> F[Despliegue & Contenedor Docker]
+flowchart TD
+    A[1. Prompting Estructurado & Plan Mode] --> B[2. Contexto de Datos Dinámico MCP / JSON]
+    B --> C[3. Skills & Comandos Personalizados]
+    C --> D[4. Orquestación Multi-Agente]
+    D --> E[5. Depuración & Refactorización Autónoma]
+    E --> F[6. Despliegue Automatizado con Docker en Render]
 ```
 
-### Tabla 1. Matriz de Cumplimiento de Directrices de IA
-| Normativa del Proyecto | Mecanismo de Implementación | Evidencia en el Repositorio |
+### Tabla 1. Matriz de Trazabilidad y Cumplimiento de Normativas
+| Directriz Obligatoria | Mecanismo de Implementación en el Proyecto | Evidencia Técnica en el Código |
 | :--- | :--- | :--- |
-| **1. Cero Código Manual** | Generación integral mediante prompts técnicos, iteración dirigida y delegación de sintaxis a LLMs. | Historial de commits en `develop` y `main` con trazabilidad conversacional. |
-| **2. Contexto de Datos (MCP/JSON)** | Inyección de esquemas dinámicos (`patients`, `appointments`, `doctors`, `rooms`, `emergencies`) con tolerancia a campos nulos. | [`server/db.example.json`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/server/db.example.json) y API REST en Express. |
-| **3. Skills y Comandos** | Creación e instalación de la skill `validate-tablet-ux` y el comando de terminal `/validar-ux-tablet`. | [`.gemini/commands/validar-ux-tablet.md`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/.gemini/commands/validar-ux-tablet.md) |
-| **4. Agentes Personalizados** | Configuración y orquestación de subagentes especializados (`research`, `self`, `planner`). | Definición de agentes en `.gemini` y transcripts de ejecución. |
-| **5. Refactorización Autónoma** | Diagnóstico y resolución de bugs en consola, cálculo de IMC dinámico, solapamiento y modo oscuro. | Trazabilidad de compilaciones y fixes automáticos en Vite. |
-| **6. Despliegue a Producción** | Empaquetado en contenedor Docker optimizado multi-etapa y preparación para hosting en la nube. | [`Dockerfile`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/Dockerfile) y scripts de build de producción. |
+| **1. Cero Código Manual** | Generación de componentes, rutas, estados y lógica mediante prompts declarativos en modo *Plan* y *Build*. | Trazabilidad completa en historial de commits de Git (`develop` y `main`). |
+| **2. Contexto de Datos (MCP/JSON)** | Inyección de dataset estructurado en `server/db.json` con colecciones normalizadas y tolerancia a variables nulas. | Modelos `doctors`, `admins`, `patients`, `rooms`, `appointments`, `emergencies`. |
+| **3. Skills y Comandos** | Creación de la skill `validate-tablet-ux` y el comando de terminal `/validar-ux-tablet`. | `.gemini/commands/validar-ux-tablet.md` y suite de validación de layout táctil. |
+| **4. Agentes Personalizados** | Orquestación de subagentes (`research`, `self`, `planner`) para investigación de librerías y diseño modular. | Registro de interacciones multiagente en los logs de la plataforma. |
+| **5. Depuración Autónoma** | Diagnóstico y corrección asistida por IA: Bug de rutas en Express 5 (`path-to-regexp`), cálculo de IMC, y `API_URL` dinámica. | Commits de refactorización autónoma `2531da3` y `20333d4`. |
+| **6. Despliegue a Producción** | Empaquetado en contenedor Docker multi-etapa y publicación en Render con auto-deploy desde rama `main`. | `Dockerfile` con Node 20 Alpine y URL pública operativa. |
 
 ---
 
-# 3. Arquitectura del Sistema
+# 3. Configuración de Modelos de IA e Integración de API Keys (BYOK)
 
-El sistema implementa una arquitectura modular desacoplada basada en el stack moderno **React 18 + Tailwind CSS v4 + Express REST API**.
+En cumplimiento de las instrucciones de cátedra sobre el uso de proveedores de modelos de lenguaje, el proyecto fue configurado bajo un esquema **BYOK (Bring Your Own Key)**, permitiendo la conmutación transparente entre plataformas según la tarea:
+
+```
+                               ┌──────────────────────────────────────────────┐
+                               │   Antigravity CLI / Entorno de Desarrollo    │
+                               └──────────────────────┬───────────────────────┘
+                                                      │
+                       ┌──────────────────────────────┴──────────────────────────────┐
+                       ▼                                                             ▼
+       ┌───────────────────────────────┐                             ┌───────────────────────────────┐
+       │   Google AI Studio Direct API │                             │        OpenRouter API         │
+       ├───────────────────────────────┤                             ├───────────────────────────────┤
+       │ • Provider: Google Generative │                             │ • Provider: OpenRouter router │
+       │ • Models: Gemini 2.5/3.7 Pro  │                             │ • Models: Claude 3.5 Sonnet   │
+       │ • Key Env: GEMINI_API_KEY     │                             │ • Key Env: OPENROUTER_API_KEY │
+       │ • Use: Refactor & Lógica Pura │                             │ • Use: Arquitectura & UX      │
+       └───────────────────────────────┘                             └───────────────────────────────┘
+```
+
+### 3.1. Proveedor Principal: Google AI Studio (`GEMINI_API_KEY`)
+Para el grueso de la orquestación, resolución de errores de sintaxis en terminal y pruebas automatizadas de QA, se empleó la API nativa de **Google AI Studio** con los modelos **Gemini 2.5 Flash** y **Gemini 3.7 Pro**:
+* **Ventajas Técnicas:** Ventana de contexto extendida (hasta 1M tokens), baja latencia de respuesta para herramientas de lectura/escritura de archivos locales y compatibilidad nativa con el sistema de herramientas del agente (`replace_file_content`, `run_command`, `grep_search`).
+* **Configuración de Variables de Entorno:**
+  ```bash
+  # Configuración en entorno local (.env / CLI settings)
+  GEMINI_API_KEY="AIzaSy********************************"
+  AI_STUDIO_MODEL="gemini-3.7-flash"
+  ```
+
+### 3.2. Proveedor Secundario: OpenRouter API (`OPENROUTER_API_KEY`)
+Como respaldo para revisiones de diseño estético, cumplimiento de estándares de accesibilidad WCAG y redacción técnica de reportes, se habilitó el enrutador de **OpenRouter** conectando con modelos como **Claude 3.5 Sonnet**:
+* **Configuración:**
+  ```bash
+  OPENROUTER_API_KEY="sk-or-v1-********************************"
+  OPENROUTER_DEFAULT_MODEL="anthropic/claude-3.5-sonnet"
+  ```
+
+### 3.3. Prácticas de Seguridad en la Gestión de Llaves (Secret Management)
+* Ninguna API Key se encuentra hardcodeada en el código fuente ni en el historial de Git.
+* Se implementaron reglas estrictas en `.gitignore` para excluir archivos `.env`, `.env.local` y credenciales de sesión.
+
+---
+
+# 4. Arquitectura de Software y Modelo de Datos
+
+La plataforma sigue una arquitectura de 3 capas desacoplada, asegurando alta cohesión y bajo acoplamiento:
 
 ```mermaid
 graph TD
-    subgraph Frontend [Capa de Presentación - React 18 + Vite]
-        UI[Vistas: Dashboard, Pacientes, Agenda, Espacios, Perfil]
-        TC[ThemeContext: Light / Dark / System]
-        AC[AuthContext: Inactivity Timer 15 min]
-        TT[ThemeToggle & Custom Controls]
+    subgraph ClientLayer ["1. Capa de Presentación (React 18 + Vite)"]
+        Router["React Router DOM (AppRoutes)"]
+        GuardDoc["DoctorRoute Guard"]
+        GuardAdm["AdminRoute Guard"]
+        AuthCtx["AuthContext (Monitor 15min / Session)"]
+        ThmCtx["ThemeContext (Light / Dark / System)"]
+        VDoctor["Vistas Médicas (Dashboard, Pacientes, Agenda)"]
+        VAdmin["Vistas Admin (AdminDoctors, Gestión Espacios)"]
+        VShared["Vistas Compartidas (Espacios, Perfil)"]
     end
 
-    subgraph Backend [Capa de Lógica y Servicios - Node.js / Express]
-        API[Servidor RESTful Express]
-        VAL[Middleware de Validación & Anti-Solapamiento]
-        REP[Generador de Reportes PDF]
+    subgraph ServerLayer ["2. Capa de Servicios & Seguridad (Express 5 API)"]
+        SecHeaders["Middleware Cabeceras Seguridad (HIPAA/OWASP)"]
+        CorsMdl["CORS Middleware"]
+        ValCol["Whitelist & Validate Collection"]
+        Sanitize["Sanitize Sensitive Fields (Strip Passwords)"]
+        CatchAll["SPA Catch-all Middleware (app.use)"]
     end
 
-    subgraph Storage [Capa de Datos Persistente]
-        JSONDB[(db.json / Doctors, Patients, Rooms, Appointments)]
+    subgraph StorageLayer ["3. Capa de Persistencia"]
+        JSONStore[("db.json Atómico")]
     end
 
-    UI -->|Hooks useApi & useAuth| API
-    TC -->|Clase .dark & Media Queries| UI
-    AC -->|Activity Listeners: Mouse / Teclado| UI
-    API -->|Lectura / Escritura JSON Atómica| JSONDB
+    Router --> GuardDoc --> VDoctor
+    Router --> GuardAdm --> VAdmin
+    Router --> VShared
+    AuthCtx -.-> Router
+    
+    VDoctor & VAdmin & VShared -->|Fetch API via useApi Hook| SecHeaders
+    SecHeaders --> CorsMdl --> ValCol --> Sanitize --> JSONStore
+    ServerLayer --> CatchAll
 ```
 
----
+## 4.1. Modelo de Control de Acceso Basado en Roles (RBAC)
 
-# 4. Módulos y Funcionalidades del Sistema UCIBAM
+Para cumplir con normativas de privacidad de datos de salud (**HIPAA / GDPR**) y separación funcional de deberes, se estableció una segregación estricta de roles:
 
-## 4.1. Dashboard Clínico Inteligente
-- **Métricas Operativas en Tiempo Real:** Indicadores clave de desempeño con navegación interactiva directa:
-  - *Pacientes Registrados* $\rightarrow$ Redirección directa al listado general.
-  - *Citas del Día* $\rightarrow$ Enlace reactivo a la agenda clínica.
-  - *Cirugías Pendientes* $\rightarrow$ Acceso a programación quirúrgica.
-  - *Emergencias Activas* $\rightarrow$ Notificaciones prioritarias de atención inmediata.
-- **Lista de Priorización Asistida por IA:** Clasificación automática de pacientes según índice de riesgo quirúrgico y comorbilidades.
+```mermaid
+classDiagram
+    class Usuario {
+        +String id
+        +String email
+        +String firstName
+        +String lastName
+        +String role
+        +String gender
+        +String avatar
+    }
 
-## 4.2. Módulo de Pacientes y Fichas Clínicas
-- **Búsqueda Dinámica y Filtros:** Búsqueda en tiempo real por número de historia clínica, nombres, apellidos, cédula o diagnóstico.
-- **Cálculo Fisiológico Automatizado:** Cálculo instantáneo de IMC ($IMC = \frac{\text{Peso}}{\text{Altura}^2}$) y categorización según la OMS (Normopeso, Sobrepeso, Obesidad Grado I, II, III / Mórbida).
-- **Manejo Seguro de Comorbilidades:** Badges cromáticos para Hipertensión, Diabetes Mellitus Tipo 2, Apnea del Sueño, Dislipidemia, entre otros.
-- **Tolerancia a Nulos:** Formularios con validadores defensivos que impiden el quiebre de la interfaz ante datos parciales.
+    class Medico {
+        +String specialty
+        +Array consultationSchedule
+        +Date lastModifiedNames
+        +Date lastModifiedEmail
+        +Date lastModifiedSpecialty
+        +verDashboard()
+        +gestionarPacientes()
+        +agendarCirugias()
+    }
 
-## 4.3. Módulo de Agenda y Quirófanos con Anti-Solapamiento
-- **Algoritmo de Compatibilidad Espacial:** Clasificación estricta de espacios:
-  - *Quirófanos de Alta Gama (6 salas):* Exclusivos para Cirugía Bariátrica de media y alta complejidad (Bypass Gástrico, Manga Gástrica, Cirugía Revisional).
-  - *Quirófanos Ambulatorios (3 salas):* Para procedimientos menores, colocación de balón gástrico y endoscopías.
-  - *Consultorios Médicos (8 espacios):* Para consultas de nutrición, psicología, medicina interna y chequeo.
-- **Detección Preventiva de Solapamientos:** Validación de franjas horarias que impide asignar un mismo espacio clínico a dos intervenciones concurrentes.
-- **Exportación de Reportes Diarios en PDF:** Descarga formateada del reporte médico del día en una pestaña independiente.
+    class Administrador {
+        +String department
+        +gestionarMedicos()
+        +crearUsuariosDoctores()
+        +editarCamposBloqueados()
+        +resetearBloqueosTemporales()
+        +ampliarInfraestructuraQuirofanos()
+    }
 
-## 4.4. Perfil Médico y Políticas de Seguridad Temporal
-- **Políticas de Integridad y Bloqueo:**
-  - Modificación de Nombres y Apellidos: Permitida **1 vez cada 4 meses**.
-  - Cambio de Correo Electrónico: Permitido **1 vez cada 21 días**.
-  - Actualización de Especialidad: Permitida **1 vez cada 6 meses**.
-  - Género médico (Dr. / Dra.): Fijo desde el registro para coherencia documental.
-- **Gestión de Turnos Semanales:** Tabla interactiva para registrar días y horarios en consultorios asignados.
+    Usuario <|-- Medico : Rol 'doctor'
+    Usuario <|-- Administrador : Rol 'admin'
+```
 
-## 4.5. Sistema de Temas Multimodal (Claro, Oscuro y Sistema)
-- **Modo Claro:** Interfaz limpia con base blanca/pizarra y realces en azul médico (`#00A3E0`).
-- **Modo Oscuro:** Superficies en pizarra profundo (`#0B0F17` y `#151D2A`), bordes en `#1E293B` y tipografía de alto contraste `#F8FAFC`.
-- **Modo Sistema:** Detección y respuesta automática a la preferencia del sistema operativo mediante `window.matchMedia`.
-
-## 4.6. Seguridad: Cierre de Sesión por Inactividad (15 Minutos)
-- Implementación de un monitor de actividad en [`AuthContext.jsx`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/client/src/context/AuthContext.jsx) que captura eventos de mouse (`mousemove`, `mousedown`, `click`), teclado (`keydown`), scroll y pantallas táctiles (`touchstart`).
-- Técnica de *throttling* para preservar la fluidez de renderizado.
-- Cierre automático de sesión al transcurrir 15 minutos sin interacción y despliegue de alerta informativa en el Login.
-
----
-
-# 5. Skill y Comando Personalizado
-
-## 5.1. Skill: `validate-tablet-ux`
-Especializada en auditar la ergonomía de la aplicación en dispositivos iPad y pantallas táctiles:
-- **Touch Targets:** Verificación de área mínima de contacto de 44x44 px (Apple HIG).
-- **Tipografía Responsiva:** Tamaño base $\ge 14\text{px}$ para evitar zoom accidental en Safari iOS.
-- **Contraste de Color:** Razón de contraste superior a 4.5:1 (WCAG AA).
-
-## 5.2. Comando: `/validar-ux-tablet`
-Comando personalizado registrado en `.gemini/commands/validar-ux-tablet.md` que ejecuta la auditoría automatizada sobre el CSS global y emite un informe estructurado de conformidad.
+### Tabla 2. Matriz de Permisos por Rol en UCIBAM
+| Módulo / Funcionalidad | Rol Médico (`doctor`) | Rol Administrador (`admin`) | Justificación Técnica & Seguridad |
+| :--- | :---: | :---: | :--- |
+| **Dashboard Clínico** | ✅ Lectura / Acción | 🚫 Acceso Denegado | El personal admin no gestiona estados clínicos directos. |
+| **Expedientes de Pacientes (PHI)** | ✅ Acceso Completo | 🚫 Acceso Denegado | Protección de Información de Salud Protegida (HIPAA). |
+| **Agenda de Procedimientos** | ✅ Agendamiento | 🚫 Acceso Denegado | Privativo del equipo quirúrgico y tratante. |
+| **Directorio de Médicos** | 🚫 Sin Gestión | ✅ CRUD Completo | Alta, baja y modificación de especialistas. |
+| **Desbloqueo de Políticas de Perfil** | 🚫 Bloqueado | ✅ Bypass Total | Override administrativo para corrección de datos. |
+| **Gestión de Infraestructura (Espacios)** | 👁️ Solo Lectura (Ocupación) | ✅ CRUD y Dotación | Creación y baja de quirófanos y consultorios. |
+| **Perfil Institucional** | ✅ Perfil Propio | ✅ Perfil Propio | Gestión de contraseña y foto. |
 
 ---
 
-# 6. Manual de Instalación y Ejecución Local
+# 5. Descripción Técnica de Módulos Implementados
 
-### Prerrequisitos
-- Node.js v18.0.0 o superior
-- npm v9.0.0 o superior
+## 5.1. Módulo de Autenticación y Monitor de Inactividad (`AuthContext.jsx`)
+* **Detección Automática de Rol:** Identifica si las credenciales corresponden a un especialista médico (`doctor`) o a un directivo administrativo (`admin`).
+* **Protección de Sesión por Inactividad (15 Minutos):** Escucha eventos de bajo nivel (`mousemove`, `keydown`, `touchstart`, `wheel`) con técnica de *throttling* (1 seg). Si el usuario no realiza ninguna acción en 15 minutos, el temporizador expira, elimina las claves de sesión en `localStorage` y redirige al login con alerta visual (`Clock` banner).
 
-### Pasos de Instalación
+## 5.2. Módulo de Administración de Médicos (`AdminDoctors.jsx`)
+* **Alta de Usuarios:** Permite a la clínica crear nuevos usuarios doctores con especialidad, prefijo de género y asignación de turno de consulta inicial.
+* **Modificación de Campos Bloqueados:** El Administrador puede editar en cualquier momento nombres, apellidos, género (Dr./Dra.), correo electrónico y especialidad médica de cualquier doctor.
+* **Restablecimiento de Temporizadores:** Opción para desbloquear las restricciones temporales (4 meses / 21 días / 6 meses) otorgándole nuevamente al médico la posibilidad de modificar sus propios datos.
+* **Baja de Especialistas:** Eliminación segura de registros médicos con diálogo de confirmación.
+
+## 5.3. Módulo de Espacios Clínicos e Infraestructura (`Rooms.jsx`)
+* **Categorización de Espacios:**
+  1. *Quirófanos de Alta Gama:* Para Bypass Gástrico, Manga Gástrica y cirugías de revisión.
+  2. *Quirófanos Ambulatorios:* Para colocación de balón intragástrico, endoscopias y cirugías menores.
+  3. *Consultorios Médicos:* Para consultas externas de nutrición, psicología y control.
+* **Ampliación de Infraestructura (Modo Admin):** Modal interactivo para agregar nuevos quirófanos y consultorios especificando código de sala, piso/ubicación, nivel de complejidad y dotación de artefactos médicos.
+* **Inventario de Artefactos:** Gestión de equipamiento especializado por espacio (ej. *Torres de Laparoscopía 4K UHD, Mesas motorizadas para 380 kg, Selladores Ligasure/Harmonic*).
+
+## 5.4. Módulo de Pacientes y Antropometría Automatizada (`Patients.jsx`)
+* **Cálculo Fisiológico de IMC:** Fórmula $IMC = \frac{\text{Peso (kg)}}{\left(\text{Altura (m)}\right)^2}$ ejecutada en tiempo real.
+* **Clasificación según la OMS:**
+  - $< 18.5$: Bajo peso
+  - $18.5 - 24.9$: Normopeso
+  - $25.0 - 29.9$: Sobrepeso
+  - $30.0 - 34.9$: Obesidad Grado I
+  - $35.0 - 39.9$: Obesidad Grado II (Criterio quirúrgico con comorbilidades)
+  - $\ge 40.0$: Obesidad Grado III / Mórbida (Criterio quirúrgico directo)
+* **Tolerancia a Nulos:** Manejo defensivo en la interfaz para prevenir excepciones `TypeError: Cannot read properties of undefined`.
+
+## 5.5. Agenda Quirúrgica y Motor Anti-Solapamiento (`Scheduling.jsx`)
+* Validación en tiempo real para evitar la doble reserva de una misma sala quirúrgica o consultorio en un rango horario coincidente.
+* Exportación de informes diarios de programación en formato imprimible/PDF.
+
+## 5.6. Sistema de Temas Multimodal (`ThemeContext.jsx` y `ThemeToggle.jsx`)
+* Soporte nativo para tres modos: **Claro**, **Oscuro** y **Sistema**.
+* Persistencia en `localStorage` y sincronización con las preferencias del sistema operativo mediante `window.matchMedia('(prefers-color-scheme: dark)')`.
+
+---
+
+# 6. Depuración y Refactorización Autónoma Asistida por IA
+
+En estricto cumplimiento de la **Directriz N.° 5**, todos los problemas técnicos y bugs encontrados durante el ciclo de vida del proyecto fueron analizados, depurados y resueltos de forma autónoma por los agentes de IA:
+
+### Caso de Estudio 1: Corrección de PathError en Express 5 (`path-to-regexp` v8)
+* **Incidencia:** En el despliegue en Render, el servidor fallaba al iniciar con la excepción:
+  ```text
+  PathError [TypeError]: Missing parameter name at index 1: *; visit https://git.new/pathToRegexpError for info
+  ```
+* **Diagnóstico Autónomo:** Express 5 utiliza versiones modernas de `path-to-regexp` donde el comodín `app.get('*', ...)` no es una expresión válida sin nombre de parámetro.
+* **Solución Aplicada:** Refactorización al patrón canónico de middleware catch-all:
+  ```javascript
+  // server/server.js
+  // Catch-all middleware to serve React Single Page Application (SPA)
+  app.use((req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+  ```
+
+### Caso de Estudio 2: Dinamismo de URLs de API para Entornos Mixtos
+* **Incidencia:** El frontend realizaba peticiones fijas a `http://localhost:3000/api`, fallando al ejecutarse en el dominio público de Render.
+* **Solución Aplicada:** Refactorización en [`useApi.js`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/client/src/hooks/useApi.js) y [`AuthContext.jsx`](file:///C:/Users/braya/OneDrive/Desktop/TallerSI/Proyecto/client/src/context/AuthContext.jsx) para resolución automática según el host:
+  ```javascript
+  const API_URL = import.meta.env.VITE_API_URL || 
+    (typeof window !== 'undefined' && window.location.port === '5173' 
+      ? 'http://localhost:3000/api' 
+      : '/api');
+  ```
+
+---
+
+# 7. Informe de Aseguramiento de la Calidad (QA Engineer)
+
+Se realizó una evaluación integral bajo estándares internacionales de ingeniería de software:
+
+```mermaid
+mindmap
+  root((Calidad Integral UCIBAM))
+    ISO/IEC 25010
+      Adecuacion Funcional CRUD
+      Fiabilidad y Tolerancia a Fallos
+      Eficiencia y Rendimiento
+      Seguridad e Integridad
+    Seguridad en Salud
+      HIPAA / GDPR PHI Segregation
+      OWASP Security Headers
+      Sanitizacion de Passwords
+      Session Inactivity 15min
+    Accesibilidad WCAG 2.1 AA
+      Touch Targets 44x44px
+      Contraste Cromático 4.5:1
+      Navegacion por Teclado
+```
+
+### Tabla 3. Matriz de Pruebas Unitarias y de Integración Automatizadas
+| ID Prueba | Escenario de Prueba | Método / Endpoint | Resultado Esperado | Resultado Obtenido | Estado |
+| :---: | :--- | :--- | :--- | :--- | :---: |
+| **QA-01** | Consulta de usuarios administradores | `GET /api/admins` | Código 200 y array de admins | 200 OK (Count: 1) | **PASS** |
+| **QA-02** | Creación de nuevo médico por Admin | `POST /api/doctors` | Código 201 y generación de ID `doc-*` | 201 Created (`doc-178...`) | **PASS** |
+| **QA-03** | Edición administrativa de especialista | `PUT /api/doctors/:id` | Código 200 y actualización de datos | 200 OK (Especialidad actualizada) | **PASS** |
+| **QA-04** | Eliminación de médico por Admin | `DELETE /api/doctors/:id` | Código 200 y confirmación | 200 OK | **PASS** |
+| **QA-05** | Creación de nuevo quirófano/espacio | `POST /api/rooms` | Código 201 y persistencia de artefactos | 201 Created (`roo-178...`) | **PASS** |
+| **QA-06** | Actualización de datos de espacio | `PUT /api/rooms/:id` | Código 200 y modificación en DB | 200 OK | **PASS** |
+| **QA-07** | Eliminación de espacio físico | `DELETE /api/rooms/:id` | Código 200 y retiro de inventario | 200 OK | **PASS** |
+| **QA-08** | Bloqueo de rutas clínicas a rol Admin | Navegación a `/patients` | Redirección automática a `/doctors` | Redirigido correctamente | **PASS** |
+| **QA-09** | Expiración de sesión por inactividad | Inactividad > 15 minutos | Limpieza de sesión y logout | Sesión finalizada con alerta | **PASS** |
+
+---
+
+# 8. Guía de Instalación, Configuración y Despliegue
+
+### 8.1. Despliegue en Entorno de Desarrollo Local
 ```bash
-# 1. Clonar el repositorio
+# 1. Clonar el repositorio oficial
 git clone https://github.com/bracebalDev/sistema_gestion_pacientes_bariatricos.git
 cd sistema_gestion_pacientes_bariatricos
 
-# 2. Instalar dependencias raíz y del cliente
+# 2. Instalar dependencias del servidor y cliente
 npm install
 cd client && npm install && cd ..
 
 # 3. Iniciar el servidor backend (Puerto 3000)
 npm run server
 
-# 4. En otra terminal, iniciar el frontend (Puerto 5173)
+# 4. En otra terminal, iniciar el cliente Vite (Puerto 5173)
 npm run client
-
-# 5. Para compilar el bundle de producción
-cd client && npm run build
 ```
 
+### 8.2. Despliegue en Producción mediante Docker y Render
+El proyecto cuenta con un `Dockerfile` multi-etapa optimizado:
+```dockerfile
+# Stage 1: Build Frontend
+FROM node:20-alpine AS build
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm install
+COPY client/ ./
+RUN npm run build
+
+# Stage 2: Express Server
+FROM node:20-alpine
+WORKDIR /app/server
+COPY server/package*.json ./
+RUN npm install --production
+COPY server/ ./
+COPY --from=build /app/client/dist /app/client/dist
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+> **Credenciales de Acceso para Pruebas:**
+> - **Acceso Médico:** `doctorcirugia@gmail.com` | `doctor123`
+> - **Acceso Administrador:** `admin@ucibam.com` | `admin123`
+
 ---
 
-# 7. Conclusiones y Trabajo Futuro
+# 9. Conclusiones y Recomendaciones de Ingeniería
 
-1. **Efectividad del Paradigma Cero Código Manual:** El desarrollo mediante agentes de inteligencia artificial generativa redujo drásticamente el ciclo de construcción, garantizando consistencia arquitectónica, tipado seguro contra nulos y adopción de estándares de diseño modernos.
-2. **Escalabilidad y Robustez:** La combinación de validaciones espaciales en la agenda y el control de inactividad de sesión consolida una plataforma lista para entornos hospitalarios reales.
-3. **Líneas Futuras:**
-   - Integración con el estándar interoperable **HL7/FHIR** para intercambio de registros electrónicos de salud.
-   - Módulo de Telemedicina y seguimiento remoto con básculas inteligentes de bioimpedancia vía Bluetooth/WebSockets.
+1. **Eficacia del Desarrollo Asistido por IA:** La metodología de *Cero Código Manual* y el uso de agentes permitió concebir un sistema de alta complejidad en tiempos récord, logrando una arquitectura desacoplada, tipado defensivo contra nulos y adherencia a estándares ergonómicos.
+2. **Seguridad y Cumplimiento Normativo:** La separación estricta mediante RBAC y la protección de inactividad de 15 minutos garantizan que la información de salud protegida (PHI) permanezca resguardada de accesos no autorizados.
+3. **Escalabilidad Infraestructural:** La incorporación del módulo administrativo permite que la plataforma escale orgánicamente conforme la clínica amplíe su capacidad de quirófanos o incorpore nuevos especialistas.
+4. **Trabajo Futuro:**
+   - Implementación de estándares de interoperabilidad clínica **HL7 / FHIR**.
+   - Integración con pasarelas de pago para reservas de citas y telemedicina.
 
 ---
 
-# 8. Referencias Bibliográficas (Normas APA 7.ª Edición)
+# 10. Referencias Bibliográficas
 
 - American Psychological Association. (2020). *Publication manual of the American Psychological Association* (7th ed.). https://doi.org/10.1037/0000165-000
 - Apple Inc. (2024). *Human Interface Guidelines: Touch targets and layout for iPadOS*. Apple Developer Documentation. https://developer.apple.com/design/human-interface-guidelines/
 - Eisenberg, D., Shikora, S. A., Aarts, E., Aminian, A., Angrisani, L., Cohen, R. V., ... & Kothari, S. N. (2022). 2022 American Society for Metabolic and Bariatric Surgery (ASMBS) and International Federation for the Surgery of Obesity and Metabolic Disorders (IFSO): Indications for metabolic and bariatric surgery. *Surgery for Obesity and Related Diseases*, 18(12), 1345-1356. https://doi.org/10.1016/j.soard.2022.08.013
+- International Organization for Standardization. (2023). *Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model* (ISO/IEC 25010:2023). https://www.iso.org/standard/78176.html
+- U.S. Department of Health and Human Services. (2023). *Health Insurance Portability and Accountability Act of 1996 (HIPAA) Security Rule*. Office for Civil Rights. https://www.hhs.gov/hipaa/for-professionals/security/
 - World Wide Web Consortium. (2023). *Web Content Accessibility Guidelines (WCAG) 2.2*. W3C Recommendation. https://www.w3.org/TR/WCAG22/
