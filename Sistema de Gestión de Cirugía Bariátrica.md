@@ -142,6 +142,8 @@ graph TD
 | **Subagente Debugger / QA** | *QA & Diagnostics* | `run_command`, `grep_search`, `replace_file_content`, `view_file` | Detección y análisis sintáctico de errores en tiempo de ejecución, rastreo de excepciones en consola, validación de variables nulas y ejecución de pruebas unitarias. | Parches atómicos de código, resolución del bug `PathError` en Express 5 y estabilización de la suite de pruebas. |
 | **Subagente DevOps** | *Infrastructure & Release* | `write_to_file`, `run_command`, `view_file` | Diseño del contenedor Docker multi-etapa, configuración del script de generación de informes PDF (`build_full_pdf.js`), y sincronización con Render Web Services. | `Dockerfile` optimizado con `node:20-alpine`, PDF técnico compilado y despliegue continuo en la nube. |
 
+![Figura 4.1. Captura de Terminal — Orquestación Jerárquica Multi-Agente y Protocolo MCP](docs/screenshots/terminal-mcp-subagents.svg)
+
 ---
 
 ## 4.2. Skills Implementadas y Estándares de Validación UX/UI
@@ -172,6 +174,8 @@ Las **Skills** son capacidades modulares compuestas por instrucciones estructura
    - Verificación de contraste en modo claro y modo oscuro.
 5. **Soporte Bi-direccional de Orientación:**
    - Renderizado adaptativo y sin solapamiento de componentes tanto en orientación Vertical (*Portrait*) como en Horizontal (*Landscape*).
+
+![Figura 4.2. Captura de Terminal — Definición del Manifiesto de la Skill validate-tablet-ux (SKILL.md)](docs/screenshots/terminal-code-skill-manifest.svg)
 
 ---
 
@@ -207,6 +211,8 @@ sequenceDiagram
     Skill-->>Out: Generar Reporte de Conformidad UX con recomendaciones
     Out-->>Dev: Visualizacion de resultados en consola / panel de artefactos
 ```
+
+![Figura 4.3. Captura de Terminal — Invocación y Ejecución del Comando Personalizado /validar-ux-tablet](docs/screenshots/terminal-skill-command.svg)
 
 ---
 
@@ -400,6 +406,8 @@ Se realizó una evaluación integral bajo estándares internacionales de ingenie
 | **QA-08** | Bloqueo de rutas clínicas a rol Admin | Navegación a `/patients` | Redirección automática a `/doctors` | Redirigido correctamente | **PASS** |
 | **QA-09** | Expiración de sesión por inactividad | Inactividad > 15 minutos | Limpieza de sesión y logout | Sesión finalizada con alerta | **PASS** |
 | **QA-10** | Prevención de solapamiento en quirófano | Solicitud de cita coincidente | Rechazo de reserva con alerta | Solapamiento bloqueado | **PASS** |
+
+![Figura 8.1. Captura de Terminal — Ejecución de la Suite Automatizada de Pruebas Unitarias y de Integración (QA Suite)](docs/screenshots/terminal-qa-debug-test.svg)
 
 ---
 

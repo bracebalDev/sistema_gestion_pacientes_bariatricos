@@ -75,6 +75,25 @@ async function main() {
     htmlBody = htmlBody.replace(`__MERMAID_DIAGRAM_${idx}__`, svgWrapper);
   });
 
+  // Inline local images (SVGs/PNGs) directly in HTML for flawless PDF rendering
+  htmlBody = htmlBody.replace(/<img\s+src="([^"]+)"\s+alt="([^"]*)"\s*\/?>/g, (match, src, alt) => {
+    const localPath = path.isAbsolute(src) ? src : path.join(__dirname, src);
+    if (fs.existsSync(localPath)) {
+      const ext = path.extname(localPath).toLowerCase();
+      if (ext === '.svg') {
+        let svgContent = fs.readFileSync(localPath, 'utf-8');
+        // Remove xml declaration if present
+        svgContent = svgContent.replace(/<\?xml[\s\S]*?\?>/i, '');
+        return `<div class="screenshot-container">${svgContent}<div class="screenshot-caption">${alt}</div></div>`;
+      } else if (ext === '.png' || ext === '.jpg' || ext === '.jpeg') {
+        const b64 = fs.readFileSync(localPath).toString('base64');
+        const mime = ext === '.png' ? 'image/png' : 'image/jpeg';
+        return `<div class="screenshot-container"><img src="data:${mime};base64,${b64}" alt="${alt}" /><div class="screenshot-caption">${alt}</div></div>`;
+      }
+    }
+    return match;
+  });
+
   // Full HTML template with print CSS
   const fullHtml = `<!DOCTYPE html>
 <html lang="es">
@@ -254,6 +273,39 @@ async function main() {
       max-height: 380px !important;
     }
 
+    .screenshot-container {
+      margin: 1em auto;
+      text-align: center;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      max-width: 100%;
+    }
+
+    .screenshot-container svg {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    }
+
+    .screenshot-container img {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+      display: block;
+      margin: 0 auto;
+    }
+
+    .screenshot-caption {
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 5px;
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+
     a {
       color: #00A3E0;
       text-decoration: none;
@@ -272,8 +324,17 @@ async function main() {
   // Convert to PDF using Edge headless
   const pdfFilePath = path.join(__dirname, 'Sistema de Gestión de Cirugía Bariátrica.pdf');
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
+  const tempProfile = path.join(__dirname, '.temp_edge_profile');
   
-  const edgeCmd = `"${edgePath}" --headless=new --disable-gpu --no-pdf-header-footer --print-to-pdf="${pdfFilePath}" "${staticHtmlPath}"`;
+  if (fs.existsSync(pdfFilePath)) {
+    try {
+      fs.unlinkSync(pdfFilePath);
+    } catch (err) {
+      console.warn('Advertencia al eliminar PDF anterior:', err.message);
+    }
+  }
+
+  const edgeCmd = `"${edgePath}" --headless=new --disable-gpu --no-pdf-header-footer --user-data-dir="${tempProfile}" --print-to-pdf="${pdfFilePath}" "${staticHtmlPath}"`;
   
   console.log('Generando PDF mediante Edge headless...');
   try {
@@ -284,6 +345,10 @@ async function main() {
     console.log('Tamaño del archivo:', stat.size, 'bytes');
   } catch (e) {
     console.error('Error al generar PDF:', e.message);
+  } finally {
+    if (fs.existsSync(tempProfile)) {
+      try { fs.rmSync(tempProfile, { recursive: true, force: true }); } catch (_) {}
+    }
   }
 }
 

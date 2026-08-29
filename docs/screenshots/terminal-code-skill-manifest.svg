@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 480" width="920" height="480">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+  <style>
+    .t-default { font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; font-size: 12px; fill: #cbd5e1; }
+    .t-prompt-user { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #38bdf8; font-weight: bold; }
+    .t-prompt-path { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #818cf8; }
+    .t-cmd { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #facc15; font-weight: bold; }
+    .t-info { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #38bdf8; font-weight: bold; }
+    .t-success { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #4ade80; font-weight: bold; }
+    .t-warn { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #fbbf24; }
+    .t-error { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #f87171; }
+    .t-muted { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #64748b; }
+    .t-cyan { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #22d3ee; font-weight: bold; }
+    .t-purple { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #c084fc; font-weight: bold; }
+    .t-bold { font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; fill: #f8fafc; font-weight: bold; }
+  </style>
+
+  <!-- Card Background -->
+  <rect x="4" y="4" width="912" height="472" rx="10" fill="#090d16" stroke="#334155" stroke-width="1.5" filter="url(#shadow)" />
+
+  <!-- Window Header -->
+  <rect x="4" y="4" width="912" height="40" rx="10" fill="url(#headerGrad)" />
+  <rect x="4" y="34" width="912" height="10" fill="#0f172a" />
+  <line x1="4" y1="44" x2="916" y2="44" stroke="#334155" stroke-width="1" />
+
+  <!-- Window Controls -->
+  <circle cx="24" cy="24" r="6" fill="#ef4444" />
+  <circle cx="44" cy="24" r="6" fill="#f59e0b" />
+  <circle cx="64" cy="24" r="6" fill="#10b981" />
+
+  <!-- Window Title -->
+  <text x="460" y="28" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#94a3b8" text-anchor="middle">brayan@ucibam-dev: ~/sistema_gestion_pacientes_bariatricos (main)</text>
+  <text x="896" y="28" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b" text-anchor="end">Definición de Skill: .gemini/config/skills/validate-tablet-ux/SKILL.md</text>
+
+  <!-- Terminal Output Lines -->
+  <text x="28" y="75"><tspan class="t-prompt-user">brayan@ucibam</tspan><tspan class="t-muted">:</tspan><tspan class="t-prompt-path">~/sistema_gestion_pacientes_bariatricos</tspan><tspan class="t-muted">$ </tspan><tspan class="t-cmd">cat .gemini/config/skills/validate-tablet-ux/SKILL.md</tspan></text>
+<text x="28" y="96"><tspan class="t-muted">---</tspan></text>
+<text x="28" y="117"><tspan class="t-purple">name: </tspan><tspan class="t-cyan">validate-tablet-ux</tspan></text>
+<text x="28" y="138"><tspan class="t-purple">description: &gt;</tspan></text>
+<text x="28" y="159"><tspan class="t-default">  Validates the UCIBAM web application&apos;s UX/UI for optimal tablet (iPad)</tspan></text>
+<text x="28" y="180"><tspan class="t-default">  and web browser compatibility. Checks touch targets, typography, responsive</tspan></text>
+<text x="28" y="201"><tspan class="t-default">  layout, color contrast (WCAG 2.1 AA), and dual orientation support.</tspan></text>
+<text x="28" y="222"><tspan class="t-muted">---</tspan></text>
+<text x="28" y="243" class="t-default"></text>
+<text x="28" y="264"><tspan class="t-bold"># Skill: Validate Tablet UX/UI</tspan></text>
+<text x="28" y="285"><tspan class="t-info">## Validation Checklist (Normas Apple HIG &amp; WCAG AA)</tspan></text>
+<text x="28" y="306"><tspan class="t-success">  1. Touch Targets: min-height: 44px, min-width: 44px, gap &gt;= 8px</tspan></text>
+<text x="28" y="327"><tspan class="t-success">  2. Typography: base font-size &gt;= 16px on tablets, line-height &gt;= 1.4</tspan></text>
+<text x="28" y="348"><tspan class="t-success">  3. Responsive Layout: Breakpoints 768px, 1024px, 1366px, sidebar auto-collapse</tspan></text>
+<text x="28" y="369"><tspan class="t-success">  4. Color Contrast: Primary text &gt;= 4.5:1, brand badges &gt;= 3:1</tspan></text>
+<text x="28" y="390"><tspan class="t-success">  5. Orientation: Flawless layout in both Portrait and Landscape modes</tspan></text>
+
+</svg>

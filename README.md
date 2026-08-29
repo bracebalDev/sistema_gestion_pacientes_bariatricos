@@ -75,6 +75,8 @@ flowchart LR
 | **5. Refactorización Autónoma** | Diagnóstico y resolución de bugs en consola, cálculo de IMC dinámico, `API_URL` dinámica, `PathError` en Express 5 y anti-solapamiento. | Commits de resolución de incidencias en Git. |
 | **6. Despliegue a Producción** | Empaquetado en contenedor Docker optimizado multi-etapa y hosting en Render con auto-deploy continuo. | `Dockerfile` y URL pública en Render. |
 
+![Captura de Terminal — Orquestación Jerárquica Multi-Agente y Protocolo MCP](docs/screenshots/terminal-mcp-subagents.svg)
+
 ---
 
 # 3. Arquitectura del Sistema
@@ -160,8 +162,12 @@ Especializada en auditar la ergonomía de la aplicación en dispositivos iPad y 
 - **Tipografía Responsiva:** Tamaño base $\ge 14\text{px}$ para evitar zoom accidental en Safari iOS.
 - **Contraste de Color:** Razón de contraste superior a 4.5:1 (WCAG AA).
 
+![Definición de la Skill validate-tablet-ux](docs/screenshots/terminal-code-skill-manifest.svg)
+
 ## 5.2. Comando: `/validar-ux-tablet`
 Comando personalizado registrado en `.gemini/commands/validar-ux-tablet.md` que ejecuta la auditoría automatizada sobre el CSS global y emite un informe estructurado de conformidad.
+
+![Ejecución del Comando /validar-ux-tablet en Terminal](docs/screenshots/terminal-skill-command.svg)
 
 ---
 
