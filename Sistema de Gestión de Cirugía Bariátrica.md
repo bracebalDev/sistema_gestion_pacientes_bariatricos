@@ -19,14 +19,14 @@
     Sistema de Gestión de Cirugía Bariátrica y Metabólica (UCIBAM)
   </h1>
   <p style="font-size: 15px; font-weight: 600; color: #00A3E0; margin: 0;">
-    Informe Técnico de Arquitectura, Orquestación con IA, Control de Acceso RBAC y Despliegue en Producción
+    Informe Técnico de Arquitectura, Orquestación con IA, Agentes, Skills, Comandos, Protocolo MCP y Despliegue en Producción
   </p>
   <div style="font-size: 12px; color: #64748b; margin-top: 0.8rem; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
     <span><strong>Autor / Desarrollador:</strong> Brayan Ceballos</span>
     <span>•</span>
     <span><strong>Período Académico:</strong> I-2026</span>
     <span>•</span>
-    <span><strong>Fecha:</strong> 18 de Agosto de 2026</span>
+    <span><strong>Fecha:</strong> 29 de Agosto de 2026</span>
   </div>
 
   <div style="margin-top: 1.2rem; padding: 0.8rem 1.2rem; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; display: inline-block;">
@@ -43,7 +43,7 @@
 
 El **Sistema de Gestión Clínica UCIBAM** (*Unidad de Cirugía Bariátrica y Metabólica*) es una solución web interactiva de grado hospitalario diseñada para digitalizar y optimizar los flujos clínicos, quirúrgicos, administrativos y de infraestructura en centros bariátricos especializados. La plataforma integra gestión de expedientes de pacientes con cálculo fisiológico automatizado de Índice de Masa Corporal (IMC) y categorización de comorbilidades según la Organización Mundial de la Salud (OMS), motor de agendamiento quirúrgico con detección y prevención estricta de solapamientos de salas y especialistas, asignación dinámica de espacios clínicos (quirófanos de alta gama, quirófanos ambulatorios y consultorios médicos), monitor de inactividad de sesión (15 minutos) bajo estándares de seguridad hospitalaria y un robusto modelo de **Control de Acceso Basado en Roles (RBAC)** que separa de forma estricta las funciones médicas de las tareas de administración hospitalaria.
 
-El desarrollo del proyecto se ejecutó en estricto apego al paradigma de **Cero Código Manual**, donde el 100% de los componentes de frontend, endpoints RESTful, persistencia JSON, validadores de UX táctil (skills) y resolución de bugs fueron orquestados mediante agentes de Inteligencia Artificial Generativa bajo el modelo BYOK (*Bring Your Own Key*) y protocolos MCP.
+El desarrollo del proyecto se ejecutó en estricto apego al paradigma de **Cero Código Manual**, donde el 100% de los componentes de frontend, endpoints RESTful, persistencia JSON, validadores de UX táctil (skills) y resolución de bugs fueron orquestados mediante agentes de Inteligencia Artificial Generativa bajo el modelo BYOK (*Bring Your Own Key*) y protocolos MCP (*Model Context Protocol*).
 
 ### Tabla 1. Ficha Técnica de la Plataforma UCIBAM
 | Parámetro Técnico | Especificación / Valor Implementado |
@@ -55,7 +55,11 @@ El desarrollo del proyecto se ejecutó en estricto apego al paradigma de **Cero 
 | **Backend & Runtime** | Node.js v20+, Express 5, CORS, Middlewares de Seguridad HTTP (OWASP / HIPAA) |
 | **Contenedorización & CI/CD** | Docker multi-etapa (`node:20-alpine`) con despliegue continuo en Render Web Services |
 | **Modelos de IA Empleados (BYOK)** | Google Gemini 2.5 Flash / Gemini 3.7 Pro (Google AI Studio) y Anthropic Claude 3.5 Sonnet (OpenRouter) |
-| **Control de Sesión y Privacidad** | Monitor de inactividad (15 min), desinfección de credenciales y segregación PHI |
+| **Agentes Implementados** | Agente Orquestador (Plan Mode), Subagente Research, Subagente Self (Builder), Subagente Debugger/QA y Subagente DevOps |
+| **Skills Desarrolladas** | `validate-tablet-ux` (Validación de Touch Targets Apple HIG, tipografía, contraste WCAG 2.1 AA y responsive tablet) |
+| **Comandos Personalizados** | `/validar-ux-tablet` (Inspección automatizada de estilos, layout táctil y generación de reportes QA) |
+| **Protocolo MCP Utilizado** | Model Context Protocol (MCP Filesystem Provider para inyección de esquemas JSON y MCP Tools para operaciones atómicas) |
+| **Control de Sesión y Privacidad** | Monitor de inactividad (15 min), desinfección de credenciales y segregación estricta de PHI |
 
 ---
 
@@ -82,9 +86,9 @@ El desarrollo de la plataforma se fundamentó en la ejecución secuencial y cont
 | Etapa / Secuencia | Directriz del Curso | Modo / Rol del Agente | Insumos / Entradas (Inputs) | Lógica de Procesamiento y Acciones | Salidas y Entregables (Outputs) |
 | :---: | :--- | :--- | :--- | :--- | :--- |
 | **Fase 1** | **1. Cero Código Manual** | *Plan Mode* & *Architect Agent* | Requerimientos de gestión bariátrica y especificaciones funcionales | Desglose modular de componentes, declaración de estados y generación declarativa | Árbol de componentes React y endpoints Express generados al 100% por IA |
-| **Fase 2** | **2. Contexto de Datos (MCP/JSON)** | *Data Engineer Agent* | Dataset clínico de prueba (`server/db.json`) | Normalización de esquemas JSON, tolerancia a valores nulos y enlaces relacionales | Base de datos documental reactiva y adaptada a la lógica hospitalaria |
-| **Fase 3** | **3. Skills y Comandos** | *Automation / Tools Agent* | Directrices de diseño Apple HIG y WCAG 2.1 AA | Configuración de la skill `validate-tablet-ux` y comando `/validar-ux-tablet` | Scripts de verificación automatizada de touch targets y contraste cromático |
-| **Fase 4** | **4. Orquestación Multi-Agente** | *Research & Orchestrator Agents* | Tareas concurrentes de diseño, validación y testing | Delegación de responsabilidades entre agentes (`research`, `self`, `planner`) | Arquitectura modular desacoplada con trazabilidad en logs del agente |
+| **Fase 2** | **2. Contexto de Datos (MCP/JSON)** | *Data Engineer Agent* (MCP) | Dataset clínico estructurado (`server/db.json`) | Inyección de esquemas mediante MCP Filesystem, normalización y tipado defensivo contra nulos | Base de datos documental reactiva y adaptada a la lógica hospitalaria |
+| **Fase 3** | **3. Skills y Comandos** | *Automation / Tools Agent* | Directrices de diseño Apple HIG y WCAG 2.1 AA | Configuración de la skill `validate-tablet-ux` y comando `/validar-ux-tablet` | Scripts de verificación automatizada de touch targets, fuentes y contraste |
+| **Fase 4** | **4. Orquestación Multi-Agente** | *Research & Orchestrator Agents* | Tareas concurrentes de diseño, validación y testing | Delegación de responsabilidades entre agentes (`research`, `self`, `planner`, `qa`) | Arquitectura modular desacoplada con trazabilidad en logs del agente |
 | **Fase 5** | **5. Depuración Autónoma** | *Debugger / QA Agent* | Logs de consola, errores de runtime y excepciones de red | Análisis sintáctico, rastreo de excepciones y sustitución atómica de código | Corrección de fallos en Express 5, `API_URL` dinámica y sanitización |
 | **Fase 6** | **6. Despliegue a Producción** | *DevOps Agent* | Código fuente integrado y repositorio GitHub | Generación de `Dockerfile` multi-etapa y enlace con Render Web Services | Aplicación desplegada en la nube con certificado SSL y disponibilidad continua |
 
@@ -92,26 +96,146 @@ El desarrollo de la plataforma se fundamentó en la ejecución secuencial y cont
 | Directriz Obligatoria | Mecanismo de Implementación en el Proyecto | Evidencia Técnica en el Repositorio | Estado de Verificación |
 | :--- | :--- | :--- | :---: |
 | **1. Cero Código Manual** | Generación de componentes, rutas, estados y lógica mediante prompts declarativos en modo *Plan* y *Build*. | Historial completo de commits en Git (`develop` y `main`). | **CUMPLIDO** |
-| **2. Contexto de Datos (MCP/JSON)** | Inyección de dataset estructurado en `server/db.json` con colecciones normalizadas y tolerancia a variables nulas. | Colecciones `doctors`, `admins`, `patients`, `rooms`, `appointments`, `emergencies`. | **CUMPLIDO** |
-| **3. Skills y Comandos** | Creación de la skill `validate-tablet-ux` y el comando de terminal `/validar-ux-tablet`. | `.gemini/commands/validar-ux-tablet.md` y suite de validación de layout táctil. | **CUMPLIDO** |
-| **4. Agentes Personalizados** | Orquestación de subagentes (`research`, `self`, `planner`) para investigación de librerías y diseño modular. | Registro de interacciones multiagente en los logs de la plataforma. | **CUMPLIDO** |
+| **2. Contexto de Datos (MCP/JSON)** | Inyección de dataset estructurado en `server/db.json` vía MCP con colecciones normalizadas y tolerancia a variables nulas. | Colecciones `doctors`, `admins`, `patients`, `rooms`, `appointments`, `emergencies`. | **CUMPLIDO** |
+| **3. Skills y Comandos** | Creación de la skill `validate-tablet-ux` y el comando de terminal `/validar-ux-tablet`. | `.gemini/commands/validar-ux-tablet.md` y `.gemini/config/skills/validate-tablet-ux/` | **CUMPLIDO** |
+| **4. Agentes Personalizados** | Orquestación de subagentes (`research`, `self`, `planner`, `qa`, `devops`) para investigación, construcción y testing. | Registro de interacciones multiagente en los logs de la plataforma. | **CUMPLIDO** |
 | **5. Depuración Autónoma** | Diagnóstico y corrección asistida por IA: Bug de rutas en Express 5 (`path-to-regexp`), cálculo de IMC, y `API_URL` dinámica. | Commits de refactorización autónoma y resolución de excepciones de runtime. | **CUMPLIDO** |
 | **6. Despliegue a Producción** | Empaquetado en contenedor Docker multi-etapa y publicación en Render con auto-deploy desde rama `main`. | `Dockerfile` con Node 20 Alpine y URL pública operativa en la nube. | **CUMPLIDO** |
 
 ---
 
-# 4. Configuración de Modelos de IA e Integración de API Keys (BYOK)
+# 4. Ecosistema de Inteligencia Artificial: Agentes, Skills, Comandos, Protocolo MCP y BYOK
+
+En esta sección se detalla exhaustivamente la infraestructura de inteligencia artificial que hizo posible el desarrollo integral bajo el estándar de **Cero Código Manual**, describiendo los roles de los agentes orquestados, las skills programadas, los comandos personalizados configurados, la integración del protocolo MCP y la gestión de modelos bajo el paradigma BYOK.
+
+## 4.1. Arquitectura y Orquestación Multi-Agente
+
+Para resolver los diversos desafíos del ciclo de vida del software (análisis de requisitos, diseño de arquitectura, generación de código, aseguramiento de la calidad y despliegue), se implementó un flujo de trabajo **Multi-Agente Jerárquico**. Un **Agente Orquestador Central** actuó como director del proyecto, delegando tareas altamente especializadas a subagentes dedicados con contextos y herramientas acotadas.
+
+```mermaid
+graph TD
+    User(["Desarrollador / Evaluador"]) --> Planner["Agente Orquestador (Plan Mode)"]
+    
+    subgraph Subagentes ["Ecosistema de Subagentes Especializados"]
+        Planner -->|Analisis y Documentacion| Research["Subagente Research"]
+        Planner -->|Generacion Frontend y Backend| Builder["Subagente Self (Builder)"]
+        Planner -->|Diagnostico y QA| Debugger["Subagente Debugger / QA"]
+        Planner -->|Docker y Despliegue Cloud| DevOps["Subagente DevOps"]
+    end
+
+    subgraph Herramientas ["Capa de Herramientas y Protocolo MCP"]
+        Builder <-->|Lectura y Escritura Atomica| MCP_FS["MCP Filesystem / Context Provider"]
+        Research <-->|Exploracion de Librerias| WebTools["Search y Doc Tools"]
+        Debugger <-->|Inspeccion de Logs y Tests| RunCmd["Terminal / Test Execution"]
+        DevOps <-->|Generacion de Dockerfile| BuildTools["Container y Build Tools"]
+    end
+
+    MCP_FS --> DB[("server/db.json")]
+```
+
+### Tabla 4.1. Matriz de Agentes y Subagentes Implementados en la Orquestación
+| Agente / Subagente | Tipo de Agente | Herramientas Asignadas | Ámbito Operativo / Responsabilidad Técnica | Entregables y Salidas Producidas |
+| :--- | :--- | :--- | :--- | :--- |
+| **Agente Orquestador (Central)** | *Planner / Orchestrator* | `invoke_subagent`, `manage_subagents`, `schedule`, `view_file` | Planificación de alto nivel, descomposición de historias de usuario, coordinación de dependencias y validación de aceptación. | Planes de ejecución paso a paso, asignación de tareas a subagentes y verificación de entregables. |
+| **Subagente Research** | *Research Specialist* | `read_url_content`, `search_web`, `view_file`, `grep_search` | Investigación de compatibilidad de Tailwind CSS v4, sintaxis de rutas en Express 5, iconos Lucide React y normativas de accesibilidad Apple HIG / WCAG 2.1. | Reportes de viabilidad técnica, especificación de contratos de API y recomendaciones de dependencias. |
+| **Subagente Self (Builder)** | *Full-Stack Developer* | `write_to_file`, `replace_file_content`, `view_file`, `find_by_name` | Generación declarativa de componentes React (`AuthContext`, `Patients`, `Scheduling`, `Rooms`, `AdminDoctors`), custom hooks (`useApi`) y controladores REST en `server.js`. | Código fuente 100% generado por IA, componentes modulares limpios y libres de deuda técnica. |
+| **Subagente Debugger / QA** | *QA & Diagnostics* | `run_command`, `grep_search`, `replace_file_content`, `view_file` | Detección y análisis sintáctico de errores en tiempo de ejecución, rastreo de excepciones en consola, validación de variables nulas y ejecución de pruebas unitarias. | Parches atómicos de código, resolución del bug `PathError` en Express 5 y estabilización de la suite de pruebas. |
+| **Subagente DevOps** | *Infrastructure & Release* | `write_to_file`, `run_command`, `view_file` | Diseño del contenedor Docker multi-etapa, configuración del script de generación de informes PDF (`build_full_pdf.js`), y sincronización con Render Web Services. | `Dockerfile` optimizado con `node:20-alpine`, PDF técnico compilado y despliegue continuo en la nube. |
+
+---
+
+## 4.2. Skills Implementadas y Estándares de Validación UX/UI
+
+Las **Skills** son capacidades modulares compuestas por instrucciones estructuradas, esquemas de validación y scripts auxiliares que amplían las habilidades de los agentes para ejecutar tareas especializadas y repetibles con consistencia determinista.
+
+### Tabla 4.2. Ficha Técnica y Especificación de Skills Implementadas
+| Skill | Ubicación del Manifiesto | Propósito y Estándares Evaluados | Scripts y Herramientas Asociadas | Modo de Ejecución |
+| :--- | :--- | :--- | :--- | :--- |
+| **`validate-tablet-ux`** | `.gemini/config/skills/validate-tablet-ux/SKILL.md` | Validación estricta de la interfaz de usuario en tabletas iPad y navegadores web bajo normativas Apple HIG y WCAG 2.1 AA. | `scripts/validate.js` | Invocada por el comando `/validar-ux-tablet` o por el agente en fase de QA. |
+| **`agy-customizations`** | Built-in CLI Engine | Guía y estándar arquitectónico para la creación de skills, comandos de entorno, rules y servidores MCP en Antigravity. | Customization Loader & Parser | Activa en sesión para garantizar conformidad en la creación de herramientas. |
+| **`antigravity-guide`** | Built-in CLI Engine | Marco de referencia sobre slash commands, gestión de subagentes, sincronización asíncrona y secret management. | System Engine Reference | Activa durante todo el ciclo de orquestación técnica del proyecto. |
+
+### Criterios Clave Verificados por la Skill `validate-tablet-ux`:
+1. **Touch Targets (Apple Human Interface Guidelines):**
+   - Todos los botones (`<button>`), enlaces interactivos (`<a>`), inputs (`<input>`) y selectores (`<select>`) deben contar con un área táctil mínima de **44 × 44 píxeles**.
+   - Espaciado mínimo de seguridad entre elementos interactivos adyacentes: **≥ 8 píxeles**, evitando pulsaciones accidentales en pantallas táctiles médicas.
+2. **Tipografía y Escala Visual:**
+   - Tamaño tipográfico base en tabletas de **≥ 16 píxeles** para evitar el auto-zoom indeseado en navegadores móviles (iOS Safari).
+   - Interlineado (*line-height*) de **≥ 1.4** en cuerpos de texto y jerarquía estricta $H1 > H2 > H3 > H4$.
+   - Prohibición absoluta de textos inferiores a 12 píxeles en cualquier módulo clínico.
+3. **Diseño Responsivo en Breakpoints Hospitalarios:**
+   - Compatibilidad completa en *iPad Portrait* (768 px), *iPad Landscape* (1024 px), *iPad Pro* (1366 px) y *Desktop Clínico* (1440 px+).
+   - Colapso dinámico del sidebar lateral en pantallas de ancho ≤ 1024 px y scroll horizontal defensivo (`overflow-x: auto`) en tablas de datos.
+   - Ventanas modales restringidas a un ancho máximo del 95% del *viewport* en dispositivos móviles y tablets.
+4. **Contraste Cromático y Accesibilidad (WCAG 2.1 AA):**
+   - Ratio de contraste mínimo de **4.5:1** para texto normal (#242424 sobre fondo blanco) y **3:1** para elementos gráficos o badges (#2B8A8A sobre fondo claro).
+   - Verificación de contraste en modo claro y modo oscuro.
+5. **Soporte Bi-direccional de Orientación:**
+   - Renderizado adaptativo y sin solapamiento de componentes tanto en orientación Vertical (*Portrait*) como en Horizontal (*Landscape*).
+
+---
+
+## 4.3. Comandos Personalizados y Slash Commands del Entorno
+
+Los **Comandos Personalizados** permiten condensar flujos de trabajo complejos en invocaciones directas y reproducibles dentro de la terminal y el entorno de chat del agente.
+
+### Tabla 4.3. Catálogo de Comandos Personalizados y Slash Commands
+| Comando | Tipo de Comando | Archivo de Configuración | Descripción Funcional y Flujo de Ejecución |
+| :--- | :--- | :--- | :--- |
+| **`/validar-ux-tablet`** | **Comando Personalizado** | `.gemini/commands/validar-ux-tablet.md` | Lee el CSS y HTML del proyecto, ejecuta el script `validate.js` de la skill `validate-tablet-ux`, evalúa los 5 criterios de usabilidad táctil y genera un informe estructurado de conformidad con clasificación *Pass / Warn / Fail*. |
+| **`/plan`** | Slash Command Nativo | Built-in Engine | Activa el modo de planificación estructurada, permitiendo al agente descomponer el proyecto en hitos, diseñar modelos de datos y especificar contratos de endpoints antes de generar código. |
+| **`/goal`** | Slash Command Nativo | Built-in Engine | Instruye al agente para ejecutar una tarea compleja de principio a fin de manera exhaustiva, validando automáticamente los resultados antes de dar por culminado el objetivo. |
+| **`/schedule`** | Slash Command Nativo | Built-in Engine | Programa temporizadores y cronómetros asíncronos para monitorear procesos en segundo plano (como builds de Vite o pruebas de concurrencia). |
+| **`/learn`** | Slash Command Nativo | Built-in Engine | Permite registrar patrones de corrección y reglas de negocio aprendidas durante la sesión para aplicarlas de forma consistente en iteraciones posteriores. |
+
+### Flujo de Ejecución del Comando `/validar-ux-tablet`:
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Dev as Desarrollador / Evaluador
+    participant CMD as Comando /validar-ux-tablet
+    participant Skill as Skill validate-tablet-ux
+    participant Script as scripts/validate.js
+    participant CSS as client/src/index.css
+    participant Out as Artifact Report (Pass/Fail)
+
+    Dev->>CMD: Invocacion de /validar-ux-tablet
+    CMD->>Skill: Cargar manifiesto y reglas de evaluacion
+    Skill->>Script: Ejecutar motor de analisis sintactico
+    Script->>CSS: Inspeccionar selectores, padding, touch targets y media queries
+    Script-->>Skill: Retornar matriz de resultados cuantitativos
+    Skill-->>Out: Generar Reporte de Conformidad UX con recomendaciones
+    Out-->>Dev: Visualizacion de resultados en consola / panel de artefactos
+```
+
+---
+
+## 4.4. Integración del Protocolo MCP (Model Context Protocol) y Contexto de Datos
+
+El **Model Context Protocol (MCP)** es el estándar abierto promovido por la industria para conectar de forma segura y estructurada a los modelos de lenguaje con fuentes de datos externas, repositorios de información y herramientas de ejecución.
+
+### Tabla 4.4. Arquitectura y Protocolos MCP Implementados en UCIBAM
+| Dimensión MCP | Componente Implementado | Función Técnica en el Proyecto UCIBAM | Beneficio Arquitectónico |
+| :--- | :--- | :--- | :--- |
+| **MCP Context Provider** | Inyección de `server/db.json` | Suministra al agente el esquema documental completo: colecciones `doctors`, `admins`, `patients`, `rooms`, `appointments` y `emergencies`. | Permitió a los agentes diseñar interfaces React con conocimiento exacto de las entidades, tipos de datos y relaciones sin requerir bases de datos remotas. |
+| **MCP Schema Typing** | Normalización y Tipado Defensivo | El agente analizó los registros JSON para prever campos opcionales y generar código frontend blindado contra valores nulos (`patient.comorbidities || []`). | Eliminación total de errores `TypeError: Cannot read properties of undefined` en tiempo de renderizado. |
+| **MCP Tool Protocol** | Herramientas de Sistema de Archivos (`fs`) | Habilitó a los agentes la capacidad de inspeccionar (`view_file`, `grep_search`), escribir (`write_to_file`) y modificar atómicamente (`replace_file_content`) archivos fuente. | Edición quirúrgica de código sin colisiones, preservando la integridad del historial de versiones y la estructura modular. |
+| **MCP Security Boundaries** | Control de Permisos en Workspace | Restringe las operaciones del agente al árbol del proyecto, evitando accesos fuera del workspace o filtración de claves privadas. | Cumplimiento de políticas de seguridad locales y protección de variables de entorno. |
+
+---
+
+## 4.5. Configuración de Modelos de IA e Integración de API Keys (BYOK)
 
 En cumplimiento de las instrucciones de cátedra sobre el uso de proveedores de modelos de lenguaje, el proyecto fue configurado bajo un esquema **BYOK (Bring Your Own Key)**, permitiendo la conmutación transparente y desacoplada entre plataformas según la criticidad de cada tarea de desarrollo.
 
-### Tabla 4. Matriz Estructural de Enrutamiento y Topología Multi-Modelo (BYOK)
+### Tabla 4.5. Matriz Estructural de Enrutamiento y Topología Multi-Modelo (BYOK)
 | Nivel de Arquitectura | Proveedor / Gateway | Modelos Configurados | Variable de Entorno | Ámbito Operativo / Responsabilidad Técnica | Mecanismo de Aislamiento y Seguridad |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Capa de Orquestación Central** | Antigravity CLI / Google DeepMind | Agente Central Multi-Herramienta | Variables de sesión de CLI | Coordinación general, ejecución de comandos y orquestación de subagentes | Ejecución local aislada con control estricto de permisos en el sistema de archivos |
 | **Capa Primaria de Generación** | Google AI Studio Direct API | Gemini 2.5 Flash / Gemini 3.7 Pro | `GEMINI_API_KEY` | Generación de componentes React, refactorización de backend Express y pruebas automatizadas | Llave encriptada en sesión; exclusión absoluta en `.gitignore` |
 | **Capa Secundaria de Auditoría** | OpenRouter Router API | Claude 3.5 Sonnet / GPT-4o | `OPENROUTER_API_KEY` | Auditoría de accesibilidad WCAG, diseño responsivo táctil y redacción técnica de reportes | Acceso vía proxy seguro; rotación de tokens sin persistencia en código |
 
-### 4.1. Proveedor Principal: Google AI Studio (`GEMINI_API_KEY`)
+### 4.5.1. Proveedor Principal: Google AI Studio (`GEMINI_API_KEY`)
 Para el grueso de la orquestación, resolución de errores de sintaxis en terminal y pruebas automatizadas de QA, se empleó la API nativa de **Google AI Studio** con los modelos **Gemini 2.5 Flash** y **Gemini 3.7 Pro**:
 * **Ventajas Técnicas:** Ventana de contexto extendida (hasta 1M tokens), baja latencia de respuesta para herramientas de lectura/escritura de archivos locales y compatibilidad nativa con el sistema de herramientas del agente (`replace_file_content`, `run_command`, `grep_search`).
 * **Configuración de Variables de Entorno:**
@@ -121,7 +245,7 @@ Para el grueso de la orquestación, resolución de errores de sintaxis en termin
   AI_STUDIO_MODEL="gemini-3.7-flash"
   ```
 
-### 4.2. Proveedor Secundario: OpenRouter API (`OPENROUTER_API_KEY`)
+### 4.5.2. Proveedor Secundario: OpenRouter API (`OPENROUTER_API_KEY`)
 Como respaldo para revisiones de diseño estético, cumplimiento de estándares de accesibilidad WCAG y redacción técnica de reportes, se habilitó el enrutador de **OpenRouter** conectando con modelos como **Claude 3.5 Sonnet**:
 * **Configuración:**
   ```bash
@@ -129,7 +253,7 @@ Como respaldo para revisiones de diseño estético, cumplimiento de estándares 
   OPENROUTER_DEFAULT_MODEL="anthropic/claude-3.5-sonnet"
   ```
 
-### 4.3. Prácticas de Seguridad en la Gestión de Llaves (Secret Management)
+### 4.5.3. Prácticas de Seguridad en la Gestión de Llaves (Secret Management)
 * Ninguna API Key se encuentra escrita en duro (*hardcoded*) en el código fuente ni en el historial de versiones de Git.
 * Se implementaron reglas estrictas en `.gitignore` para excluir archivos `.env`, `.env.local` y credenciales de sesión.
 
@@ -331,9 +455,11 @@ CMD ["node", "server.js"]
 # 10. Conclusiones y Recomendaciones de Ingeniería
 
 1. **Eficacia del Paradigma Cero Código Manual:** El desarrollo mediante agentes de inteligencia artificial generativa redujo drásticamente el ciclo de construcción, garantizando consistencia arquitectónica, tipado seguro contra nulos y adopción de estándares de diseño modernos.
-2. **Seguridad y Cumplimiento Normativo:** La separación estricta mediante RBAC y la protección de inactividad de 15 minutos garantizan que la información de salud protegida (PHI) permanezca resguardada de accesos no autorizados.
-3. **Escalabilidad Infraestructural:** La incorporación del módulo administrativo permite que la plataforma escale orgánicamente conforme la clínica amplíe su capacidad de quirófanos o incorpore nuevos especialistas.
-4. **Trabajo Futuro:**
+2. **Potencia de la Orquestación Multi-Agente y Protocolo MCP:** La separación de roles entre agentes especializados (*Planner*, *Research*, *Builder*, *QA*, *DevOps*) combinada con la inyección dinámica de contexto estructurado vía MCP permitió modularizar el desarrollo, aislar fallos y prevenir regresiones en el sistema.
+3. **Estandarización y Calidad Mediante Skills y Comandos:** La implementación de la skill `validate-tablet-ux` y el comando `/validar-ux-tablet` aseguró que la interfaz cumpliera rigurosamente con los lineamientos de diseño de Apple HIG y accesibilidad WCAG 2.1 AA para dispositivos táctiles hospitalarios.
+4. **Seguridad y Cumplimiento Normativo:** La separación estricta mediante RBAC y la protección de inactividad de 15 minutos garantizan que la información de salud protegida (PHI) permanezca resguardada de accesos no autorizados bajo las directrices HIPAA / GDPR.
+5. **Escalabilidad Infraestructural:** La incorporación del módulo administrativo permite que la plataforma escale orgánicamente conforme la clínica amplíe su capacidad de quirófanos o incorpore nuevos especialistas.
+6. **Trabajo Futuro:**
    - Implementación de estándares de interoperabilidad clínica **HL7 / FHIR**.
    - Integración con pasarelas de pago para reservas de citas y telemedicina.
 
@@ -342,6 +468,7 @@ CMD ["node", "server.js"]
 # 11. Referencias Bibliográficas
 
 - American Psychological Association. (2020). *Publication manual of the American Psychological Association* (7th ed.). https://doi.org/10.1037/0000165-000
+- Anthropic. (2024). *Model Context Protocol (MCP) Specification*. https://modelcontextprotocol.io/
 - Apple Inc. (2024). *Human Interface Guidelines: Touch targets and layout for iPadOS*. Apple Developer Documentation. https://developer.apple.com/design/human-interface-guidelines/
 - Eisenberg, D., Shikora, S. A., Aarts, E., Aminian, A., Angrisani, L., Cohen, R. V., ... & Kothari, S. N. (2022). 2022 American Society for Metabolic and Bariatric Surgery (ASMBS) and International Federation for the Surgery of Obesity and Metabolic Disorders (IFSO): Indications for metabolic and bariatric surgery. *Surgery for Obesity and Related Diseases*, 18(12), 1345-1356. https://doi.org/10.1016/j.soard.2022.08.013
 - International Organization for Standardization. (2023). *Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Product quality model* (ISO/IEC 25010:2023). https://www.iso.org/standard/78176.html
